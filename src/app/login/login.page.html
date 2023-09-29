@@ -1,0 +1,56 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Login
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content [fullscreen]="true">
+
+  <form [formGroup]="memberForm" (ngSubmit)="login()">
+    <div *ngIf="error" class="errors_danger">{{error | titlecase }}</div>
+    <ion-list>
+      <ion-item>
+        <ion-label position="floating">Username</ion-label>
+        <ion-input placeholder="Username"
+        formControlName="username"
+        ></ion-input>
+      </ion-item>
+      <ion-item *ngIf="username()?.touched && username()?.invalid" class="error_messages">
+        <ion-text *ngIf="username()?.errors?.['required']" color="danger">Username is Required</ion-text>
+        <ion-text *ngIf="username()?.errors?.['minlength']" color="danger">Minmum length for username is 6 character</ion-text>
+        <ion-text *ngIf="username()?.errors?.['maxlength']" color="danger">Maximum length for username is 10 character</ion-text>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Password</ion-label>
+        <ion-input placeholder="password"
+          formControlName="password"
+          type="password"
+            ></ion-input>
+      </ion-item>
+      <ion-item *ngIf="password()?.touched && password()?.invalid" class="error_messages">
+        <ion-text *ngIf="password()?.errors?.['required']" color="danger">Password is Required</ion-text>
+        <ion-text *ngIf="password()?.errors?.['minlength']" color="danger">Minmum length for password is 6 character</ion-text>
+        <ion-text *ngIf="password()?.errors?.['maxlength']" color="danger">Maximum length for password is 20 character</ion-text>
+      </ion-item>
+      <div class="ion-padding">
+        <div class="show_password" *ngIf="show_password">{{memberForm.get('password')?.value}}</div>
+        <ion-checkbox labelPlacement="end" (click)="show_password = !show_password">Show Password</ion-checkbox>
+      </div>
+      <ion-button size="small" [disabled]="this.memberForm.status == 'INVALID'" type="submit">Save</ion-button>
+    </ion-list>
+
+
+
+
+
+    {{memberForm.value | json}}
+  </form>
+
+
+
+<div *ngIf="current_user">
+    {{current_user | json}}
+</div>
+
+</ion-content>

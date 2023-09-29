@@ -6,7 +6,9 @@ import { Component } from '@angular/core';
   styleUrls: ['tab1.page.scss']
 })
 export class Tab1Page {
-
-  constructor() {}
+    data = localStorage.getItem('current_user')
+  constructor() {
+    console.log(this.data)
+  }
 
 }
