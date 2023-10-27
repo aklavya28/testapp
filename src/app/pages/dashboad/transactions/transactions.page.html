@@ -1,0 +1,52 @@
+<!-- <ion-header style="display: none;">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="false"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>{{acc_detail?.type}} Transactions</ion-title>
+  </ion-toolbar>
+</ion-header> -->
+
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <!-- <ion-buttons slot="start">
+      <ion-nav [root]=""></ion-nav>
+      <ion-menu-button autoHide="false"></ion-menu-button>
+    </ion-buttons> -->
+    <ion-title>{{acc_detail?.type}} Transactions</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content [fullscreen]="true" class="trns_body">
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+    <div *ngIf="all_transactions.data" class="ion-padding">
+
+      <div *ngFor="let trns of all_transactions.data" class="trns_list" [ngClass]="trns.transaction_type == 'debit'? 'red' : 'green'"   >
+          <div>
+            <div>
+              <fa-icon  [icon]="['far', 'clock']" slot="start"></fa-icon >
+              {{trns.transaction_date | date}}
+            </div>
+            <div *ngIf="trns.message">
+              <fa-icon  [icon]="['far', 'message']" slot="start"></fa-icon >
+                {{trns.message}}
+              </div>
+
+          </div>
+            <div>{{trns.amount | currency:'INR':'symbol':'.2-2' }}  </div>
+      </div>
+
+    </div>
+    <div *ngIf="!all_transactions.data">
+        No data
+    </div>
+
+
+</ion-content>

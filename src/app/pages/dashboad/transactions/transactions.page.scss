@@ -1,0 +1,40 @@
+.trns_body{
+    --background: #f2f2f2;
+}
+
+.trns_list {
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: space-between;
+    font-weight:  bold;
+    margin-bottom: 8px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 7px 13px #cdcdcd;
+
+}
+
+.trns_list>div:first-child {font-size: 14px; font-weight: normal;
+    fa-icon{
+        color: gray;
+    }
+    div:first-child{
+        margin-bottom: 10px;
+    }
+    div:last-child{
+       padding-left: 20px;
+       position: relative;
+       fa-icon{
+            color: goldenrod;
+            position: absolute;
+            left: 0;
+        }
+    }
+}
+.trns_list>div:last-child {font-size: 14px; font-weight: bold;}
+
+
+.red>div:last-child{ color: red;}
+.green>div:last-child{ color: green}

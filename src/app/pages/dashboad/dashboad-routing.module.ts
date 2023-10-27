@@ -7,6 +7,10 @@ const routes: Routes = [
   {
     path: '',
     component: DashboadPage
+  },
+  {
+    path: 'transactions/:id/:type',
+    loadChildren: () => import('./transactions/transactions.module').then( m => m.TransactionsPageModule)
   }
 ];
 

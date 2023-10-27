@@ -1,17 +1,53 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>
-      Tab 1
-    </ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="false"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Pay</ion-title>
   </ion-toolbar>
 </ion-header>
+<ion-content>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 1</ion-title>
-    </ion-toolbar>
-  </ion-header>
 
-  <app-explore-container name="Tab 1 page"></app-explore-container>
+  <div *ngIf="error" class="errors_danger">{{error | titlecase }}</div>
+  <form  [formGroup]="payForm" (ngSubmit)="paySubmit()">
+  <ion-item *ngIf="clientInfo.data">
+
+    <ion-select label="Choose payable service"
+    formControlName="service"
+    placeholder="Pay For"
+    >
+      <div *ngFor="let item of clientInfo.data">
+
+        <ion-select-option  *ngIf="item.ac_type !== 'Saving' && item.ac_type !== 'FD'"  value="{{item.id +','+ item.ac_type}}">{{item.ac_type}} </ion-select-option>
+      </div>
+
+    </ion-select>
+
+  </ion-item>
+  <div *ngIf="service()?.touched && service()?.invalid">
+    <ion-text *ngIf="service()?.errors?.['required']" color="danger">Username is Required</ion-text>
+  </div>
+  <ion-item>
+    <ion-input label="Enter Amount"
+      type="number"
+      maxlength="1000000"
+      formControlName="amount"
+
+     >
+    </ion-input>
+  </ion-item>
+  {{amount()?.valid}}
+  <div *ngIf="amount()?.touched && amount()?.invalid">
+    <ion-text *ngIf="amount()?.errors?.['required']" color="danger">Amount is Required</ion-text>
+    <ion-text *ngIf="amount()?.errors?.['min_val']" color="danger">Zero not allowed</ion-text>
+    <ion-text *ngIf="amount()?.errors?.['mix_val']" color="danger">Can not pay more then 1000000 </ion-text>
+
+  </div>
+  <ion-button size="small" [disabled]="this.payForm.status == 'INVALID'" type="submit">Pay Now</ion-button>
+
+  </form>
+  {{payForm.value | json}}
+
+
 </ion-content>

@@ -1,19 +1,38 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './guards/auth.guard';
+
+
 
 const routes: Routes = [
   {
     path: '',
     loadChildren: () => import('./login/login.module').then(m=>m.LoginPageModule)
+    // loadChildren: () => import('./pages/rxjs/rxjs-routing.module').then(m=> m.RxjsPageRoutingModule)
   },
   {
-    path: 'dashboad',
-    loadChildren: () => import('./pages/dashboad/dashboad.module').then( m => m.DashboadPageModule)
+    path: 'dashboard',
+    loadChildren: () => import('./pages/dashboad/dashboad.module').then( m => m.DashboadPageModule),
+    canActivate:[AuthGuard]
   },
   {
-    path: 'tabs/tab1',
-    loadChildren: () => import('./tab1/tab1.module').then( m => m.Tab1PageModule)
-  }
+    path: 'tabs',
+    loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule),
+    canActivate:[AuthGuard]
+  },
+  {
+    path: 'rxjs',
+    loadChildren: () => import('./pages/rxjs/rxjs.module').then( m => m.RxjsPageModule),
+    canActivate:[AuthGuard]
+  },
+  {
+    path: 'transactions/:account_id/:type',
+    loadChildren: () =>import('./pages/dashboad/transactions/transactions.module').then( m => m.TransactionsPageModule ),
+    canActivate:[AuthGuard]
+  },
+
+
+
 
 
   // {

@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
+import { AppComponent } from '../app.component';
+
 
 
 @Component({
@@ -23,7 +25,8 @@ export class LoginPage implements OnInit {
       private fb: FormBuilder,
       private service: LoginService,
       private loding: LoadingController,
-      private route: Router
+      private route: Router,
+      private app: AppComponent
 
     ) {
     this.memberForm = fb.group({
@@ -34,12 +37,15 @@ export class LoginPage implements OnInit {
   }
 
   ngOnInit() {
-  //  this.memberForm.get('username')?.setValue("M03229")
-   this.memberForm.get('username')?.setValue("M08352")
+
+   this.memberForm.get('username')?.setValue("M03229")
+  //  this.memberForm.get('username')?.setValue("M08352")
    this.memberForm.get('password')?.setValue("123456")
 
   }
   async login(){
+    let data = localStorage.removeItem('current_user');
+
     const loading = await this.loding.create({
       message: 'Fatching data...',
 
@@ -47,22 +53,29 @@ export class LoginPage implements OnInit {
     loading.present();
     let username:string =  this.memberForm.get('username')?.value;
     let password:string =  this.memberForm.get('password')?.value;
+    this.service.postLogin(username, password, this.u_type).pipe(
+
+    )
     let post_Req = this.service.postLogin(username, password, this.u_type).subscribe((res:any) =>{
       loading.dismiss()
-      console.log(res)
-      // alert(res)
       localStorage.removeItem('current_user');
       localStorage.setItem('current_user', JSON.stringify(res))
       this.error = ''
-      this.route.navigateByUrl('/tabs/tab1')
+      this.route.navigateByUrl('/tabs/tabs/dashboard')
     }, (err) =>{
 
       loading.dismiss()
-      this.error = err.error.message
+      this.error = err.error.message ? err.error.message : (err.statusText+ "! Server Not Found");
     })
 
-
     // this.service.postLogin()
+
+    console.log(localStorage.getItem('current_user'))
+
+  }
+
+  ionViewWillEnter(){
+
 
   }
   username(){

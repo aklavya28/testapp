@@ -1,13 +1,29 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>dashboad</ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="false"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Dashboard</ion-title>
   </ion-toolbar>
 </ion-header>
+<ion-content>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">dashboad</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <div class="list_of_services">
+      <ion-title>Services</ion-title>
+      <div *ngIf="services">
+
+        <div *ngFor="let item of services.data" >
+          <a (click)="sendService(item.id, item.ac_type)">
+            <div> <img src="./../../../assets/icon/loan.png" alt=""></div>
+            <div>
+              <!-- {{item |json}} -->
+              <p>{{item.ac_type}}</p>
+              <p>A/C No:. {{item.account_number}}</p>
+
+            </div>
+          </a>
+        </div>
+      </div>
+  </div>
+
 </ion-content>
