@@ -7,7 +7,8 @@ import { Router } from '@angular/router';
 export class LoginService {
   // url:string = 'https://app.devrising.in/api/hrms/'
 
-  private mainurl:string = 'http://localhost:3000/api/'
+//   private mainurl:string = 'http://localhost:3000/api/'
+  private mainurl:string = 'https://app.devrising.in/api/'
   url:string = 'http://localhost:3000/api/hrms/';
 
 
@@ -22,7 +23,8 @@ export class LoginService {
 
    postLogin(username:string, pass:string, type:string){
 
-      return this.http.post<any>(this.loginUrl, {username: username, password:pass, type:type });
+      // return this.http.post<any>(this.loginUrl, {username: username, password:pass, type:type });
+      return this.http.post<any>(this.mainurl+'sign-in', {username: username, password:pass, type:type });
    }
    postDashDetail(userid:string, token:string){
       return  this.http.get<any>(this.mainurl+"app-dashboard?token="+token+"&user_id="+userid)
@@ -72,6 +74,85 @@ export class LoginService {
             token: token,
             res_ac: res_account,
             amount: amount
+         });
+   }
+   list_of_bank(
+      userid:string,
+      token:string
+
+       ){
+      return  this.http.get<any>(this.mainurl+"app-list-of-bank?token="+token+"&user_id="+userid)
+   }
+   c_user_bank_status(
+      userid:string,
+      token:string
+
+       ){
+      return  this.http.get<any>(this.mainurl+"app-c-user-bank-status?token="+token+"&user_id="+userid)
+   }
+   addBankSubmit(
+      userid:string,
+      token:string,
+      bank_name: string,
+      bank_ac_no:number,
+      ifsc:string
+      ){
+         return this.http.post<any>(this.mainurl+'app-add-bank-account', {
+            user_id: userid,
+            token: token,
+            bank_name: bank_name,
+            bank_ac_no: bank_ac_no,
+            ifsc: ifsc
+         });
+   }
+   get_personal_banks(
+      userid:string,
+      token:string
+       ){
+      return  this.http.get<any>(this.mainurl+"app-get-personal-banks?token="+token+"&user_id="+userid)
+   }
+
+   money_trns_to_other(
+      userid:string,
+      token:string,
+      bank_id: number,
+      amount:number,
+      ){
+         return this.http.post<any>(this.mainurl+'app-bank-trnsfer', {
+            user_id: userid,
+            token: token,
+            bank_id: bank_id,
+            amount: amount,
+         });
+   }
+   mobile_login(
+      mobile: number
+      ){
+         return this.http.post<any>(this.mainurl+'app-mobile-login', {
+            mobile: mobile,
+         });
+   }
+   verify_otp(
+      mobile: number,
+      otp:number
+      ){
+         return this.http.post<any>(this.mainurl+'app-verify-otp', {
+            mobile: mobile,
+            otp: otp
+         });
+   }
+   check_balance(
+      user_id: string,
+      token: string,
+      ac_type: string,
+      ac_id:number
+      ){
+         return this.http.post<any>(this.mainurl+'app-check-balance', {
+            user_id,
+            token,
+            ac_type,
+            ac_id
+
          });
    }
 

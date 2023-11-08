@@ -17,6 +17,11 @@ export class AppComponent implements OnInit{
       title: 'Pay',
       url: "/tabs/tabs/tab1", icon: 'card'
     },
+    {
+      title: 'Add Bank',
+      url: "/tabs/tabs/addbank", icon: 'color-filter'
+    },
+
 
     { title: 'Inbox', url: '/folder/inbox', icon: 'mail' },
     { title: 'Outbox', url: '/folder/outbox', icon: 'paper-plane' },

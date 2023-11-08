@@ -36,6 +36,13 @@ const routes: Routes = [
 
       },
       {
+        path: 'addbank',
+        loadChildren: () => import('../pages/addbank/addbank.module').then(m => m.AddbankPageModule),
+        canActivate:[AuthGuard]
+        // loadChildren: () => import('./pages/addbank/addbank.module').then( m => m.AddbankPageModule)
+      },
+
+      {
         path: '',
         redirectTo: '/tabs/tab1',
         pathMatch: 'full'

@@ -31,13 +31,13 @@
   <ion-item>
     <ion-input label="Enter Amount"
       type="number"
-      maxlength="1000000"
+      onKeyPress="if(this.value.length==7) return false;"
       formControlName="amount"
 
      >
     </ion-input>
   </ion-item>
-  {{amount()?.valid}}
+
   <div *ngIf="amount()?.touched && amount()?.invalid">
     <ion-text *ngIf="amount()?.errors?.['required']" color="danger">Amount is Required</ion-text>
     <ion-text *ngIf="amount()?.errors?.['min_val']" color="danger">Zero not allowed</ion-text>

@@ -29,7 +29,7 @@ const routes: Routes = [
     path: 'transactions/:account_id/:type',
     loadChildren: () =>import('./pages/dashboad/transactions/transactions.module').then( m => m.TransactionsPageModule ),
     canActivate:[AuthGuard]
-  },
+  }
 
 
 

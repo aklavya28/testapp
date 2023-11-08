@@ -13,7 +13,8 @@ export class TransactionsPage implements OnInit {
   acc_detail: { acc_id: number; type: string; } | undefined
   userid:string = ''
   token:string = ''
-
+  balance:any;
+  error:any;
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -54,6 +55,7 @@ export class TransactionsPage implements OnInit {
         console.log(err)
         this.router.navigateByUrl('tabs/tabs/dashboard')
         loading.dismiss()
+        this.error = err.error.message ? err.error.message : (err.statusText+ "! Something went wrong");
         // loading.present()
 
     })
@@ -67,5 +69,31 @@ export class TransactionsPage implements OnInit {
       window.location.reload();
     }, 2000);
   }
+  async check_balanece(acc_detail:any){
 
+    let user_id = this.get_current_user('current_user').user_id;
+    let token= this.get_current_user('current_user').token;
+    let ac_type =  acc_detail.type;
+    let ac_id = acc_detail.acc_id;
+    const loading = await this.loader.create({
+      message: 'Checking Balance ...'
+    });
+    loading.present()
+    this.service.check_balance(user_id, token, ac_type, ac_id).subscribe((res) =>{
+      console.log(res)
+      loading.dismiss()
+      this.balance = res
+    }, (err) =>{
+      loading.dismiss()
+      console.log(err)
+      this.error = err.error.message ? err.error.message : (err.statusText+ "! Something went wrong");
+    })
+
+
+  }
+ get_current_user(local_s_type:string){
+    let c_user:any = localStorage.getItem(local_s_type);
+          let json_user = JSON.parse(c_user)
+          return json_user
+  }
 }

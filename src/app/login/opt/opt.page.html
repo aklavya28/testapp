@@ -1,0 +1,19 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      OTP
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content [fullscreen]="true">
+  <div *ngIf="error" class="errors_danger">{{error | titlecase }}</div>
+
+
+  <div  >
+      <ng-otp-input  (onInputChange)="onOtpChange($event)"  [config]="{length:6, allowNumbersOnly:true}"></ng-otp-input>
+  </div>
+  <ion-button size="small" [disabled]="verfy" (click)="check_otp()"> Verify OTP</ion-button>
+  <ion-button size="small" [disabled]="resendOtp" (click)="resnd_otp()"> Resend OTP</ion-button>
+
+
+</ion-content>

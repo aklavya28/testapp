@@ -1,7 +1,7 @@
 {
   "name": "testapp",
   "version": "0.0.1",
-  "author": "Ionic Framework",
+  "author": "Sunil Bhardwaj",
   "homepage": "https://ionicframework.com/",
   "scripts": {
     "ng": "ng",
@@ -36,6 +36,7 @@
     "cordova-plugin-splashscreen": "^6.0.2",
     "cordova-plugin-statusbar": "^3.0.0",
     "ionicons": "^7.0.0",
+    "ng-otp-input": "^1.9.3",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.13.0"

@@ -20,7 +20,11 @@ export class LoginPage implements OnInit {
   current_user:any =  localStorage.getItem('current_user') ? localStorage.getItem('current_user') : '';
   newdata:any = ''
 
+  viewMode:string = "otp"
+
+
   memberForm: FormGroup;
+  memberFormOtp!: FormGroup;
   constructor(
       private fb: FormBuilder,
       private service: LoginService,
@@ -38,9 +42,20 @@ export class LoginPage implements OnInit {
 
   ngOnInit() {
 
+    // if(this.get_current_user('current_user')){
+      // this.route.navigateByUrl('/tabs/tabs/dashboard')
+    //  }
+
+
    this.memberForm.get('username')?.setValue("M03229")
   //  this.memberForm.get('username')?.setValue("M08352")
    this.memberForm.get('password')?.setValue("123456")
+  // otp
+    this.memberFormOtp = this.fb.group({
+        mobile: this.fb.control('', [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")])
+    })
+  // otp end
+
 
   }
   async login(){
@@ -53,19 +68,26 @@ export class LoginPage implements OnInit {
     loading.present();
     let username:string =  this.memberForm.get('username')?.value;
     let password:string =  this.memberForm.get('password')?.value;
-    this.service.postLogin(username, password, this.u_type).pipe(
+    this.service.postLogin(username, password, this.u_type).subscribe((res:any) =>{
 
-    )
-    let post_Req = this.service.postLogin(username, password, this.u_type).subscribe((res:any) =>{
+      console.log('suniol', res.status)
       loading.dismiss()
+
       localStorage.removeItem('current_user');
       localStorage.setItem('current_user', JSON.stringify(res))
-      this.error = ''
-      this.route.navigateByUrl('/tabs/tabs/dashboard')
+      if(res.status === "ERROR"){
+        this.error = res.message
+
+      }else{
+        this.error = '';
+        this.route.navigateByUrl('/tabs/tabs/dashboard')
+      }
+
     }, (err) =>{
 
       loading.dismiss()
       this.error = err.error.message ? err.error.message : (err.statusText+ "! Server Not Found");
+      console.log("sunil",this.error)
     })
 
     // this.service.postLogin()
@@ -74,8 +96,24 @@ export class LoginPage implements OnInit {
 
   }
 
-  ionViewWillEnter(){
+  async loginOTP (){
+   let mobile = this.memberFormOtp.get('mobile')?.value
 
+   const loading = await this.loding.create({
+    message: 'Sending OTP ...',
+    });
+    loading.present()
+
+    this.service.mobile_login(mobile).subscribe((res) =>{
+      loading.dismiss()
+      localStorage.setItem("mobile", mobile);
+      this.route.navigateByUrl('opt', mobile)
+      console.log(res)
+    }, (err) =>{
+      loading.dismiss()
+      console.log(err)
+      this.error = err.error.message ? err.error.message : (err.statusText+ "! Something went wrong");
+    })
 
   }
   username(){
@@ -84,8 +122,20 @@ export class LoginPage implements OnInit {
   password(){
     return this.memberForm.get('password');
   }
+  mobile(){
+    return this.memberFormOtp.get('mobile');
+  }
+
+
   checkValue(event: any){
     console.log(event.target.checked)
   }
-
+  send(d:string){
+    this.viewMode = d
+  }
+  get_current_user(local_s_type:string){
+    let c_user:any = localStorage.getItem(local_s_type);
+          let json_user = JSON.parse(c_user)
+          return json_user
+  }
 }

@@ -1,0 +1,74 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="false"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Add Personal Bank</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div  *ngIf="personBank" class="bank">
+      <div *ngFor="let bank of personBank">
+          <p>Bank {{bank.name}}</p>
+          <p>ac no. {{bank.account_number}}</p>
+          <p>ifsc. {{bank.ifsc}}</p>
+      </div>
+  </div>
+ <ion-button size="small" (click)="get_bank()" *ngIf="isActive == false">Add New Bank</ion-button>
+ <div *ngIf="error" class="errors_danger">{{error | titlecase }}</div>
+ <form  *ngIf="isActive == true" [formGroup]="addBankForm" (ngSubmit)="addBankSubmit()">
+  <ion-item >
+
+    <ion-select
+    formControlName="name"
+
+    label="Choose Bank" label-placement="floating" fill="outline"
+    >
+        <ion-select-option *ngFor="let item of banklist.data" value="{{item}}" > {{item}} </ion-select-option>
+
+    </ion-select>
+    <br>
+
+
+  </ion-item>
+  <div *ngIf="name()?.touched && name()?.invalid">
+    <ion-text *ngIf="name()?.errors?.['required']" color="danger">Bank is Required</ion-text>
+  </div>
+  <ion-item>
+    <ion-input label="Bank Account Number"
+      type="number"
+      formControlName="ac_no"
+      onKeyPress="if(this.value.length==20) return false;"
+      label-placement="floating" fill="outline"
+     >
+    </ion-input>
+  </ion-item>
+  {{ac_no()?.errors | json}}
+  <div *ngIf="ac_no()?.touched && name()?.invalid">
+    <ion-text *ngIf="ac_no()?.errors?.['required']" color="danger">Bank account is Required</ion-text>
+    <ion-text *ngIf="ac_no()?.errors?.['maxlength']" color="danger">Amount is Required</ion-text>
+  </div>
+  <br>
+  <ion-item>
+    <ion-input label="Enter IFSC"
+      type="text"
+      formControlName="ifsc"
+      maxlength="11"
+      label-placement="floating" fill="outline"
+     >
+
+    </ion-input>
+  </ion-item>
+  <div *ngIf="ifsc()?.touched && ifsc()?.invalid">
+    <ion-text *ngIf="ifsc()?.errors?.['required']" color="danger">IFSC code is Required</ion-text>
+    <ion-text *ngIf="ifsc()?.errors?.['minlength']" color="danger">Minmume length is  {{ifsc()?.errors?.['minlength']['requiredLength']}} charater long</ion-text>
+  </div>
+  {{ifsc()?.errors | json}}
+  {{addBankForm.value | json}}
+
+
+  <ion-button size="small" [disabled]="this.addBankForm.status == 'INVALID'" type="submit">Save Bank</ion-button>
+  </form>
+
+
+</ion-content>

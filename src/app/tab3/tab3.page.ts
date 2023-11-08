@@ -18,6 +18,8 @@ export class Tab3Page implements OnInit {
 
   // forms
   saving_input:boolean | undefined;
+  bank_input:boolean | undefined;
+  banks:any;
   check_ac:boolean = false
   reciver_detail:any;
 
@@ -31,39 +33,58 @@ export class Tab3Page implements OnInit {
     private tost: ToastController,
     private cd: ChangeDetectorRef
   ) {
-
-
-
   }
+
+
   ngOnInit(){
-    console.log(this.error )
-
-
     this.clientInfo = localStorage.getItem('current_user')
     this.tranferForm = this.fb.group({
       type: this.fb.control('',[Validators.required]),
       s_account: this.fb.control(null),
+      bank: this.fb.control(null),
       amount: this.fb.control('', [Validators.required, this.min_val, this.mix_val]),
     })
 
-     this.tranferForm.get('type')?.valueChanges.subscribe((res:string) =>{
-
-
+     this.tranferForm.get('type')?.valueChanges.subscribe(async (res:string) =>{
       if(res === "bank"){
         this.saving_input = true
+        this.bank_input = false
         this.cd.detectChanges();
+
         this.tranferForm.get('s_account')?.setValidators([Validators.required, Validators.maxLength(6), Validators.minLength(6)])
+        this.tranferForm.get('bank')?.setValidators(null)
+        this.tranferForm.get('bank')?.patchValue('')
       }
       else{
+        // checking bank
+        this.cd.detectChanges();
+        let data =  this.tranferForm.get('bank')?.setValidators([Validators.required]);
+        let c_user = this.get_current_user('current_user');
+        const loading = await this.loading.create({
+          message: 'Searching for associated bank details ...',
+        });
+        loading.present();
+        this.api.c_user_bank_status(c_user.user_id, c_user.token).subscribe((res) =>{
+          loading.dismiss()
+          this.banks = res.data
+
+        }, (err) =>{
+          loading.dismiss()
+          setTimeout(()=>{
+            this.router.navigateByUrl('/tabs/tabs/addbank')
+          }, 2000)
+        })
+        // checking bank end
+
+
         this.saving_input = false
+        this.bank_input = true
         this.cd.detectChanges();
           this.tranferForm.get('s_account')?.setValidators(null)
           this.tranferForm.get('s_account')?.patchValue('')
           this.reciver_detail = ''
       }
     })
-
-
   }
 
 
@@ -80,23 +101,102 @@ export class Tab3Page implements OnInit {
       // console.log(type)
       this.paywithin_bank(saving_ac,amount)
     }else{
-      console.log(type)
+      this.bank_trnsfer()
     }
     // console.log([saving_ac, type, amount])
 
   }
-  paywithin_bank(saving_ac:any, amount:any){
-    // user_id: userid,
-    //         token: token,
-    //         res_ac: res_account,
-    //         amount: amount
-    let c_user:any = localStorage.getItem('current_user');
-    let user_json = JSON.parse(c_user)
-    this.api.withinbank(user_json.user_id, user_json.token, saving_ac, amount).subscribe((res) => {
+
+  async bank_trnsfer(){
+    const loading = await this.loading.create({
+      message: 'Please wait ...',
+
+    });
+    const success =  await this.tost.create({
+      position: 'top',
+      header: 'Transfer request sent successfully',
+      cssClass: "green",
+      buttons: [
+        {
+          icon: 'close',
+          htmlAttributes: {
+            'aria-label': 'close',
+          },
+        },
+      ],
+      })
+
+    let user_json = this.get_current_user('current_user')
+
+    let bank_id = this.tranferForm.get('bank')?.value
+    let amount = this.tranferForm.get('amount')?.value
+    loading.present()
+    this.api.money_trns_to_other(user_json.user_id, user_json.token, bank_id, amount).subscribe((res) =>{
       console.log(res)
+      loading.dismiss()
+      success.present()
+      this.tranferForm.reset()
+      this.router.navigateByUrl('/tabs/tabs/dashboard')
+    }, (err) => {
+      loading.dismiss()
+      this.error = err.error.message ? err.error.message : (err.statusText+ "! Something went wrong");
+    })
+
+  }
+
+
+
+  async paywithin_bank(saving_ac:any, amount:any){
+    const loading = await this.loading.create({
+      message: 'Searching for details ...',
+
+    });
+    const success =  await this.tost.create({
+      position: 'top',
+      header: 'Transfer Successfully',
+      cssClass: "green",
+      buttons: [
+        {
+          icon: 'close',
+          htmlAttributes: {
+            'aria-label': 'close',
+          },
+        },
+      ],
+      })
+
+    let user_json = this.get_current_user('current_user')
+    loading.present()
+    this.api.withinbank(user_json.user_id, user_json.token, saving_ac, amount).subscribe((res) => {
+      loading.dismiss()
+      success.present()
+      this.tranferForm.reset()
+      this.router.navigateByUrl('/tabs/tabs/dashboard')
+
+    }, (err) =>{
+      loading.dismiss()
+      this.error = err.error.message ? err.error.message : (err.statusText+ "! Something went wrong");
     })
 
     console.log(user_json)
+  }
+
+  async other_bank_tranfer(json_u_dtl:any){
+    const loading = await this.loading.create({
+      message: 'Searching for associated bank details ...',
+    });
+    loading.present()
+    this.api.c_user_bank_status( json_u_dtl.user_id, json_u_dtl.token ).subscribe((res) =>{
+      loading.dismiss()
+      console.log(res)
+    }, (err) =>{
+      loading.dismiss()
+      setTimeout(()=>{
+        this.router.navigateByUrl('/tabs/tabs/addbank')
+      }, 2000)
+
+      this.error = err.error.message ? err.error.message : (err.statusText+ "! Something went wrong");
+    })
   }
 
 
@@ -116,27 +216,24 @@ export class Tab3Page implements OnInit {
   async verify_accont(){
     const loading = await this.loading.create({
       message: 'Searching for saving details ...',
-
     });
 
+
      let reciver_saving  =  this.tranferForm.get('s_account')?.value
-      console.log(reciver_saving)
-      let current_user = JSON.parse(this.clientInfo);
-      let token = current_user.token
-      let user_id = current_user.user_id
-
-
+     let current_user = this.get_current_user('current_user')
 
       loading.present()
-      this.api.check_saving(user_id, token, reciver_saving).subscribe((res) =>{
+      this.api.check_saving(current_user.user_id, current_user.token, reciver_saving).subscribe((res) =>{
+        this.error = ''
         loading.dismiss()
          let name = res.member.first_name
          let mobile = res.member.mobile_no
-        console.log(res)
-        this.reciver_detail = { name: name, mobile: mobile}
+         this.reciver_detail = { name: name, mobile: mobile}
+
 
       }, (err)=>{
         loading.dismiss()
+        this.reciver_detail = null
         this.error = err.error.message ? err.error.message : (err.statusText+ "! Something went wrong");
       })
   }
@@ -147,5 +244,15 @@ export class Tab3Page implements OnInit {
   s_account(){
       return this.tranferForm.get('s_account');
   }
+  bank(){
+      return this.tranferForm.get('bank');
+  }
 
+
+
+  get_current_user(local_s_type:string){
+    let c_user:any = localStorage.getItem(local_s_type);
+          let json_user = JSON.parse(c_user)
+          return json_user
+  }
 }

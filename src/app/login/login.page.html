@@ -7,48 +7,89 @@
 </ion-header>
 <ion-content [fullscreen]="true">
 
-  <form [formGroup]="memberForm" (ngSubmit)="login()">
-    <div *ngIf="error" class="errors_danger">{{error | titlecase }}</div>
-    <ion-list>
-      <ion-item>
-        <ion-label position="floating">Username</ion-label>
-        <ion-input placeholder="Username"
-        formControlName="username"
-        ></ion-input>
-        <ion-icon slot="start" name="person-outline"></ion-icon>
-      </ion-item>
-      <ion-item *ngIf="username()?.touched && username()?.invalid" class="error_messages">
-        <ion-text *ngIf="username()?.errors?.['required']" color="danger">Username is Required</ion-text>
-        <ion-text *ngIf="username()?.errors?.['minlength']" color="danger">Minmum length for username is 6 character</ion-text>
-        <ion-text *ngIf="username()?.errors?.['maxlength']" color="danger">Maximum length for username is 10 character</ion-text>
-      </ion-item>
-      <ion-item>
-        <ion-label position="floating">Password</ion-label>
-        <ion-input placeholder="password"
-          formControlName="password"
-          type="password"
-            ></ion-input>
+  <div *ngIf="error" class="errors_danger">{{error | titlecase }}</div>
+  {{memberForm.value | json}}
+  <div class="navigation">
+    <ul class="nav nav-pills">
+            <li class="nav-item" [class.active]="viewMode == 'member'" (click)="send('member')">
+                Member Login
+            </li>
+            <li class="nav-item" [class.active]="viewMode == 'otp'" (click)="viewMode = 'otp'">OTP Login</li>
+        </ul>
+    </div>
+    <div class="content_container" [ngSwitch]="viewMode">
+        <div class="first_box" *ngSwitchCase="'member'">
+          <form [formGroup]="memberForm" (ngSubmit)="login()">
 
-            <ion-icon slot="start" name="lock-closed-outline"></ion-icon>
-      </ion-item>
-      <ion-item *ngIf="password()?.touched && password()?.invalid" class="error_messages">
-        <ion-text *ngIf="password()?.errors?.['required']" color="danger">Password is Required</ion-text>
-        <ion-text *ngIf="password()?.errors?.['minlength']" color="danger">Minmum length for password is 6 character</ion-text>
-        <ion-text *ngIf="password()?.errors?.['maxlength']" color="danger">Maximum length for password is 20 character</ion-text>
-      </ion-item>
-      <div class="ion-padding">
-        <div class="show_password" *ngIf="show_password">{{memberForm.get('password')?.value}}</div>
-        <ion-checkbox labelPlacement="end" (click)="show_password = !show_password">Show Password</ion-checkbox>
-      </div>
-      <ion-button size="small" [disabled]="this.memberForm.status == 'INVALID'" type="submit">Save</ion-button>
-    </ion-list>
+            <ion-list>
+              <ion-item>
+                <ion-label position="floating">Username</ion-label>
+                <ion-input placeholder="Username"
+                formControlName="username"
+                maxlength="6"
+                ></ion-input>
+                <ion-icon slot="start" name="person-outline"></ion-icon>
+              </ion-item>
+              <ion-item *ngIf="username()?.touched && username()?.invalid" class="error_messages">
+                <ion-text *ngIf="username()?.errors?.['required']" color="danger">Username is Required</ion-text>
+                <ion-text *ngIf="username()?.errors?.['minlength']" color="danger">Minmum length for username is 6 character</ion-text>
+                <ion-text *ngIf="username()?.errors?.['maxlength']" color="danger">Maximum length for username is 10 character</ion-text>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">Password</ion-label>
+                <ion-input placeholder="password"
+                  formControlName="password"
+                  type="password"
+                    ></ion-input>
+
+                    <ion-icon slot="start" name="lock-closed-outline"></ion-icon>
+              </ion-item>
+              <ion-item *ngIf="password()?.touched && password()?.invalid" class="error_messages">
+                <ion-text *ngIf="password()?.errors?.['required']" color="danger">Password is Required</ion-text>
+                <ion-text *ngIf="password()?.errors?.['minlength']" color="danger">Minmum length for password is 6 character</ion-text>
+                <ion-text *ngIf="password()?.errors?.['maxlength']" color="danger">Maximum length for password is 20 character</ion-text>
+              </ion-item>
+              <div class="ion-padding">
+                <div class="show_password" *ngIf="show_password">{{memberForm.get('password')?.value}}</div>
+                <ion-checkbox labelPlacement="end" (click)="show_password = !show_password">Show Password</ion-checkbox>
+              </div>
+              <ion-button size="small" [disabled]="this.memberForm.status == 'INVALID'" type="submit">Save</ion-button>
+            </ion-list>
+
+            {{memberForm.value | json}}
+          </form>
+
+
+        </div>
+        <div  *ngSwitchCase="'otp'">
+          <form [formGroup]="memberFormOtp" (ngSubmit)="loginOTP()">
+
+            <ion-list>
+              <ion-item>
+                <ion-label position="floating"></ion-label>
+                <ion-input
+                type="number"
+                formControlName="mobile"
+                ></ion-input>
+                <ion-icon slot="start" name="call-outline"></ion-icon>
+              </ion-item>
+              <div *ngIf="memberFormOtp.get('mobile')?.touched && memberFormOtp.get('mobile')?.invalid">
+                <ion-text *ngIf="memberFormOtp.get('mobile')?.errors?.['required']" color="danger">Mobile is Required</ion-text>
+                <ion-text *ngIf="memberFormOtp.get('mobile')?.errors?.['pattern']" color="danger"> Enter your correct 10-digit mobile number.</ion-text>
+              </div>
+              <ion-button size="small" [disabled]="this.memberFormOtp.status == 'INVALID'" type="submit">Get OTP</ion-button>
+              <!-- <ion-button size="small" type="submit">Save</ion-button> -->
+            </ion-list>
+
+          </form>
+
+
+        </div>
+        <div  *ngSwitchDefault>Coming Soon</div>
+    </div>
 
 
 
-
-
-    {{memberForm.value | json}}
-  </form>
 
   <a [routerLink]="['/tabs/tabs/dashboard']">sdfs dfsd f</a>
 

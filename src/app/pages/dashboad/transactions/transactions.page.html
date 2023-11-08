@@ -17,7 +17,18 @@
       <ion-menu-button autoHide="false"></ion-menu-button>
     </ion-buttons> -->
     <ion-title>{{acc_detail?.type}} Transactions</ion-title>
-  </ion-toolbar>
+
+   </ion-toolbar>
+   {{acc_detail | json}}
+   <ion-list *ngIf="acc_detail?.type ==='Deposit Loan' || acc_detail?.type ==='FD' || acc_detail?.type ==='Saving' || acc_detail?.type === 'Personal Loan' || acc_detail?.type === 'Property Loan' || acc_detail?.type === 'Gold Loan'">
+    <ion-item>
+      Balance:
+      <span *ngIf="balance">
+        {{balance | currency:'INR'}}
+      </span>
+      <ion-button *ngIf="!balance" (click)="check_balanece(acc_detail)">Check</ion-button>
+    </ion-item>
+  </ion-list>
 </ion-header>
 
 
@@ -27,6 +38,7 @@
   </ion-refresher>
 
     <div *ngIf="all_transactions.data" class="ion-padding">
+
 
       <div *ngFor="let trns of all_transactions.data" class="trns_list" [ngClass]="trns.transaction_type == 'debit'? 'red' : 'green'"   >
           <div>

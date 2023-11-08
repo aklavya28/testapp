@@ -32,7 +32,7 @@
      formControlName="s_account"
      >
     </ion-input>
-    <span *ngIf=" s_account()?.valid && s_account()?.value.length > 0">
+    <span *ngIf=" s_account()?.valid ">
       <ion-button  color="success" (click)="verify_accont()">Check</ion-button>
     </span>
   </ion-item>
@@ -47,10 +47,31 @@
       <div> Name: {{reciver_detail.name}}</div>
       <div> Mobile: {{reciver_detail.mobile}}</div>
   </div>
+  <ion-item *ngIf="bank_input">
+
+    <ion-select label="Choose Associative Bank"
+    formControlName="bank"
+    >
+    <div *ngFor="let item of banks">
+
+      <ion-select-option   value="{{item.id }}">Name: {{item.name}} <br> AC: {{item.account_number}} </ion-select-option>
+    </div>
+
+    </ion-select>
+  </ion-item>
+  {{bank()?.valid| json}}
+  <div *ngIf="bank()?.touched && bank()?.invalid">
+    <ion-text *ngIf="bank()?.errors?.['required']" color="danger">Bank is required</ion-text>
+
+  </div>
+
+
+
   <ion-item >
     <ion-input label="Enter Amount"
     type="number"
      formControlName="amount"
+     onKeyPress="if(this.value.length==7) return false;"
      >
   </ion-input>
 </ion-item>
