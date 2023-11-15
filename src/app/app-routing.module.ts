@@ -21,14 +21,13 @@ const routes: Routes = [
     canActivate:[AuthGuard]
   },
   {
-    path: 'rxjs',
-    loadChildren: () => import('./pages/rxjs/rxjs.module').then( m => m.RxjsPageModule),
-    canActivate:[AuthGuard]
-  },
-  {
     path: 'transactions/:account_id/:type',
     loadChildren: () =>import('./pages/dashboad/transactions/transactions.module').then( m => m.TransactionsPageModule ),
     canActivate:[AuthGuard]
+  },
+  {
+    path: 'test',
+    loadChildren: () => import('./pages/test/test.module').then( m => m.TestPageModule)
   }
 
 

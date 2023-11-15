@@ -13,10 +13,29 @@
     background-color: #fff;
     border-radius: 5px;
     box-shadow: 0 7px 13px #cdcdcd;
+    color: #000;
+    font-size: 14px;
+    position: relative;
+    overflow: hidden;
+    &::after{
+        content: "";
+        width: 69px;
+        height: 276px;
+        position: absolute;
+        right: -50px;
+        z-index: 1;
+        transform: rotate(45deg);
+        background: radial-gradient(#00bcd405, #03a9f44d);
+    }
+    & > *{
+        position: relative;
+        z-index: 9;
+    }
 
 }
 
 .trns_list>div:first-child {font-size: 14px; font-weight: normal;
+
     fa-icon{
         color: gray;
     }
@@ -32,9 +51,36 @@
             left: 0;
         }
     }
+
 }
 .trns_list>div:last-child {font-size: 14px; font-weight: bold;}
 
 
 .red>div:last-child{ color: red;}
 .green>div:last-child{ color: green}
+
+
+.balance {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    background: linear-gradient(45deg, #FF5722, #FF9800) !important;
+    color: #fff;
+}
+
+.balance>spam {flex: 1;}
+
+.balance>.amount {
+    color: #fff;
+    font-size: 19px;
+    font-weight: bold;
+}
+
+ion-toolbar {
+    height: 51px;
+}
+.list-md{
+    padding-top:0 !important ;
+    padding-bottom:0 !important ;
+}

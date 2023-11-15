@@ -1,3 +1,24 @@
 .green .toast-wrapper.toast-bottom{
     background:  green;
 }
+.form_desgn {
+    padding: 0 19px;
+}
+
+.form_desgn .fields {
+    background: #fff;
+    border-radius: 7px;
+    box-shadow: 0 4px 17px rgb(0 0 0 / 31%);
+    overflow: hidden;
+}
+
+.form_desgn .fields ion-text {
+    color: #ff1100;
+    padding: 10px !important;
+    font-size: 14px;
+    line-height: 34px;
+}
+div ion-text {
+    display: block;
+    line-height: 10px !important;
+}

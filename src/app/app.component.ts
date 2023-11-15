@@ -1,13 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, DoCheck, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-
+import { Platform } from '@ionic/angular';
+import { StatusBar, Style } from '@capacitor/status-bar';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements DoCheck{
   current_url:string =''
+  current_user:any;
+  top:string='';
+
   public appPages = [
     {
       title: 'Dashboad',
@@ -23,18 +27,23 @@ export class AppComponent implements OnInit{
     },
 
 
-    { title: 'Inbox', url: '/folder/inbox', icon: 'mail' },
-    { title: 'Outbox', url: '/folder/outbox', icon: 'paper-plane' },
-    { title: 'Favorites', url: '/folder/favorites', icon: 'heart' },
-    { title: 'Archived', url: '/folder/archived', icon: 'archive' },
-    { title: 'Trash', url: '/folder/trash', icon: 'trash' },
-    { title: 'Spam', url: '/folder/spam', icon: 'warning' },
+    // { title: 'Inbox', url: '/folder/inbox', icon: 'mail' },
+    // { title: 'Outbox', url: '/folder/outbox', icon: 'paper-plane' },
+    // { title: 'Favorites', url: '/folder/favorites', icon: 'heart' },
+    // { title: 'Archived', url: '/folder/archived', icon: 'archive' },
+    // { title: 'Trash', url: '/folder/trash', icon: 'trash' },
+    // { title: 'Spam', url: '/folder/spam', icon: 'warning' },
 
   ];
 
 
   public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
-  constructor( private router: Router) {
+  constructor(
+    private router: Router,
+    private platform: Platform,
+
+
+    ) {
 
     router.events.subscribe((event) =>{
       // console.log(event)
@@ -51,6 +60,14 @@ export class AppComponent implements OnInit{
   }
   ngOnInit(){
 
+    console.log('statusBarHeight: ', StatusBar.getInfo());
+   if(this.platform.is('android')){
+      this.top = "top: 30px"
+    }
+  }
+  ngDoCheck( ){
+    // console.log("som is good man")
+    this.current_user = localStorage.getItem('current_user')
 
   }
  logout(): boolean{
@@ -61,5 +78,6 @@ export class AppComponent implements OnInit{
     return false
 
   }
+
 
 }

@@ -5,15 +5,30 @@
     </ion-title>
   </ion-toolbar>
 </ion-header>
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" class="opt_main">
   <div *ngIf="error" class="errors_danger">{{error | titlecase }}</div>
 
 
-  <div  >
-      <ng-otp-input  (onInputChange)="onOtpChange($event)"  [config]="{length:6, allowNumbersOnly:true}"></ng-otp-input>
+  <div  class="opt_container">
+      <div>
+        <label for="">Enter OTP</label>
+        <div>
+          <ng-otp-input  (onInputChange)="onOtpChange($event)"  [config]="{length:6, allowNumbersOnly:true}"></ng-otp-input>
+
+        </div>
+        <div>
+          <ion-button size="small" [disabled]="verfy" (click)="check_otp()"><ion-icon name="arrow-forward-outline"></ion-icon> </ion-button>
+        </div>
+      </div>
+      <div class="buttons_opt">
+        <ion-button size="small" color="primary" fill="outline"  [routerLink]="['/']"><ion-icon name="arrow-back-outline"></ion-icon></ion-button>
+        <ion-button size="small" color="dark" fill="outline" [disabled]="resendOtp" (click)="resnd_otp()"> Resend OTP</ion-button>
+
+      </div>
+
+
+
   </div>
-  <ion-button size="small" [disabled]="verfy" (click)="check_otp()"> Verify OTP</ion-button>
-  <ion-button size="small" [disabled]="resendOtp" (click)="resnd_otp()"> Resend OTP</ion-button>
 
 
 </ion-content>

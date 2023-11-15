@@ -8,80 +8,77 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" class="main_bg">
   <div *ngIf="error" class="errors_danger">{{error | titlecase }}</div>
+  <h1 class="main_title">Money Transfer</h1>
+  <form [formGroup]="tranferForm" (ngSubmit)="transferSubmit()" class="forms">
+    <div class="fiels">
+      <ion-item lines="full">
 
-  <form  [formGroup]="tranferForm" (ngSubmit)="transferSubmit()">
-  <ion-item >
+        <ion-select label="Choose Transfer Type" formControlName="type" placeholder="Pay For" label-placement="floating">
+          <ion-select-option value="bank"> Saving To Dev Saving </ion-select-option>
+          <ion-select-option value="other"> Saving To Other Bank </ion-select-option>
 
-    <ion-select label="Choose Transfer Type"
-    formControlName="type"
-    placeholder="Pay For"
-    >
-        <ion-select-option value="bank" > Saving To Dev Saving </ion-select-option>
-        <ion-select-option value="other"> Saving To Other Bank </ion-select-option>
+        </ion-select>
 
-    </ion-select>
+      </ion-item>
 
-  </ion-item>
+      <ion-item *ngIf="saving_input" lines="full">
+        <ion-input label="Enter Dev Saving A/C" type="text" maxlength="6" formControlName="s_account"
+          label-placement="floating">
+        </ion-input>
+        <span *ngIf=" s_account()?.valid ">
+          <ion-button color="success" (click)="verify_accont()">Check</ion-button>
+        </span>
+      </ion-item>
 
-  <ion-item *ngIf="saving_input">
-    <ion-input label="Enter Dev Saving A/C"
-    type="text"
-    maxlength="6"
-     formControlName="s_account"
-     >
-    </ion-input>
-    <span *ngIf=" s_account()?.valid ">
-      <ion-button  color="success" (click)="verify_accont()">Check</ion-button>
-    </span>
-  </ion-item>
+      <div *ngIf="s_account()?.touched && s_account()?.invalid">
+        <ion-text *ngIf="s_account()?.errors?.['required']" color="danger">Account is required</ion-text>
+        <ion-text *ngIf="s_account()?.errors?.['maxlength']" color="danger">The account number should be 6 characters
+          long.</ion-text>
+        <ion-text *ngIf="s_account()?.errors?.['minlength']" color="danger">The account number should be 6 characters
+          long.</ion-text>
+      </div>
 
-  <div *ngIf="s_account()?.touched && s_account()?.invalid">
-    <ion-text *ngIf="s_account()?.errors?.['required']" color="danger">Account is required</ion-text>
-    <ion-text *ngIf="s_account()?.errors?.['maxlength']" color="danger">The account number should be 6 characters long.</ion-text>
-    <ion-text *ngIf="s_account()?.errors?.['minlength']" color="danger">The account number should be 6 characters long.</ion-text>
-  </div>
+      <div *ngIf="reciver_detail" class="reciver_detail">
+        <div> <span>Name</span>  {{reciver_detail.name}}</div>
+        <div> <span>Mobile</span> {{reciver_detail.mobile}}</div>
+      </div>
 
-  <div *ngIf="reciver_detail">
-      <div> Name: {{reciver_detail.name}}</div>
-      <div> Mobile: {{reciver_detail.mobile}}</div>
-  </div>
-  <ion-item *ngIf="bank_input">
+      <ion-item *ngIf="bank_input" lines="full">
 
-    <ion-select label="Choose Associative Bank"
-    formControlName="bank"
-    >
-    <div *ngFor="let item of banks">
+        <ion-select label="Choose Associative Bank" formControlName="bank" label-placement="floating">
+          <div *ngFor="let item of banks">
 
-      <ion-select-option   value="{{item.id }}">Name: {{item.name}} <br> AC: {{item.account_number}} </ion-select-option>
+            <ion-select-option value="{{item.id }}">Name: {{item.name}} <br> AC: {{item.account_number}}
+            </ion-select-option>
+          </div>
+
+        </ion-select>
+      </ion-item>
+
+      <div *ngIf="bank()?.touched && bank()?.invalid">
+        <ion-text *ngIf="bank()?.errors?.['required']" color="danger">Bank is required</ion-text>
+
+      </div>
+
+
+
+      <ion-item lines="full">
+        <ion-input label="Enter Amount" type="number" formControlName="amount" label-placement="floating"
+          onKeyPress="if(this.value.length==7) return false;">
+        </ion-input>
+      </ion-item>
+      <div *ngIf="amount()?.touched && amount()?.invalid">
+        <ion-text *ngIf="amount()?.errors?.['required']" color="danger">Amount is Required</ion-text>
+        <ion-text *ngIf="amount()?.errors?.['min_val']" color="danger">Minimum transfer amount should be greater than {{
+          999 | currency:'INR':'symbol':'.2-2'}}</ion-text>
+        <ion-text *ngIf="amount()?.errors?.['mix_val']" color="danger">Can not pay more then 1000000 </ion-text>
+
+      </div>
     </div>
-
-    </ion-select>
-  </ion-item>
-  {{bank()?.valid| json}}
-  <div *ngIf="bank()?.touched && bank()?.invalid">
-    <ion-text *ngIf="bank()?.errors?.['required']" color="danger">Bank is required</ion-text>
-
-  </div>
-
-
-
-  <ion-item >
-    <ion-input label="Enter Amount"
-    type="number"
-     formControlName="amount"
-     onKeyPress="if(this.value.length==7) return false;"
-     >
-  </ion-input>
-</ion-item>
-<div *ngIf="amount()?.touched && amount()?.invalid">
-  <ion-text *ngIf="amount()?.errors?.['required']" color="danger">Amount is Required</ion-text>
-  <ion-text *ngIf="amount()?.errors?.['min_val']" color="danger">Minimum transfer amount should be greater than {{ 999 | currency:'INR':'symbol':'.2-2'}}</ion-text>
-  <ion-text *ngIf="amount()?.errors?.['mix_val']" color="danger">Can not pay more then 1000000 </ion-text>
-
-</div>
-  <ion-button size="small" [disabled]="this.tranferForm.status == 'INVALID'" type="submit">Transfer</ion-button>
+    <ion-button size="large" expand="block" [disabled]="this.tranferForm.status == 'INVALID'"
+      type="submit">Transfer</ion-button>
   </form>
 
 

@@ -73,14 +73,18 @@ export class AddbankPage implements OnInit {
         message: 'Saving Details...',
       });
       loading.present()
-    this.api.addBankSubmit(json_user.user_id, json_user.token, bank_name, bank_ac_no, ifsc).subscribe((res) =>{
+      this.api.addBank(json_user.user_id, json_user.token, bank_name, bank_ac_no, ifsc).subscribe((res) =>{
+
        console.log(res)
        loading.dismiss()
+        setTimeout(()=>{
+          location.reload()
+        }, 500)
     }, (err) =>{
       this.error = err.error.message ? err.error.message : (err.statusText+ "! Something went wrong");
       loading.dismiss()
     })
-    location.reload()
+
 
   }
   name(){
@@ -92,5 +96,7 @@ export class AddbankPage implements OnInit {
   ifsc(){
     return this.addBankForm.get('ifsc')
   }
-
+  loc_reload(){
+    location.reload()
+  }
 }

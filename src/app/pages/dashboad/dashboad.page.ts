@@ -48,7 +48,7 @@ export class DashboadPage implements OnInit {
 
       this.api_service.postDashDetail(user_id,token).subscribe((t:any)=>{
         this.services = t
-        console.log(t)
+        // console.log(t)
         localStorage.removeItem('client_info');
         this.clientInfo = localStorage.setItem('client_info', JSON.stringify(this.services))
 

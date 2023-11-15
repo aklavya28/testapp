@@ -6,15 +6,42 @@
     <ion-title>Dashboard</ion-title>
   </ion-toolbar>
 </ion-header>
-<ion-content>
+<ion-content [fullscreen]="true" class="main_bg">
 
+
+  <h1 class="main_title">Services</h1>
   <div class="list_of_services">
-      <ion-title>Services</ion-title>
-      <div *ngIf="services">
+      <div *ngIf="services" class="main_icons">
 
-        <div *ngFor="let item of services.data" >
+        <div *ngFor="let item of services.data" class="dash_single">
           <a (click)="sendService(item.id, item.ac_type)">
-            <div> <img src="./../../../assets/icon/loan.png" alt=""></div>
+
+            <div [ngSwitch]="item.ac_type">
+              <div *ngSwitchCase="'Saving'">
+               <img src="./../../../assets/icon/savings.png" alt="">
+              </div>
+              <div *ngSwitchCase="'RD'">
+               <img src="./../../../assets/icon/donation.png" alt="">
+              </div>
+              <div *ngSwitchCase="'FD'">
+               <img src="./../../../assets/icon/deposit.png" alt="">
+              </div>
+              <div *ngSwitchCase="'Personal Loan'">
+               <img src="./../../../assets/icon/loan.png" alt="">
+              </div>
+              <div *ngSwitchCase="'Property Loan'">
+               <img src="./../../../assets/icon/real-estate.png" alt="">
+              </div>
+              <div *ngSwitchCase="'Gold Loan'">
+               <img src="./../../../assets/icon/gold.png" alt="">
+              </div>
+              <div *ngSwitchCase="'Deposit Loan'">
+               <img src="./../../../assets/icon/money.png" alt="">
+              </div>
+
+              <div *ngSwitchDefault></div>
+            </div>
+
             <div>
               <!-- {{item |json}} -->
               <p>{{item.ac_type}}</p>
@@ -27,3 +54,7 @@
   </div>
 
 </ion-content>
+
+
+
+

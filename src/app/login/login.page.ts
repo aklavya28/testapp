@@ -2,9 +2,8 @@ import { LoginService } from './../services/login.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { LoadingController } from '@ionic/angular';
+import { LoadingController, Platform } from '@ionic/angular';
 import { AppComponent } from '../app.component';
-
 
 
 @Component({
@@ -30,7 +29,9 @@ export class LoginPage implements OnInit {
       private service: LoginService,
       private loding: LoadingController,
       private route: Router,
-      private app: AppComponent
+      private app: AppComponent,
+      private platform: Platform,
+      // private statusbar: StatusBar
 
     ) {
     this.memberForm = fb.group({
@@ -40,16 +41,35 @@ export class LoginPage implements OnInit {
 
   }
 
+  ionViewWillLeave() {
+    // console.log('Home page will leave');
+    this.platform.ready().then(() => {
+      this.platform.backButton.subscribeWithPriority(9999, () => {
+        document.addEventListener('backbutton', function (event) {
+          event.preventDefault();
+          event.stopPropagation();
+          // console.log('hello sdfsdfsdfsfsfdsdf');
+        }, false);
+      });
+      // this.statusBar.styleDefault();
+    });
+
+    // console.log("histroy", history.pushState(null,'homepage', '/tabs/tabs/dashboard'))
+  }
   ngOnInit() {
 
-    // if(this.get_current_user('current_user')){
-      // this.route.navigateByUrl('/tabs/tabs/dashboard')
-    //  }
+    if(this.get_current_user('current_user')){
+      this.route.navigateByUrl('/tabs/tabs/dashboard')
+     }
 
 
-   this.memberForm.get('username')?.setValue("M03229")
+   this.memberForm.get('username')?.setValue("M10466")
+  //  this.memberForm.get('username')?.setValue("M03229")
+  //  this.memberForm.get('username')?.setValue("M00478")
   //  this.memberForm.get('username')?.setValue("M08352")
    this.memberForm.get('password')?.setValue("123456")
+  //  this.memberForm.get('password')?.setValue("Sunil@3546")
+  //  this.memberForm.get('password')?.setValue("545A1E")
   // otp
     this.memberFormOtp = this.fb.group({
         mobile: this.fb.control('', [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")])
@@ -82,7 +102,10 @@ export class LoginPage implements OnInit {
         this.error = '';
         this.route.navigateByUrl('/tabs/tabs/dashboard')
       }
-
+      // history.pushState(null, '', 'pagename');
+      //     window.addEventListener('popstate', function (event) {
+      //         history.pushState(null, '/tabs/tabs/dashboard', 'pagename');
+      // });
     }, (err) =>{
 
       loading.dismiss()

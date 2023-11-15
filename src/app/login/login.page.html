@@ -1,100 +1,154 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Login
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
-<ion-content [fullscreen]="true">
-
-  <div *ngIf="error" class="errors_danger">{{error | titlecase }}</div>
-  {{memberForm.value | json}}
-  <div class="navigation">
-    <ul class="nav nav-pills">
-            <li class="nav-item" [class.active]="viewMode == 'member'" (click)="send('member')">
-                Member Login
-            </li>
-            <li class="nav-item" [class.active]="viewMode == 'otp'" (click)="viewMode = 'otp'">OTP Login</li>
-        </ul>
+<ion-content [fullscreen]="true" class="main_container">
+  <div class="wrapper">
+    <div class="brand">
+      <img src="../../assets/dev_logo.png" alt="Dev Rising">
     </div>
-    <div class="content_container" [ngSwitch]="viewMode">
-        <div class="first_box" *ngSwitchCase="'member'">
-          <form [formGroup]="memberForm" (ngSubmit)="login()">
+    <div class="navigation">
+      <ul class="navigation_login">
+        <li
+          class="nav-item"
+          [class.active]="viewMode == 'member'"
+          (click)="send('member')"
+        >
+          Member Login
+        </li>
+        <li
+          class="nav-item"
+          [class.active]="viewMode == 'otp'"
+          (click)="viewMode = 'otp'"
+        >
+          OTP Login
+        </li>
+      </ul>
+    </div>
+    <div *ngIf="error" class="errors_danger">{{error | titlecase }}</div>
 
-            <ion-list>
-              <ion-item>
+
+    <div class="content_container" [ngSwitch]="viewMode">
+      <div class="first_box" *ngSwitchCase="'member'">
+        <form class="forms"  [formGroup]="memberForm" (ngSubmit)="login()">
+          <div class="fields">
+            <ion-list  no-lines>
+              <ion-item lines="full">
                 <ion-label position="floating">Username</ion-label>
-                <ion-input placeholder="Username"
-                formControlName="username"
-                maxlength="6"
+                <ion-input
+                  placeholder="Username"
+                  formControlName="username"
+                  maxlength="6"
                 ></ion-input>
                 <ion-icon slot="start" name="person-outline"></ion-icon>
               </ion-item>
-              <ion-item *ngIf="username()?.touched && username()?.invalid" class="error_messages">
-                <ion-text *ngIf="username()?.errors?.['required']" color="danger">Username is Required</ion-text>
-                <ion-text *ngIf="username()?.errors?.['minlength']" color="danger">Minmum length for username is 6 character</ion-text>
-                <ion-text *ngIf="username()?.errors?.['maxlength']" color="danger">Maximum length for username is 10 character</ion-text>
+              <ion-item lines="none"
+                *ngIf="username()?.touched && username()?.invalid"
+                class="error_messages ion_list"
+              >
+                <ion-text *ngIf="username()?.errors?.['required']" color="danger"
+                  >Username is Required</ion-text
+                >
+                <ion-text *ngIf="username()?.errors?.['minlength']" color="danger"
+                  >Minmum length for username is 6 character</ion-text
+                >
+                <ion-text *ngIf="username()?.errors?.['maxlength']" color="danger"
+                  >Maximum length for username is 10 character</ion-text
+                >
               </ion-item>
-              <ion-item>
+              <ion-item lines="full">
                 <ion-label position="floating">Password</ion-label>
-                <ion-input placeholder="password"
+                <ion-input
+
                   formControlName="password"
                   type="password"
-                    ></ion-input>
+                ></ion-input>
 
-                    <ion-icon slot="start" name="lock-closed-outline"></ion-icon>
+                <ion-icon slot="start" name="lock-closed-outline"></ion-icon>
               </ion-item>
-              <ion-item *ngIf="password()?.touched && password()?.invalid" class="error_messages">
-                <ion-text *ngIf="password()?.errors?.['required']" color="danger">Password is Required</ion-text>
-                <ion-text *ngIf="password()?.errors?.['minlength']" color="danger">Minmum length for password is 6 character</ion-text>
-                <ion-text *ngIf="password()?.errors?.['maxlength']" color="danger">Maximum length for password is 20 character</ion-text>
+              <ion-item lines="none"
+                *ngIf="password()?.touched && password()?.invalid"
+                class="error_messages ion_list"
+              >
+                <ion-text *ngIf="password()?.errors?.['required']" color="danger"
+                  >Password is Required</ion-text
+                >
+                <ion-text *ngIf="password()?.errors?.['minlength']" color="danger"
+                  >Minmum length for password is 6 character</ion-text
+                >
+                <ion-text *ngIf="password()?.errors?.['maxlength']" color="danger"
+                  >Maximum length for password is 20 character</ion-text
+                >
               </ion-item>
               <div class="ion-padding">
-                <div class="show_password" *ngIf="show_password">{{memberForm.get('password')?.value}}</div>
-                <ion-checkbox labelPlacement="end" (click)="show_password = !show_password">Show Password</ion-checkbox>
+                <div class="show_password" *ngIf="show_password">
+                  {{memberForm.get('password')?.value}}
+                </div>
+                <ion-checkbox
+                  labelPlacement="end"
+                  (click)="show_password = !show_password"
+                  >Show Password</ion-checkbox
+                >
               </div>
-              <ion-button size="small" [disabled]="this.memberForm.status == 'INVALID'" type="submit">Save</ion-button>
+
             </ion-list>
+          </div>
 
-            {{memberForm.value | json}}
-          </form>
-
-
-        </div>
-        <div  *ngSwitchCase="'otp'">
-          <form [formGroup]="memberFormOtp" (ngSubmit)="loginOTP()">
-
+          <div>
+            <ion-button
+              size="large"
+              [disabled]="this.memberForm.status == 'INVALID'"
+              type="submit"
+              expand="block"
+              >Login</ion-button
+            >
+          </div>
+        </form>
+      </div>
+      <div class="forms" *ngSwitchCase="'otp'">
+        <form [formGroup]="memberFormOtp" (ngSubmit)="loginOTP()">
+          <div class="fields">
             <ion-list>
-              <ion-item>
-                <ion-label position="floating"></ion-label>
-                <ion-input
-                type="number"
-                formControlName="mobile"
-                ></ion-input>
+              <ion-item lines="none">
+                <ion-label position="floating">Registered Mobile Number</ion-label>
                 <ion-icon slot="start" name="call-outline"></ion-icon>
+                <ion-input type="number" formControlName="mobile"   onKeyPress="if(this.value.length==10) return false;"></ion-input>
               </ion-item>
-              <div *ngIf="memberFormOtp.get('mobile')?.touched && memberFormOtp.get('mobile')?.invalid">
-                <ion-text *ngIf="memberFormOtp.get('mobile')?.errors?.['required']" color="danger">Mobile is Required</ion-text>
-                <ion-text *ngIf="memberFormOtp.get('mobile')?.errors?.['pattern']" color="danger"> Enter your correct 10-digit mobile number.</ion-text>
-              </div>
-              <ion-button size="small" [disabled]="this.memberFormOtp.status == 'INVALID'" type="submit">Get OTP</ion-button>
-              <!-- <ion-button size="small" type="submit">Save</ion-button> -->
+              <ion-item lines="none"
+                *ngIf="memberFormOtp.get('mobile')?.touched && memberFormOtp.get('mobile')?.invalid"
+                class="error_messages ion_list"
+              >
+                <ion-text
+                  *ngIf="memberFormOtp.get('mobile')?.errors?.['required']"
+                  color="danger"
+                  >Mobile is Required</ion-text
+                >
+                <ion-text
+                  *ngIf="memberFormOtp.get('mobile')?.errors?.['pattern']"
+                  color="danger"
+                >
+                  Enter your correct 10-digit mobile number.</ion-text
+                >
+              </ion-item>
+
+
             </ion-list>
 
-          </form>
+          </div>
+          <div>
+            <ion-button
+              size="large"
+              [disabled]="this.memberFormOtp.status == 'INVALID'"
+              type="submit"
+              expand="block"
+              class="big_btns"
 
 
-        </div>
-        <div  *ngSwitchDefault>Coming Soon</div>
+              >Get OTP
+
+              </ion-button>
+          </div>
+        </form>
+      </div>
+      <div *ngSwitchDefault>Coming Soon</div>
     </div>
+  </div>
 
-
-
-
-  <a [routerLink]="['/tabs/tabs/dashboard']">sdfs dfsd f</a>
-
-<div *ngIf="current_user">
-    {{current_user | json}}
-</div>
 
 </ion-content>

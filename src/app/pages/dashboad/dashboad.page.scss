@@ -1,0 +1,53 @@
+
+.main_icons {
+  padding: 0 15px 10px;
+  display: flex;
+  flex-flow: column;
+}
+
+.main_icons> .dash_single {
+    margin-bottom: 17px;
+    border-radius: 10px;
+    box-shadow: 0 3px 10px rgb(26 0 0 / 29%);
+    background: white;
+ }
+
+.dash_single>a {
+    padding: 10px;
+    display: flex;
+    gap: 18px;
+    align-items: center;
+}
+
+.dash_single>a p {
+    margin: 0 0 7px;
+    color: #000;
+    font-size: 14px;
+}
+
+.dash_single>a p:first-child {
+    font-weight: bold;
+    color: #FF9800;
+    font-size: 15px;
+}
+.dash_single a {
+    position: relative;
+    overflow: hidden;
+
+}
+
+.dash_single a:after {
+    content: "";
+    width: 128px;
+    height: 95px;
+    background: rgb(0 188 212 / 12%);
+    position: absolute;
+    transform: rotate(56deg);
+    left: -39px;
+    border-radius: 15px;
+}
+
+.dash_single a div {
+    position: relative;
+    z-index: 99;
+}

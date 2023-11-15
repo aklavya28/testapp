@@ -6,69 +6,87 @@
     <ion-title>Add Personal Bank</ion-title>
   </ion-toolbar>
 </ion-header>
-<ion-content>
-  <div  *ngIf="personBank" class="bank">
-      <div *ngFor="let bank of personBank">
-          <p>Bank {{bank.name}}</p>
-          <p>ac no. {{bank.account_number}}</p>
-          <p>ifsc. {{bank.ifsc}}</p>
+<ion-content class="main_bg">
+  <div *ngIf="personBank" class="bank">
+    <div *ngIf="error" class="errors_danger">{{error | titlecase }}</div>
+    <h1>Associated Bank List</h1>
+    <div *ngFor="let bank of personBank">
+      <div class="bank_single">
+        <div> <img src="../../../assets/icon/bank.png" alt=""></div>
+        <div>
+          <p>
+            <span>Bank</span>
+            <span>{{bank.name}}</span>
+          </p>
+          <p>
+            <span>Ac No</span>
+            <span>{{bank.account_number}}</span>
+          </p>
+          <p>
+            <span>IFSC</span>
+            <span>{{bank.ifsc}}</span>
+          </p>
+        </div>
       </div>
+    </div>
   </div>
- <ion-button size="small" (click)="get_bank()" *ngIf="isActive == false">Add New Bank</ion-button>
- <div *ngIf="error" class="errors_danger">{{error | titlecase }}</div>
- <form  *ngIf="isActive == true" [formGroup]="addBankForm" (ngSubmit)="addBankSubmit()">
-  <ion-item >
+  <div class="form_area">
+      <div class="add_new_bank_btn">
 
-    <ion-select
-    formControlName="name"
+        <ion-button size="large" expand="block" (click)="get_bank()" *ngIf="isActive == false">Add New Bank</ion-button>
+      </div>
 
-    label="Choose Bank" label-placement="floating" fill="outline"
-    >
-        <ion-select-option *ngFor="let item of banklist.data" value="{{item}}" > {{item}} </ion-select-option>
+    <form *ngIf="isActive == true" [formGroup]="addBankForm" (ngSubmit)="addBankSubmit()">
+      <h1>Add New Bank</h1>
+      <div class="form_fields">
+        <ion-item lines="full">
+          <ion-select formControlName="name" label="Choose Bank" label-placement="floating" >
+            <ion-select-option *ngFor="let item of banklist.data" value="{{item}}"> {{item}} </ion-select-option>
+          </ion-select>
 
-    </ion-select>
-    <br>
+        </ion-item>
+        <div *ngIf="name()?.touched && name()?.invalid">
+          <ion-text *ngIf="name()?.errors?.['required']" color="danger">Bank is Required</ion-text>
+        </div>
+        <ion-item lines="full">
+          <ion-input
+          label="Bank Account Number"
+          type="number" formControlName="ac_no"
+            onKeyPress="if(this.value.length==20) return false;" label-placement="floating" >
+          </ion-input>
+        </ion-item>
 
+        <div *ngIf="ac_no()?.touched && name()?.invalid">
+          <ion-text *ngIf="ac_no()?.errors?.['required']" color="danger">Bank account is Required</ion-text>
+          <ion-text *ngIf="ac_no()?.errors?.['maxlength']" color="danger">Amount is Required</ion-text>
+        </div>
 
-  </ion-item>
-  <div *ngIf="name()?.touched && name()?.invalid">
-    <ion-text *ngIf="name()?.errors?.['required']" color="danger">Bank is Required</ion-text>
+        <ion-item lines="full">
+          <ion-input label="Enter IFSC" type="text" formControlName="ifsc" maxlength="11" label-placement="floating"
+            >
+
+          </ion-input>
+        </ion-item>
+
+        <div *ngIf="ifsc()?.touched && ifsc()?.invalid">
+          <ion-text *ngIf="ifsc()?.errors?.['required']" color="danger">IFSC code is Required</ion-text>
+          <ion-text *ngIf="ifsc()?.errors?.['minlength']" color="danger">Minmume length is
+            {{ifsc()?.errors?.['minlength']['requiredLength']}} charater long</ion-text>
+        </div>
+
+      </div>
+      <div class="btn_area">
+        <div>
+
+          <ion-button size="large" expand="block" color="dark" (click)="loc_reload()">Cancel</ion-button>
+        </div>
+        <div>
+          <ion-button size="large" expand="block"  [disabled]="this.addBankForm.status == 'INVALID'" type="submit">Save Bank</ion-button>
+        </div>
+      </div>
+    </form>
   </div>
-  <ion-item>
-    <ion-input label="Bank Account Number"
-      type="number"
-      formControlName="ac_no"
-      onKeyPress="if(this.value.length==20) return false;"
-      label-placement="floating" fill="outline"
-     >
-    </ion-input>
-  </ion-item>
-  {{ac_no()?.errors | json}}
-  <div *ngIf="ac_no()?.touched && name()?.invalid">
-    <ion-text *ngIf="ac_no()?.errors?.['required']" color="danger">Bank account is Required</ion-text>
-    <ion-text *ngIf="ac_no()?.errors?.['maxlength']" color="danger">Amount is Required</ion-text>
-  </div>
-  <br>
-  <ion-item>
-    <ion-input label="Enter IFSC"
-      type="text"
-      formControlName="ifsc"
-      maxlength="11"
-      label-placement="floating" fill="outline"
-     >
 
-    </ion-input>
-  </ion-item>
-  <div *ngIf="ifsc()?.touched && ifsc()?.invalid">
-    <ion-text *ngIf="ifsc()?.errors?.['required']" color="danger">IFSC code is Required</ion-text>
-    <ion-text *ngIf="ifsc()?.errors?.['minlength']" color="danger">Minmume length is  {{ifsc()?.errors?.['minlength']['requiredLength']}} charater long</ion-text>
-  </div>
-  {{ifsc()?.errors | json}}
-  {{addBankForm.value | json}}
-
-
-  <ion-button size="small" [disabled]="this.addBankForm.status == 'INVALID'" type="submit">Save Bank</ion-button>
-  </form>
 
 
 </ion-content>

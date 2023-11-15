@@ -9,25 +9,25 @@
 
 <ion-header>
   <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
+    <ion-back-button></ion-back-button>
+
+    <ion-buttons slot="start" class="back_btn" (click)="back_btn()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+
     </ion-buttons>
-    <!-- <ion-buttons slot="start">
-      <ion-nav [root]=""></ion-nav>
-      <ion-menu-button autoHide="false"></ion-menu-button>
-    </ion-buttons> -->
     <ion-title>{{acc_detail?.type}} Transactions</ion-title>
 
    </ion-toolbar>
-   {{acc_detail | json}}
+
    <ion-list *ngIf="acc_detail?.type ==='Deposit Loan' || acc_detail?.type ==='FD' || acc_detail?.type ==='Saving' || acc_detail?.type === 'Personal Loan' || acc_detail?.type === 'Property Loan' || acc_detail?.type === 'Gold Loan'">
-    <ion-item>
-      Balance:
-      <span *ngIf="balance">
+    <div class="balance">
+        Balance:
+      <span *ngIf="balance" class="amount">
+
         {{balance | currency:'INR'}}
       </span>
-      <ion-button *ngIf="!balance" (click)="check_balanece(acc_detail)">Check</ion-button>
-    </ion-item>
+      <ion-button *ngIf="!balance"  (click)="check_balanece(acc_detail)">Check</ion-button>
+    </div>
   </ion-list>
 </ion-header>
 

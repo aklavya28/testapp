@@ -82,7 +82,12 @@ export class TransactionsPage implements OnInit {
     this.service.check_balance(user_id, token, ac_type, ac_id).subscribe((res) =>{
       console.log(res)
       loading.dismiss()
-      this.balance = res
+      if(res === 0){
+        this.balance = "0.0"
+
+      }else{
+        this.balance = res
+      }
     }, (err) =>{
       loading.dismiss()
       console.log(err)
@@ -95,5 +100,8 @@ export class TransactionsPage implements OnInit {
     let c_user:any = localStorage.getItem(local_s_type);
           let json_user = JSON.parse(c_user)
           return json_user
+  }
+  back_btn(){
+    this.router.navigateByUrl('/tabs/tabs/dashboard');
   }
 }

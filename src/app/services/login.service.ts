@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -9,12 +10,17 @@ export class LoginService {
 
 //   private mainurl:string = 'http://localhost:3000/api/'
   private mainurl:string = 'https://app.devrising.in/api/'
+
   url:string = 'http://localhost:3000/api/hrms/';
 
 
  private loginUrl:string = 'http://localhost:3000/api/sign-in';
 
-    constructor(private router: Router, private http: HttpClient) {
+    constructor(
+      private router: Router,
+      private http: HttpClient
+
+      ) {
 
    }
    getusers(addparms:string){
@@ -90,7 +96,7 @@ export class LoginService {
        ){
       return  this.http.get<any>(this.mainurl+"app-c-user-bank-status?token="+token+"&user_id="+userid)
    }
-   addBankSubmit(
+   addBank(
       userid:string,
       token:string,
       bank_name: string,

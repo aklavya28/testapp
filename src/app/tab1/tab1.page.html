@@ -6,30 +6,40 @@
     <ion-title>Pay</ion-title>
   </ion-toolbar>
 </ion-header>
-<ion-content>
+<ion-content class="main_bg" >
 
 
-  <div *ngIf="error" class="errors_danger">{{error | titlecase }}</div>
-  <form  [formGroup]="payForm" (ngSubmit)="paySubmit()">
-  <ion-item *ngIf="clientInfo.data">
+  <div style="margin: 10px 15px 0;" *ngIf="error" class="errors_danger">{{error | titlecase }}</div>
 
-    <ion-select label="Choose payable service"
+  <h1 class="main_title">Pay installments and emi</h1>
+
+  <form  [formGroup]="payForm" (ngSubmit)="paySubmit()" class="form_desgn">
+    <div class="fields">
+
+      <ion-item lines="full"
+  *ngIf="clientInfo.data">
+
+    <ion-select
+    label-placement="floating"
+
+    label="Choose payable service"
     formControlName="service"
     placeholder="Pay For"
     >
       <div *ngFor="let item of clientInfo.data">
-
         <ion-select-option  *ngIf="item.ac_type !== 'Saving' && item.ac_type !== 'FD'"  value="{{item.id +','+ item.ac_type}}">{{item.ac_type}} </ion-select-option>
       </div>
 
     </ion-select>
 
   </ion-item>
-  <div *ngIf="service()?.touched && service()?.invalid">
-    <ion-text *ngIf="service()?.errors?.['required']" color="danger">Username is Required</ion-text>
-  </div>
-  <ion-item>
-    <ion-input label="Enter Amount"
+    <div *ngIf="service()?.touched && service()?.invalid">
+      <ion-text *ngIf="service()?.errors?.['required']" color="danger">Field is Required</ion-text>
+    </div>
+  <ion-item lines="full">
+    <ion-input
+    labelPlacement="floating"
+      label="Enter Amount"
       type="number"
       onKeyPress="if(this.value.length==7) return false;"
       formControlName="amount"
@@ -44,10 +54,12 @@
     <ion-text *ngIf="amount()?.errors?.['mix_val']" color="danger">Can not pay more then 1000000 </ion-text>
 
   </div>
-  <ion-button size="small" [disabled]="this.payForm.status == 'INVALID'" type="submit">Pay Now</ion-button>
+    </div>
+  <br>
+  <ion-button size="large" expand="block" class="btn_color" [disabled]="this.payForm.status == 'INVALID'" type="submit">Pay Now</ion-button>
 
   </form>
-  {{payForm.value | json}}
+
 
 
 </ion-content>
