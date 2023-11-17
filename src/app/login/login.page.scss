@@ -82,3 +82,14 @@ ion-item.error_messages.ion_list > .item-inner {
     border-color: transparent !important;
 }
 
+.bio {
+    position: absolute;
+    bottom: 10%;
+    left: 50%;
+}
+
+.bio>img {
+    width: 72px;
+    position: relative;
+    left: -36px;
+}

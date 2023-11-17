@@ -32,6 +32,11 @@ export class LoginService {
       // return this.http.post<any>(this.loginUrl, {username: username, password:pass, type:type });
       return this.http.post<any>(this.mainurl+'sign-in', {username: username, password:pass, type:type });
    }
+   bioLogin(user_id:string, token:string){
+
+      // return this.http.post<any>(this.loginUrl, {username: username, password:pass, type:type });
+      return this.http.post<any>(this.mainurl+'app-bio', {user_id, token });
+   }
    postDashDetail(userid:string, token:string){
       return  this.http.get<any>(this.mainurl+"app-dashboard?token="+token+"&user_id="+userid)
    }
