@@ -87,6 +87,7 @@ export class AddbankPage implements OnInit {
 
 
   }
+
   name(){
     return this.addBankForm.get('name')
   }

@@ -2,6 +2,10 @@ import { Component, DoCheck, OnChanges, OnInit, SimpleChanges } from '@angular/c
 import { NavigationEnd, Router } from '@angular/router';
 import { Platform } from '@ionic/angular';
 import { StatusBar, Style } from '@capacitor/status-bar';
+import { App } from '@capacitor/app';
+
+
+
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -10,6 +14,7 @@ import { StatusBar, Style } from '@capacitor/status-bar';
 export class AppComponent implements DoCheck{
   current_url:string =''
   current_user:any;
+  fingerprint:any;
   top:string='';
 
   public appPages = [
@@ -43,6 +48,8 @@ export class AppComponent implements DoCheck{
     private platform: Platform,
 
 
+    //
+
     ) {
 
     router.events.subscribe((event) =>{
@@ -58,17 +65,36 @@ export class AppComponent implements DoCheck{
     })
 
   }
-  ngOnInit(){
+  ionViewWillLeave() : void {
+   localStorage.removeItem('current_user')
+  }
+  async ngOnInit(){
+    let {isActive} = await App.getState();
 
-    console.log('statusBarHeight: ', StatusBar.getInfo());
+
+
    if(this.platform.is('android')){
-      this.top = "top: 30px"
+      // this.top = "top: 30px"
+      if(isActive){
+        alert("status")
+        // localStorage.removeItem('current_user')
+      }
+      StatusBar.setOverlaysWebView({ overlay: false })
+
+
     }
+
+
+    // console.log(this.fp)
+
+    // alert(JSON.parse(v))
+
+
+
   }
   ngDoCheck( ){
     // console.log("som is good man")
     this.current_user = localStorage.getItem('current_user')
-
   }
  logout(): boolean{
 
@@ -81,3 +107,7 @@ export class AppComponent implements DoCheck{
 
 
 }
+// document.addEventListener('destroy', function () {
+//   // your JS code here!
+//   localStorage.removeItem('current_user')
+// });

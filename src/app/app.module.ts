@@ -1,3 +1,4 @@
+import { FingerprintAIO } from '@awesome-cordova-plugins/fingerprint-aio/ngx';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
@@ -26,7 +27,9 @@ import { fab } from '@fortawesome/free-brands-svg-icons'
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     Platform,
-    AuthGuard
+    AuthGuard,
+    FingerprintAIO,
+
   ],
   bootstrap: [AppComponent],
 })

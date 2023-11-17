@@ -54,8 +54,9 @@ async check_otp(){
         loading.dismiss()
         localStorage.removeItem('current_user');
         localStorage.setItem('current_user', JSON.stringify(res.data))
+        localStorage.setItem('bio', JSON.stringify(res.data));
         this.error = ''
-      this.route.navigateByUrl('/tabs/tabs/dashboard')
+        this.route.navigateByUrl('/tabs/tabs/dashboard')
       }, (err) =>{
         loading.dismiss()
 
