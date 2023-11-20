@@ -37,7 +37,9 @@ export class Tab1Page {
 
     let info:any = localStorage.getItem('client_info')
     this.clientInfo = JSON.parse(info)
+    console.log('clint', this.clientInfo)
     this.payForm.get('service')?.valueChanges.subscribe(async (val)=>{
+      console.log('testing', val)
       this.payForm.get('amount')?.enable()
       this.payForm.patchValue({ amount: 0});
       let rd_id =  val.split(',')[0]

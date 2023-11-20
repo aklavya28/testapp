@@ -41,6 +41,18 @@ const routes: Routes = [
         canActivate:[AuthGuard]
         // loadChildren: () => import('./pages/addbank/addbank.module').then( m => m.AddbankPageModule)
       },
+      {
+        path: 'profile',
+        loadChildren: () => import('../pages/profile/profile.module').then(m => m.ProfilePageModule),
+        canActivate:[AuthGuard]
+        // loadChildren: () => import('./pages/addbank/addbank.module').then( m => m.AddbankPageModule)
+      },
+      {
+        path: 't-history',
+        loadChildren: () => import('../pages/transfer-history/transfer-history.module').then(m => m.TransferHistoryPageModule),
+        canActivate:[AuthGuard]
+        // loadChildren: () => import('./pages/addbank/addbank.module').then( m => m.AddbankPageModule)
+      },
 
       {
         path: '',

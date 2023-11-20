@@ -8,8 +8,8 @@ import { Router } from '@angular/router';
 export class LoginService {
   // url:string = 'https://app.devrising.in/api/hrms/'
 
-//   private mainurl:string = 'http://localhost:3000/api/'
-  private mainurl:string = 'https://app.devrising.in/api/'
+  private mainurl:string = 'http://localhost:3000/api/'
+//   private mainurl:string = 'https://app.devrising.in/api/'
 
   url:string = 'http://localhost:3000/api/hrms/';
 
@@ -166,5 +166,16 @@ export class LoginService {
 
          });
    }
-
+   get_user_profile(
+      token:string,
+      userid:string
+       ){
+      return  this.http.get<any>(this.mainurl+"app-get-profile?token="+token+"&user_id="+userid)
+   }
+   transfer_history(
+      userid:string,
+      token:string
+       ){
+      return  this.http.get<any>(this.mainurl+"app-transfer-history?token="+token+"&user_id="+userid)
+   }
 }

@@ -1,0 +1,43 @@
+.history {
+    margin: 36px 20px 0;
+}
+
+.history>.inner {
+    background: white;
+    margin-bottom: 31px;
+    padding: 15px 15px 8px;
+    border-radius: 6px;
+    position: relative;
+    margin-left: 45px;
+    position: relative;
+    box-shadow: 0 11px 13px #9191911c;
+}
+
+.history>.inner ion-icon {
+    position: absolute;
+    left: -40px;
+    font-size: 31px;
+    color: #628737;
+    top: calc(50% - 19px);
+}
+
+.history>.inner p {
+    position: absolute;
+    top: -17px;
+    font-weight: bold;
+    font-size: 12px;
+    padding: 0;
+    margin: 0;
+}
+
+.history>.inner h4 {
+    margin: 0;
+    font-size: 16px;
+}
+
+.history>.inner>div:last-child {
+    font-size: 20px;
+    padding: 4px 0 0;
+    font-weight: bold;
+    color: #ff671a;
+}

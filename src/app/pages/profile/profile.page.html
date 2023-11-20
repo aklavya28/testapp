@@ -1,0 +1,55 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="false"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Profile</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content [fullscreen]="true" class="main_bg">
+  <div *ngIf="error" class="errors_danger">{{error | titlecase }}</div>
+  <div *ngIf="userdata" class="meber">
+      <div class="profile_img">
+        <div *ngIf="userdata.profile_img.document.url"><img src="{{userdata.profile_img.document.url}}
+          " alt="profile">
+        </div>
+          <h3>{{userdata.member.first_name}} {{userdata.member.last_name}}</h3>
+      </div>
+      <h2>Profile Details</h2>
+      <div class="details">
+
+          <div>
+              <div>Gender</div>
+              <div>{{userdata.member.gender}}</div>
+          </div>
+          <div>
+              <div>Mobile</div>
+              <div>{{userdata.member.mobile_no}}</div>
+          </div>
+          <div>
+              <div>DOB</div>
+              <div>{{userdata.member.dob}}</div>
+          </div>
+          <div>
+            <div>Aadhar</div>
+            <div>{{userdata.member.aadhar_no}}</div>
+        </div>
+        <div>
+            <div>Pan</div>
+            <div>{{userdata.member.pan_no}}</div>
+        </div>
+          <div>
+              <div>Father Name</div>
+              <div>{{userdata.member.father_name}}</div>
+          </div>
+          <div>
+              <div>Nominee Name</div>
+              <div>{{userdata.member.nominee_name}} / {{userdata.member.nominee_relation}}</div>
+          </div>
+
+      </div>
+  </div>
+</ion-content>
+
+
+

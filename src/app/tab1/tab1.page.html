@@ -27,6 +27,7 @@
     placeholder="Pay For"
     >
       <div *ngFor="let item of clientInfo.data">
+        <!-- <ion-item-option>tessdfdsf</ion-item-option> -->
         <ion-select-option  *ngIf="item.ac_type !== 'Saving' && item.ac_type !== 'FD'"  value="{{item.id +','+ item.ac_type}}">{{item.ac_type}} </ion-select-option>
       </div>
 

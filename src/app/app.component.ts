@@ -30,6 +30,18 @@ export class AppComponent implements DoCheck{
       title: 'Add Bank',
       url: "/tabs/tabs/addbank", icon: 'color-filter'
     },
+    {
+      title: 'Transfer',
+      url: "/tabs/tabs/tab3", icon: 'repeat'
+    },
+    {
+      title: 'Profile',
+      url: "/tabs/tabs/profile", icon: 'person-circle'
+    },
+    {
+      title: 'Transfer History',
+      url: "/tabs/tabs/t-history", icon: 'layers'
+    },
 
 
     // { title: 'Inbox', url: '/folder/inbox', icon: 'mail' },
@@ -47,9 +59,6 @@ export class AppComponent implements DoCheck{
     private router: Router,
     private platform: Platform,
 
-
-    //
-
     ) {
 
     router.events.subscribe((event) =>{
@@ -59,37 +68,15 @@ export class AppComponent implements DoCheck{
         // your code will goes here
         this.current_url = event.url;
         localStorage.setItem('current_url', JSON.stringify(this.current_url))
-
       }
 
     })
 
   }
-  ionViewWillLeave() : void {
-   localStorage.removeItem('current_user')
-  }
-  async ngOnInit(){
-    let {isActive} = await App.getState();
-
-
-
+  ngOnInit(){
    if(this.platform.is('android')){
-      // this.top = "top: 30px"
-      if(isActive){
-        alert("status")
-        // localStorage.removeItem('current_user')
-      }
       StatusBar.setOverlaysWebView({ overlay: false })
-
-
     }
-
-
-    // console.log(this.fp)
-
-    // alert(JSON.parse(v))
-
-
 
   }
   ngDoCheck( ){
@@ -104,10 +91,4 @@ export class AppComponent implements DoCheck{
     return false
 
   }
-
-
 }
-// document.addEventListener('destroy', function () {
-//   // your JS code here!
-//   localStorage.removeItem('current_user')
-// });

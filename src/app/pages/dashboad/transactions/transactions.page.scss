@@ -19,13 +19,13 @@
     overflow: hidden;
     &::after{
         content: "";
-        width: 69px;
-        height: 276px;
+        width: 125px;
+        height: 105px;
         position: absolute;
-        right: -50px;
+        right: -44px;
         z-index: 1;
-        transform: rotate(45deg);
-        background: radial-gradient(#00bcd405, #03a9f44d);
+        transform: rotate(-124deg);
+        background: radial-gradient(rgb(205 249 255 / 0%), rgb(229 229 229));
     }
     & > *{
         position: relative;
@@ -67,6 +67,7 @@
     gap: 15px;
     background: linear-gradient(45deg, #FF5722, #FF9800) !important;
     color: #fff;
+    height: 67px;
 }
 
 .balance>spam {flex: 1;}

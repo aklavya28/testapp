@@ -17,7 +17,7 @@ export class DashboadPage implements OnInit {
   id:number = 0;
   ac_type:string = ''
   clientInfo:any = ''
-
+  pendig_data:any;
   // account service info
 
 
@@ -48,9 +48,11 @@ export class DashboadPage implements OnInit {
 
       this.api_service.postDashDetail(user_id,token).subscribe((t:any)=>{
         this.services = t
-        // console.log(t)
+        this.pendig_data = t.req
+        console.log(t.req)
         localStorage.removeItem('client_info');
         this.clientInfo = localStorage.setItem('client_info', JSON.stringify(this.services))
+
 
         loading.dismiss()
       }, (err) =>{

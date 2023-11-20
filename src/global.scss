@@ -30,7 +30,7 @@ ion-toolbar {--background: linear-gradient(45deg, #FF5722, #FF9800) !important;c
 }
 
 .main_bg {
-    --background: linear-gradient(45deg, #262dff0d, #ff930012)
+    --background: linear-gradient(45deg, #232afb21, #ff930024)
 }
 .errors_danger{
     margin: 10px 0 15px;
@@ -68,3 +68,17 @@ h1.main_title {
 }
 .btn_color{ color: #fff !important;}
 ion-button{color: #fff;}
+.nodata {
+    font-size: 23px;
+    text-transform: uppercase;
+    font-weight: bold;
+    text-align: center;
+    height: 180px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: radial-gradient(#fdfdfd, #dbdbdb);
+    margin: 2px 20px;
+    color: #b1b1b1;
+    border-radius: 5px;
+}

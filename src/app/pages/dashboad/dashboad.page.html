@@ -7,7 +7,17 @@
   </ion-toolbar>
 </ion-header>
 <ion-content [fullscreen]="true" class="main_bg">
-
+  <div *ngIf="pendig_data" class="transfer_rew">
+    <h1 class="main_title">Transfer Pending Request</h1>
+    <div class="inner">
+        <div *ngFor="let item of pendig_data">
+          <h3>{{item.bank_detail}}</h3>
+          <div><span>Amount</span> {{item.amount | currency:'INR' }}</div>
+          <div><span>Dated</span> {{item.created_at | date }}</div>
+          <div class="pending"><span>Status</span> {{item.status | uppercase }}</div>
+        </div>
+    </div>
+  </div>
 
   <h1 class="main_title">Services</h1>
   <div class="list_of_services">

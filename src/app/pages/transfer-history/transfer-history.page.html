@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="false"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Transfer History</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="main_bg" >
+  <h1 class="main_title">Transfer Details</h1>
+  <div class="history" *ngIf="t_history">
+
+      <div class="inner" *ngFor="let item of t_history">
+        <ion-icon name="checkmark-done-outline"></ion-icon>
+            <div class="first">
+              <p>{{item.updated_at | date}}</p>
+              <h4>{{item.bank_detail}}</h4>
+            </div>
+            <div>
+              {{item.amount | currency: "INR" }}
+            </div>
+      </div>
+  </div>
+  <div class="nodata" *ngIf="t_history==''">
+    No Data
+  </div>
+
+</ion-content>

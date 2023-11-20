@@ -77,8 +77,8 @@ export class LoginPage implements OnInit {
      this.memberForm.get('username')?.setValue("M03229")
     //  this.memberForm.get('username')?.setValue("M00478")
     //  this.memberForm.get('username')?.setValue("M08352")
-    // this.memberForm.get('password')?.setValue('123456');
-     this.memberForm.get('password')?.setValue("Sunil@3546")
+    this.memberForm.get('password')?.setValue('123456');
+    //  this.memberForm.get('password')?.setValue("Sunil@3546")
     //  this.memberForm.get('password')?.setValue("545A1E")
     // otp
     this.memberFormOtp = this.fb.group({
