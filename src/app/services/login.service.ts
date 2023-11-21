@@ -8,8 +8,9 @@ import { Router } from '@angular/router';
 export class LoginService {
   // url:string = 'https://app.devrising.in/api/hrms/'
 
-//   private mainurl:string = 'http://localhost:3000/api/'
-  private mainurl:string = 'https://app.devrising.in/api/'
+  private mainurl:string = 'http://localhost:3000/api/'
+
+//   private mainurl:string = 'https://app.devrising.in/api/'
 
   url:string = 'http://localhost:3000/api/hrms/';
 
