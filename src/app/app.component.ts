@@ -1,8 +1,9 @@
 import { Component, DoCheck, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { Platform } from '@ionic/angular';
+import { LoadingController, Platform } from '@ionic/angular';
 import { StatusBar, Style } from '@capacitor/status-bar';
-import { App } from '@capacitor/app';
+import { HelperService } from './services/helper.service';
+import { LoginService } from './services/login.service';
 
 
 
@@ -11,11 +12,13 @@ import { App } from '@capacitor/app';
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
 })
-export class AppComponent implements DoCheck{
+export class AppComponent implements OnInit{
   current_url:string =''
   current_user:any;
   fingerprint:any;
   top:string='';
+  profileStatus:boolean=false;
+  profile:any;
 
   public appPages = [
     {
@@ -58,10 +61,12 @@ export class AppComponent implements DoCheck{
   constructor(
     private router: Router,
     private platform: Platform,
+    private helper: HelperService,
+    private api: LoginService,
+    private loding: LoadingController
+      ) {
 
-    ) {
-
-    router.events.subscribe((event) =>{
+    router.events.subscribe((event:any) =>{
       // console.log(event)
       if (event instanceof NavigationEnd ) {
 
@@ -73,22 +78,55 @@ export class AppComponent implements DoCheck{
     })
 
   }
-  ngOnInit(){
-   if(this.platform.is('android')){
-      StatusBar.setOverlaysWebView({ overlay: false })
-    }
+  async open(){
+    let user:any =  this.helper.get_current_user('current_user')
 
+    if(user){
+      const loading = await this.loding.create({
+        message: 'Profile menu is loading ...'
+      });
+      // loading.present()
+      this.api.get_user_profile( user.token,user.user_id).subscribe((res)=>{
+        loading.dismiss()
+          let name:string = `${res.data.member.first_name} ${res.data.member.last_name}`
+          let img = res.data.profile_img.document.url
+          let mobile = res.data.member.mobile_no
+        const profile = {
+          name: name,
+          img: img,
+          mobile:mobile
+        }
+        this.profile = profile
+
+
+        // console.log("from helper", this.get_current_user('profile'))
+      }, (err)=>{
+        loading.dismiss()
+        console.log(err)
+      })
+    }
+  }
+ async ngOnInit(){
+
+    if(this.platform.is('android')){
+          StatusBar.setOverlaysWebView({ overlay: false })
+      }
+      this.helper.getprofile()
   }
   ngDoCheck( ){
-    // console.log("som is good man")
+    // console.log(this.profile, 'son',  this.getprofile())
+
+
     this.current_user = localStorage.getItem('current_user')
   }
  logout(): boolean{
 
     localStorage.removeItem('current_user')
+    localStorage.removeItem('profile')
     this.router.navigateByUrl('/')
      window.location.reload()
     return false
 
   }
+
 }

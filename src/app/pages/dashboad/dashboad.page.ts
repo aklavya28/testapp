@@ -1,8 +1,12 @@
+import { getTestBed } from '@angular/core/testing';
 import {  Router, Routes, NavigationEnd } from '@angular/router';
 import { Component, Input, OnInit } from '@angular/core';
 import { AppComponent } from 'src/app/app.component';
 import { LoginService } from 'src/app/services/login.service';
 import { LoadingController } from '@ionic/angular';
+import { HelperService } from 'src/app/services/helper.service';
+import { map } from 'rxjs/operators';
+
 @Component({
   selector: 'app-dashboad',
   templateUrl: './dashboad.page.html',
@@ -25,6 +29,7 @@ export class DashboadPage implements OnInit {
     private api_service: LoginService,
     private app: AppComponent,
     private loader: LoadingController,
+    private helper: HelperService
 
     ) {
 
@@ -32,10 +37,10 @@ export class DashboadPage implements OnInit {
   }
 
   async ngOnInit() {
-
       let user_id:string = this.json_obj_current_user.user_id;
       let token:string = this.json_obj_current_user.token;
       // local Storage
+
 
 
 
@@ -49,13 +54,13 @@ export class DashboadPage implements OnInit {
       this.api_service.postDashDetail(user_id,token).subscribe((t:any)=>{
         this.services = t
         this.pendig_data = t.req
-        console.log(t.req)
+
         localStorage.removeItem('client_info');
         this.clientInfo = localStorage.setItem('client_info', JSON.stringify(this.services))
 
 
         loading.dismiss()
-      }, (err) =>{
+      }, (err:any) =>{
 
         console.log(err)
         this.router.navigateByUrl('/')
@@ -63,6 +68,8 @@ export class DashboadPage implements OnInit {
         // loading.present()
 
     })
+// sfofosfsodf
+
 
   }
   sendService(id:number, type:string){

@@ -26,13 +26,56 @@
 
         {{balance | currency:'INR'}}
       </span>
-      <ion-button *ngIf="!balance"  (click)="check_balanece(acc_detail)">Check</ion-button>
+      <ion-button color="secondary" size="small" *ngIf="!balance"  (click)="check_balanece(acc_detail)">Check</ion-button>
     </div>
   </ion-list>
 </ion-header>
 
 
 <ion-content [fullscreen]="true" class="trns_body">
+  <div class="testing">
+    <div *ngIf="acc_detail?.type !='FD'" class="ion-padding">
+      <ion-button color="secondary" (click)="setOpen(true)" expand="block">Download Statement</ion-button>
+    </div>
+
+    <ion-modal [isOpen]="isModalOpen">
+      <ng-template>
+        <ion-header>
+          <ion-toolbar>
+            <ion-title>Download Statement</ion-title>
+            <ion-buttons slot="end">
+              <ion-button class="close_btn" (click)="setOpen(false)"><ion-icon name="close"></ion-icon></ion-button>
+            </ion-buttons>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content class="ion-padding">
+          <form  [formGroup]="monthForm" (ngSubmit)="paySubmit()" class="form_desgn">
+            <ion-radio-group value="custom_checked" formControlName="months">
+              <div>
+                <ion-radio value="1" >1 Month</ion-radio>
+              </div>
+              <div>
+                <ion-radio value="3">3 Months</ion-radio>
+              </div>
+              <div>
+                <ion-radio value="6">6 Months</ion-radio>
+              </div>
+            </ion-radio-group>
+          <ion-button size="default" expand="block" color="secondary" class="btn_color" [disabled]="this.monthForm.status == 'INVALID'" type="submit">
+              <ion-icon name="Download"></ion-icon> &nbsp;
+            Download</ion-button>
+
+          </form>
+        </ion-content>
+      </ng-template>
+    </ion-modal>
+
+  </div>
+
+
+
+
+
   <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>

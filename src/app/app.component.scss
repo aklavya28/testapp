@@ -70,7 +70,7 @@ ion-menu ion-content {
   }
 
   ion-menu.ios ion-list {
-    padding: 20px 0 0 0;
+    padding: 0;
   }
 
   ion-menu.ios ion-note {
@@ -123,5 +123,44 @@ ion-menu ion-content {
   }
   .toast-button-group {
     border-left: 1px solid #6f9b3c;
+}
+
+.profile {
+  padding: 20px;
+  display: flex;
+  border-bottom: 1px solid #efd2c6;
+  margin-bottom: 15px;
+  gap: 20px;
+  align-items: center;
+}
+
+.profile h2 {
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.profile>div:first-child {
+  width: 100px;
+  border-radius: 15px;
+  overflow: hidden;
+  border: 5px solid white;
+  box-shadow: 0 0 10px #0000004d;
+}
+
+.profile a {
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 14px;
+}
+.spinner {
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.spinner ion-spinner {
+    width: 99px;
+  height: 81px;
 }
 

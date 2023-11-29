@@ -28,11 +28,11 @@ export class ProfilePage implements OnInit {
     });
     let user =  this.help.get_current_user('current_user');
     loading.present()
-    this.api.get_user_profile(user.token, user.user_id).subscribe((res)=>{
+    this.api.get_user_profile(user.token, user.user_id).subscribe((res:any)=>{
       loading.dismiss()
       this.userdata = res.data
       console.log(res)
-    }, (err)=>{
+    }, (err:any)=>{
       loading.dismiss()
       // this.reciver_detail = null
       this.error = err.error.message ? err.error.message : (err.statusText+ "! Something went wrong");

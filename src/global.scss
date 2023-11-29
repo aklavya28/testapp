@@ -25,9 +25,8 @@
 @import "@ionic/angular/css/text-transformation.css";
 @import "@ionic/angular/css/flex-utils.css";
 
-ion-toolbar {--background: linear-gradient(45deg, #FF5722, #FF9800) !important;color: #fff;
-
-}
+// ion-toolbar {--background: linear-gradient(45deg, #e04e10, #FF9800) !important;color: #fff;}
+ion-toolbar {--background: #e04e10; color: #fff;}
 
 .main_bg {
     --background: linear-gradient(45deg, #232afb21, #ff930024)

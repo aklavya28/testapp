@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {  Router } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
+import { HelperService } from 'src/app/services/helper.service';
 import { LoginService } from 'src/app/services/login.service';
 
 @Component({
@@ -17,7 +18,8 @@ export class OptPage implements OnInit {
   constructor(
     private service: LoginService,
     private route: Router,
-    private loding: LoadingController
+    private loding: LoadingController,
+    private helper: HelperService
   ) { }
 
   ngOnInit() {
@@ -49,15 +51,17 @@ async check_otp(){
 
       });
       loading.present()
-      this.service.verify_otp(this.mobile, this.otp).subscribe((res)=>{
+      this.service.verify_otp(this.mobile, this.otp).subscribe((res:any)=>{
 
         loading.dismiss()
         localStorage.removeItem('current_user');
         localStorage.setItem('current_user', JSON.stringify(res.data))
         localStorage.setItem('bio', JSON.stringify(res.data));
+
+
         this.error = ''
         this.route.navigateByUrl('/tabs/tabs/dashboard')
-      }, (err) =>{
+      }, (err:any) =>{
         loading.dismiss()
 
         this.error = err.error.message ? err.error.message : (err.statusText+ "! Something went wrong");
@@ -67,10 +71,10 @@ async check_otp(){
 }
 resnd_otp(){
 
-  this.service.mobile_login(this.mobile).subscribe((res)=>{
+  this.service.mobile_login(this.mobile).subscribe((res:any)=>{
     console.log("resend otp", res)
     location.reload();
-  }, (err)=>{
+  }, (err:any)=>{
     console.log("resend otp", err)
     this.error = err.error.message ? err.error.message : (err.statusText+ "! Something went wrong");
   })

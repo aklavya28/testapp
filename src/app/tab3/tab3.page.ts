@@ -64,11 +64,11 @@ export class Tab3Page implements OnInit {
           message: 'Searching for associated bank details ...',
         });
         loading.present();
-        this.api.c_user_bank_status(c_user.user_id, c_user.token).subscribe((res) =>{
+        this.api.c_user_bank_status(c_user.user_id, c_user.token).subscribe((res:any) =>{
           loading.dismiss()
           this.banks = res.data
 
-        }, (err) =>{
+        }, (err:any) =>{
           loading.dismiss()
           setTimeout(()=>{
             this.router.navigateByUrl('/tabs/tabs/addbank')
@@ -131,13 +131,13 @@ export class Tab3Page implements OnInit {
     let bank_id = this.tranferForm.get('bank')?.value
     let amount = this.tranferForm.get('amount')?.value
     loading.present()
-    this.api.money_trns_to_other(user_json.user_id, user_json.token, bank_id, amount).subscribe((res) =>{
+    this.api.money_trns_to_other(user_json.user_id, user_json.token, bank_id, amount).subscribe((res:any) =>{
       console.log(res)
       loading.dismiss()
       success.present()
       this.tranferForm.reset()
       this.router.navigateByUrl('/tabs/tabs/dashboard')
-    }, (err) => {
+    }, (err:any) => {
       loading.dismiss()
       this.error = err.error.message ? err.error.message : (err.statusText+ "! Something went wrong");
     })
@@ -167,13 +167,13 @@ export class Tab3Page implements OnInit {
 
     let user_json = this.get_current_user('current_user')
     loading.present()
-    this.api.withinbank(user_json.user_id, user_json.token, saving_ac, amount).subscribe((res) => {
+    this.api.withinbank(user_json.user_id, user_json.token, saving_ac, amount).subscribe((res:any) => {
       loading.dismiss()
       success.present()
       this.tranferForm.reset()
       this.router.navigateByUrl('/tabs/tabs/dashboard')
 
-    }, (err) =>{
+    }, (err:any) =>{
       loading.dismiss()
       this.error = err.error.message ? err.error.message : (err.statusText+ "! Something went wrong");
     })
@@ -186,10 +186,10 @@ export class Tab3Page implements OnInit {
       message: 'Searching for associated bank details ...',
     });
     loading.present()
-    this.api.c_user_bank_status( json_u_dtl.user_id, json_u_dtl.token ).subscribe((res) =>{
+    this.api.c_user_bank_status( json_u_dtl.user_id, json_u_dtl.token ).subscribe((res:any) =>{
       loading.dismiss()
       console.log(res)
-    }, (err) =>{
+    }, (err:any) =>{
       loading.dismiss()
       setTimeout(()=>{
         this.router.navigateByUrl('/tabs/tabs/addbank')
@@ -223,7 +223,7 @@ export class Tab3Page implements OnInit {
      let current_user = this.get_current_user('current_user')
 
       loading.present()
-      this.api.check_saving(current_user.user_id, current_user.token, reciver_saving).subscribe((res) =>{
+      this.api.check_saving(current_user.user_id, current_user.token, reciver_saving).subscribe((res:any) =>{
         this.error = ''
         loading.dismiss()
          let name = res.member.first_name
@@ -231,7 +231,7 @@ export class Tab3Page implements OnInit {
          this.reciver_detail = { name: name, mobile: mobile}
 
 
-      }, (err)=>{
+      }, (err:any)=>{
         loading.dismiss()
         this.reciver_detail = null
         this.error = err.error.message ? err.error.message : (err.statusText+ "! Something went wrong");

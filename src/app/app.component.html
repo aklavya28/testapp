@@ -6,12 +6,27 @@
 
   <ion-split-pane contentId="main-content">
 
-    <ion-menu *ngIf="current_user" contentId="main-content" type="overlay" >
+    <ion-menu *ngIf="current_user" (ionWillOpen)="open()"  contentId="main-content" type="overlay" >
 
       <ion-content>
         <ion-list id="inbox-list">
-          <ion-list-header>Menu</ion-list-header>
-          <ion-menu-toggle class="menus" auto-hide="false" *ngFor="let p of appPages; let i = index">
+          <div class="spinner" *ngIf="!profile">
+            <ion-spinner name="dots" color="primary"></ion-spinner>
+
+
+          </div>
+
+          <div class="profile" *ngIf="profile">
+            <div>
+              <img src="{{profile.img}}" alt="">
+            </div>
+            <div>
+              <h2>{{profile.name}}</h2>
+              <a href="tel:`${profile.mobile}`">{{profile.mobile}}</a>
+            </div>
+          </div>
+
+          <ion-menu-toggle  class="menus" auto-hide="false" *ngFor="let p of appPages; let i = index">
             <ion-item lines="full"
              routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" routerLinkActive="selected">
               <ion-icon aria-hidden="true" name="{{p.icon}}"></ion-icon> &nbsp;
@@ -29,7 +44,7 @@
             <ion-label>{{ label }}</ion-label>
           </ion-item>
         </ion-list> -->
-        <ion-button (click)="logout()" expand="full" > Logout</ion-button>
+        <ion-button color="danger" (click)="logout()" expand="full" > Logout</ion-button>
       </ion-content>
     </ion-menu>
     <ion-router-outlet id="main-content"></ion-router-outlet>

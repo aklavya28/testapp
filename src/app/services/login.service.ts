@@ -1,21 +1,20 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
-
+import { Observable } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
 export class LoginService {
   // url:string = 'https://app.devrising.in/api/hrms/'
 
-  private mainurl:string = 'http://localhost:3000/api/'
+//   private mainurl:string = 'http://localhost:3000/api/'
 
-//   private mainurl:string = 'https://app.devrising.in/api/'
+  private mainurl:string = 'https://app.devrising.in/api/'
 
   url:string = 'http://localhost:3000/api/hrms/';
-
-
- private loginUrl:string = 'http://localhost:3000/api/sign-in';
+  private loginUrl:string = 'http://localhost:3000/api/sign-in';
 
     constructor(
       private router: Router,
@@ -178,5 +177,28 @@ export class LoginService {
       token:string
        ){
       return  this.http.get<any>(this.mainurl+"app-transfer-history?token="+token+"&user_id="+userid)
+   }
+
+   transactions_pdf(
+      userid:string,
+      token:string,
+      ac_id:number,
+      ac_type:string,
+      time:number
+       ){
+      return  this.http.get<any>(this.mainurl+"app-transactions-pdf?token="+token+"&user_id="+userid+"&ac_id="+ac_id+"&ac_type="+ac_type+"&time="+time)
+   }
+   getBooks(
+      userid:string,
+      token:string,
+
+   ): Observable<any[]> {
+
+      return this.http.get<any[]>(this.mainurl+"app-get-profile?token="+token+"&user_id="+userid)
+   //    .pipe(
+   //       tap(data => console.log('All Products', JSON.stringify(data))),
+
+   //   );
+
    }
 }

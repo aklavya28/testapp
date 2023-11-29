@@ -56,14 +56,14 @@ export class Tab1Page {
       });
       rd_loder.present()
 
-      this.api.rd_due(userid, token, rd_id).subscribe((res) =>{
+      this.api.rd_due(userid, token, rd_id).subscribe((res:any) =>{
         rd_loder.dismiss()
         console.log(res.amount)
         // this.payForm.get('amount')?.value = res.amount
 
         this.payForm.patchValue({ amount: res.amount })
         this.payForm.get('amount')?.disable()
-      },(err) =>{
+      },(err:any) =>{
 
         rd_loder.dismiss()
 
@@ -111,7 +111,7 @@ export class Tab1Page {
           // window.location.reload()
           this.router.navigateByUrl('/tabs/tabs/dashboard')
 
-        }, (err) =>{
+        }, (err:any) =>{
 
           loading.dismiss()
 

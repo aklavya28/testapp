@@ -8,7 +8,7 @@
 </ion-header>
 <ion-content class="main_bg">
   <div *ngIf="personBank" class="bank">
-    <div *ngIf="error" class="errors_danger">{{error | titlecase }}</div>
+    <div *ngIf="error" class="errors_danger ion-padding">{{error | titlecase }}</div>
     <h1>Associated Bank List</h1>
     <div *ngFor="let bank of personBank">
       <div class="bank_single">
@@ -33,7 +33,7 @@
   <div class="form_area">
       <div class="add_new_bank_btn">
 
-        <ion-button size="large" expand="block" (click)="get_bank()" *ngIf="isActive == false">Add New Bank</ion-button>
+        <ion-button size="default" color="secondary" expand="block" (click)="get_bank()" *ngIf="isActive == false">Add New Bank</ion-button>
       </div>
 
     <form *ngIf="isActive == true" [formGroup]="addBankForm" (ngSubmit)="addBankSubmit()">
@@ -78,10 +78,11 @@
       <div class="btn_area">
         <div>
 
-          <ion-button size="large" expand="block" color="dark" (click)="loc_reload()">Cancel</ion-button>
+          <ion-button size="default"  expand="block" color="dark" (click)="loc_reload()">Cancel</ion-button>
         </div>
         <div>
-          <ion-button size="large" expand="block"  [disabled]="this.addBankForm.status == 'INVALID'" type="submit">Save Bank</ion-button>
+          <ion-button size="default" color="secondary" expand="block"  [disabled]="this.addBankForm.status == 'INVALID'" type="submit">Save Bank</ion-button>
+          <!-- <ion-button size="default" expand="block"   type="submit">Save Bank</ion-button> -->
         </div>
       </div>
     </form>

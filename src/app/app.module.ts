@@ -15,12 +15,15 @@ import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontaweso
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import { far } from '@fortawesome/free-regular-svg-icons'
 import { fab } from '@fortawesome/free-brands-svg-icons'
+import { FileOpener } from '@ionic-native/file-opener/ngx';
+import { File } from '@ionic-native/file/ngx';
 
 @NgModule({
   declarations: [AppComponent],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,
     HttpClientModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+
 
 
 
@@ -29,6 +32,8 @@ import { fab } from '@fortawesome/free-brands-svg-icons'
     Platform,
     AuthGuard,
     FingerprintAIO,
+    FileOpener,
+    File
 
   ],
   bootstrap: [AppComponent],

@@ -25,7 +25,8 @@
         right: -44px;
         z-index: 1;
         transform: rotate(-124deg);
-        background: radial-gradient(rgb(205 249 255 / 0%), rgb(229 229 229));
+        background:radial-gradient(rgba(205, 249, 255, 0), rgb(196 211 49 / 35%));
+        top:0
     }
     & > *{
         position: relative;
@@ -65,9 +66,10 @@
     align-items: center;
     justify-content: center;
     gap: 15px;
-    background: linear-gradient(45deg, #FF5722, #FF9800) !important;
+    background: #e04e10;
     color: #fff;
     height: 67px;
+    border-top: 1px solid #e56d3a;
 }
 
 .balance>spam {flex: 1;}
@@ -85,3 +87,43 @@ ion-toolbar {
     padding-top:0 !important ;
     padding-bottom:0 !important ;
 }
+.close_btn ion-icon{
+    color: #fff
+}
+ion-radio::part(container) {
+    width: 30px;
+    height: 30px;
+
+    border-radius: 8px;
+    border: 2px solid #ddd;
+  }
+
+  ion-radio::part(mark) {
+    background: none;
+    transition: none;
+    transform: none;
+    border-radius: 0;
+  }
+
+  ion-radio.radio-checked::part(container) {
+    background: #eb7c06;
+    border-color: transparent;
+  }
+
+  ion-radio.radio-checked::part(mark) {
+    width: 6px;
+    height: 10px;
+
+    border-width: 0px 2px 2px 0px;
+    border-style: solid;
+    border-color: #fff;
+
+    transform: rotate(45deg);
+  }
+  ion-radio-group >div {
+    background: white;
+    padding: 9px;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 11px;
+}
+

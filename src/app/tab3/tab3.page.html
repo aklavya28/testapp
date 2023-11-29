@@ -28,7 +28,7 @@
           label-placement="floating">
         </ion-input>
         <span *ngIf=" s_account()?.valid ">
-          <ion-button color="success" (click)="verify_accont()">Check</ion-button>
+          <ion-button size="small" color="secondary" (click)="verify_accont()">Check</ion-button>
         </span>
       </ion-item>
 
@@ -77,7 +77,7 @@
 
       </div>
     </div>
-    <ion-button size="large" expand="block" [disabled]="this.tranferForm.status == 'INVALID'"
+    <ion-button size="default" color="secondary" expand="block" [disabled]="this.tranferForm.status == 'INVALID'"
       type="submit">Transfer</ion-button>
   </form>
 

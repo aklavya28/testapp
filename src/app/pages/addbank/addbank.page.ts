@@ -26,7 +26,7 @@ export class AddbankPage implements OnInit {
   ngOnInit() {
     let c_user:any = localStorage.getItem('current_user');
     let json_dtl = JSON.parse(c_user)
-    this.api.get_personal_banks(json_dtl.user_id, json_dtl.token).subscribe((res) =>{
+    this.api.get_personal_banks(json_dtl.user_id, json_dtl.token).subscribe((res:any) =>{
       this.personBank = res.data
       console.log(this.personBank)
     })
@@ -47,13 +47,13 @@ export class AddbankPage implements OnInit {
 
     });
     loading.present()
-    this.api.list_of_bank(dtl.user_id, dtl.token).subscribe((res) =>{
+    this.api.list_of_bank(dtl.user_id, dtl.token).subscribe((res:any) =>{
       loading.dismiss()
       this.isActive = true
       this.addBankForm.reset()
       this.banklist = res
       console.log(this.banklist)
-    }, (err) =>{
+    }, (err:any) =>{
       loading.dismiss()
       this.error = err.error.message ? err.error.message : (err.statusText+ "! Something went wrong");
     })
@@ -73,14 +73,14 @@ export class AddbankPage implements OnInit {
         message: 'Saving Details...',
       });
       loading.present()
-      this.api.addBank(json_user.user_id, json_user.token, bank_name, bank_ac_no, ifsc).subscribe((res) =>{
+      this.api.addBank(json_user.user_id, json_user.token, bank_name, bank_ac_no, ifsc).subscribe((res:any) =>{
 
        console.log(res)
        loading.dismiss()
         setTimeout(()=>{
           location.reload()
         }, 500)
-    }, (err) =>{
+    }, (err:any) =>{
       this.error = err.error.message ? err.error.message : (err.statusText+ "! Something went wrong");
       loading.dismiss()
     })

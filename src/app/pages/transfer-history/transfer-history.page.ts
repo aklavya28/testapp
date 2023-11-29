@@ -21,9 +21,9 @@ export class TransferHistoryPage implements OnInit {
   ngOnInit() {
     // location.reload()
     let user = this.helper.get_current_user('current_user');
-    this.api.transfer_history(user.user_id, user.token).subscribe((res) =>{
+    this.api.transfer_history(user.user_id, user.token).subscribe((res:any) =>{
         this.t_history = res.data
-    }, (err) =>{
+    }, (err:any) =>{
 
       // loading.dismiss()
       this.error = err.error.message ? err.error.message : (err.statusText+ "! Something went wrong");

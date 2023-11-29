@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { LoadingController, Platform } from '@ionic/angular';
 import { AppComponent } from '../app.component';
 import { FingerprintAIO } from '@awesome-cordova-plugins/fingerprint-aio/ngx';
+import { HelperService } from '../services/helper.service';
 
 @Component({
   selector: 'app-login',
@@ -18,7 +19,7 @@ export class LoginPage implements OnInit {
   current_user: any = localStorage.getItem('current_user') ? localStorage.getItem('current_user') : '';
   newdata: any = '';
 
-  viewMode: string = 'otp';
+  viewMode: string = 'member';
   fpo: any;
 
   showbio:boolean= false
@@ -32,7 +33,8 @@ export class LoginPage implements OnInit {
     private route: Router,
     private app: AppComponent,
     private platform: Platform,
-    private fp: FingerprintAIO
+    private fp: FingerprintAIO,
+    private helper: HelperService
   ) {
     this.memberForm = fb.group({
       username: fb.control('', [
@@ -74,10 +76,10 @@ export class LoginPage implements OnInit {
     // }
 
     // this.memberForm.get('username')?.setValue('M10466');
-     this.memberForm.get('username')?.setValue("M03229")
+    //  this.memberForm.get('username')?.setValue("M03229")
     //  this.memberForm.get('username')?.setValue("M00478")
     //  this.memberForm.get('username')?.setValue("M08352")
-    this.memberForm.get('password')?.setValue('123456');
+    // this.memberForm.get('password')?.setValue('123456');
     //  this.memberForm.get('password')?.setValue("Sunil@3546")
     //  this.memberForm.get('password')?.setValue("545A1E")
     // otp
@@ -142,6 +144,8 @@ export class LoginPage implements OnInit {
           this.error = res.message;
         } else {
           this.error = '';
+
+
           this.route.navigateByUrl('/tabs/tabs/dashboard');
         }
         // history.pushState(null, '', 'pagename');
@@ -149,7 +153,7 @@ export class LoginPage implements OnInit {
         //         history.pushState(null, '/tabs/tabs/dashboard', 'pagename');
         // });
       },
-      (err) => {
+      (err:any) => {
         loading.dismiss();
         this.error = err.error.message
           ? err.error.message
@@ -168,16 +172,20 @@ export class LoginPage implements OnInit {
     });
    let user =  this.get_current_user('bio')
     loading.present()
-    this.service.bioLogin(user.user_id, user.token).subscribe((res) => {
+    this.service.bioLogin(user.user_id, user.token).subscribe((res:any) => {
       // console.log(res)
       loading.dismiss()
       localStorage.removeItem('current_user');
-        localStorage.setItem('current_user', JSON.stringify(res.data))
-        localStorage.setItem('bio', JSON.stringify(res.data));
-        this.error = ''
+      localStorage.setItem('current_user', JSON.stringify(res.data))
+      localStorage.setItem('bio', JSON.stringify(res.data));
+      this.error = ''
+
+
+
+
         this.route.navigateByUrl('/tabs/tabs/dashboard')
 
-    }, (err) => {
+    }, (err:any) => {
       loading.dismiss();
       console.log(err);
       this.error = err.error.message
@@ -196,13 +204,13 @@ export class LoginPage implements OnInit {
     loading.present();
 
     this.service.mobile_login(mobile).subscribe(
-      (res) => {
+      (res:any) => {
         loading.dismiss();
         localStorage.setItem('mobile', mobile);
         this.route.navigateByUrl('opt', mobile);
-        console.log(res);
+
       },
-      (err) => {
+      (err:any) => {
         loading.dismiss();
         console.log(err);
         this.error = err.error.message
