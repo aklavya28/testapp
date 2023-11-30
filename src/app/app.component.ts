@@ -110,6 +110,8 @@ export class AppComponent implements OnInit{
 
     if(this.platform.is('android')){
           StatusBar.setOverlaysWebView({ overlay: false })
+          StatusBar.setBackgroundColor({color: "#4eb767"})
+
       }
       this.helper.getprofile()
   }

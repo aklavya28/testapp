@@ -17,9 +17,12 @@
     height: 33px !important;
     width: 33px !important;
 }
+.opt_container>div .otp-input:focus {
+    border-color: #5fc778;
 
+}
 .opt_container>div>div>ion-button {
-    height: 34px;
+    height: 43px;
     position: relative;
     top: -6px;
     border-radius: 7px;

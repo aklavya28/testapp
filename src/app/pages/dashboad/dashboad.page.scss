@@ -10,12 +10,13 @@
     border-radius: 10px;
     box-shadow: 0 3px 10px rgb(26 0 0 / 29%);
     background: white;
+    overflow: hidden;
  }
 
 .dash_single>a {
     padding: 10px;
     display: flex;
-    gap: 18px;
+    gap: 40px;
     align-items: center;
 }
 
@@ -27,7 +28,7 @@
 
 .dash_single>a p:first-child {
     font-weight: bold;
-    color: #FF9800;
+    color: #408549;
     font-size: 15px;
 }
 .dash_single a {
@@ -40,7 +41,7 @@
     content: "";
     width: 128px;
     height: 95px;
-    background: rgb(0 188 212 / 12%);
+    background:linear-gradient(45deg, #53be77, #79d97c);
     position: absolute;
     transform: rotate(56deg);
     left: -39px;
@@ -53,7 +54,7 @@
 }
 .transfer_rew .inner {
     background: #edf7ff;
-    margin: 15px;
+    margin: 0 15px;
     padding: 15px;
     border-radius: 10px;
     box-shadow: 0 5px 10px #0202021c;
@@ -63,7 +64,7 @@
 .transfer_rew> .inner h3 {
     margin: 0 0 6px;
     padding: 0 0 8px;
-    color: #F57C00;
+    color: #5fc778;
     font-size: 18px;
     font-weight: bold;
     position: relative;
@@ -98,5 +99,5 @@
 }
 
 .transfer_rew .inner>div >div.pending {
-    color: red;
+    color: #FF9800;
 }

@@ -5,10 +5,9 @@
 <ion-app [style]="top">
 
   <ion-split-pane contentId="main-content">
-
     <ion-menu *ngIf="current_user" (ionWillOpen)="open()"  contentId="main-content" type="overlay" >
 
-      <ion-content>
+      <ion-content class="menu_bar">
         <ion-list id="inbox-list">
           <div class="spinner" *ngIf="!profile">
             <ion-spinner name="dots" color="primary"></ion-spinner>
@@ -22,7 +21,7 @@
             </div>
             <div>
               <h2>{{profile.name}}</h2>
-              <a href="tel:`${profile.mobile}`">{{profile.mobile}}</a>
+              <a><ion-icon name="call"></ion-icon> {{profile.mobile}}</a>
             </div>
           </div>
 

@@ -3,9 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoadingController, Platform } from '@ionic/angular';
-import { AppComponent } from '../app.component';
 import { FingerprintAIO } from '@awesome-cordova-plugins/fingerprint-aio/ngx';
 import { HelperService } from '../services/helper.service';
+
 
 @Component({
   selector: 'app-login',
@@ -31,7 +31,6 @@ export class LoginPage implements OnInit {
     private service: LoginService,
     private loding: LoadingController,
     private route: Router,
-    private app: AppComponent,
     private platform: Platform,
     private fp: FingerprintAIO,
     private helper: HelperService
@@ -92,7 +91,7 @@ export class LoginPage implements OnInit {
     // otp end
 
     // bio
-    if (this.get_current_user('bio')){
+    if (this.helper.get_current_user("bio")){
         this.showbio = true
     }
     // bio end
@@ -100,7 +99,7 @@ export class LoginPage implements OnInit {
 
   }
   show_bio(){
-    if(this.get_current_user('bio')){
+    if(this.helper.get_current_user('bio')){
         this.show_bio_init()
     }
 
@@ -158,7 +157,7 @@ export class LoginPage implements OnInit {
         this.error = err.error.message
           ? err.error.message
           : err.statusText + '! Server Not Found';
-        console.log('sunil', this.error);
+        // console.log('sunil', this.error);
       }
     );
 
@@ -170,7 +169,7 @@ export class LoginPage implements OnInit {
     const loading = await this.loding.create({
       message: 'Verifing bio ...',
     });
-   let user =  this.get_current_user('bio')
+   let user =  this.helper.get_current_user('bio')
     loading.present()
     this.service.bioLogin(user.user_id, user.token).subscribe((res:any) => {
       // console.log(res)
@@ -187,7 +186,7 @@ export class LoginPage implements OnInit {
 
     }, (err:any) => {
       loading.dismiss();
-      console.log(err);
+      // console.log(err);
       this.error = err.error.message
         ? err.error.message
         : err.statusText + '! Something went wrong';
@@ -212,7 +211,7 @@ export class LoginPage implements OnInit {
       },
       (err:any) => {
         loading.dismiss();
-        console.log(err);
+        // console.log(err);
         this.error = err.error.message
           ? err.error.message
           : err.statusText + '! Something went wrong';
@@ -229,16 +228,8 @@ export class LoginPage implements OnInit {
     return this.memberFormOtp.get('mobile');
   }
 
-  checkValue(event: any) {
-    console.log(event.target.checked);
-  }
   send(d: string) {
     this.viewMode = d;
-  }
-  get_current_user(local_s_type: string) {
-    let c_user: any = localStorage.getItem(local_s_type);
-    let json_user = JSON.parse(c_user);
-    return json_user;
   }
 
 

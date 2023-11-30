@@ -26,10 +26,11 @@
 @import "@ionic/angular/css/flex-utils.css";
 
 // ion-toolbar {--background: linear-gradient(45deg, #e04e10, #FF9800) !important;color: #fff;}
-ion-toolbar {--background: #e04e10; color: #fff;}
+ion-toolbar {--background: #5fc778; color: #fff;}
 
 .main_bg {
-    --background: linear-gradient(45deg, #232afb21, #ff930024)
+    // --background: linear-gradient(45deg, #232afb21, #ff930024)
+    --background: #71d47b26;
 }
 .errors_danger{
     margin: 10px 0 15px;

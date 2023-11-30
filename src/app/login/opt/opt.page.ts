@@ -10,7 +10,9 @@ import { LoginService } from 'src/app/services/login.service';
   styleUrls: ['./opt.page.scss'],
 })
 export class OptPage implements OnInit {
-  mobile:any =localStorage.getItem('mobile');
+
+  // mobile:any =localStorage.getItem('mobile');
+  mobile:any =this.helper.get_current_user('mobile');
   otp:any;
   resendOtp:boolean = true;
   verfy:boolean = true
@@ -27,10 +29,7 @@ export class OptPage implements OnInit {
     setTimeout(()=>{
       this.resendOtp = false
       },30000)
-      if(this.get_current_user('current_user')){
-        console.log(this.get_current_user('current_user'))
-        // this.route.navigateByUrl('/tabs/tabs/dashboard')
-       }
+
   }
   onOtpChange(e:any){
     if (e.length == 6){
@@ -79,20 +78,6 @@ resnd_otp(){
     this.error = err.error.message ? err.error.message : (err.statusText+ "! Something went wrong");
   })
 }
-get_current_user(local_s_type:string){
-  let c_user:any = localStorage.getItem(local_s_type);
-        let json_user = JSON.parse(c_user)
-        return json_user
-}
+
 }
 
-
-// data
-// :
-// {user_id: "14783a9a-5f57-4376-8c74-494a5b2b6422", token: "hhxszvjzSFzimdyAQxaw"}
-// message
-// :
-// "Request sent successfully"
-// status
-// :
-// "success"

@@ -1,20 +1,14 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
 export class LoginService {
-  // url:string = 'https://app.devrising.in/api/hrms/'
-
 //   private mainurl:string = 'http://localhost:3000/api/'
 
   private mainurl:string = 'https://app.devrising.in/api/'
-
-  url:string = 'http://localhost:3000/api/hrms/';
-  private loginUrl:string = 'http://localhost:3000/api/sign-in';
 
     constructor(
       private router: Router,
@@ -23,10 +17,6 @@ export class LoginService {
       ) {
 
    }
-   getusers(addparms:string){
-    return   this.http.get(this.url+addparms)
-   }
-
    postLogin(username:string, pass:string, type:string){
 
       // return this.http.post<any>(this.loginUrl, {username: username, password:pass, type:type });

@@ -10,7 +10,6 @@ import { Filesystem, Directory, Encoding, FilesystemDirectory } from '@capacitor
 import * as pdfMake from "pdfmake/build/pdfmake";
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NgFor } from '@angular/common';
 import { HelperService } from 'src/app/services/helper.service';
 (<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
 
@@ -67,22 +66,15 @@ export class TransactionsPage implements OnInit {
       type: this.route.snapshot.params['type']
 
     }
-    console.log(this.acc_detail)
+
 
     const loading = await this.loader.create({
       message: 'Keep patience data is loading ...'
     });
-    // console.log(this.acc_detail.acc_id)
-    // console.log(this.route.snapshot.params)
 
-    let user_data:any = localStorage.getItem('current_user');
-    let user_dtl_json = JSON.parse(user_data)
-    this.userid = user_dtl_json.user_id;
-    this.token = user_dtl_json.token;
-    loading.present()
-
-
-      this.service.transactions(this.userid,this.token,this.acc_detail.acc_id, this.acc_detail.type).subscribe((res:any)=>{
+      let user:any = this.helper.get_current_user('current_user');
+      loading.present()
+      this.service.transactions(user.user_id,user.token,this.acc_detail.acc_id, this.acc_detail.type).subscribe((res:any)=>{
         this.all_transactions = res
         loading.dismiss()
       },(err:any) =>{
@@ -106,15 +98,14 @@ export class TransactionsPage implements OnInit {
   }
   async check_balanece(acc_detail:any){
 
-    let user_id = this.get_current_user('current_user').user_id;
-    let token= this.get_current_user('current_user').token;
+    let user:any = this.helper.get_current_user('current_user');
     let ac_type =  acc_detail.type;
     let ac_id = acc_detail.acc_id;
     const loading = await this.loader.create({
       message: 'Checking Balance ...'
     });
     loading.present()
-    this.service.check_balance(user_id, token, ac_type, ac_id).subscribe((res:any) =>{
+    this.service.check_balance(user.user_id, user.token, ac_type, ac_id).subscribe((res:any) =>{
       console.log(res)
       loading.dismiss()
       if(res === 0){
@@ -131,11 +122,7 @@ export class TransactionsPage implements OnInit {
 
 
   }
- get_current_user(local_s_type:string){
-    let c_user:any = localStorage.getItem(local_s_type);
-          let json_user = JSON.parse(c_user)
-          return json_user
-  }
+
   back_btn(){
     this.router.navigateByUrl('/tabs/tabs/dashboard');
   }
@@ -213,7 +200,7 @@ export class TransactionsPage implements OnInit {
         this.error = err.error.message ? err.error.message : (err.statusText+ "! Something went wrong");
       })
 
-      console.log("detail from submit", this.acc_detail, months)
+      // console.log("detail from submit", this.acc_detail, months)
     }
     // typeof(months)
   }
