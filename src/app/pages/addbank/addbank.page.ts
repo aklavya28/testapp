@@ -32,6 +32,7 @@ export class AddbankPage implements OnInit {
     })
 
     this.addBankForm = this.fb.group({
+      holder_name: this.fb.control('', [Validators.required]),
       name: this.fb.control('', [Validators.required]),
       ac_no: this.fb.control('', [Validators.required]),
       ifsc: this.fb.control('', [Validators.required, Validators.maxLength(11), Validators.minLength(11)])
@@ -66,6 +67,7 @@ export class AddbankPage implements OnInit {
     // ifsc:string
     let c_user:any = localStorage.getItem('current_user');
     let json_user = JSON.parse(c_user)
+    let holder_name = this.addBankForm.get('holder_name')?.value
     let bank_name = this.addBankForm.get('name')?.value
     let bank_ac_no = this.addBankForm.get('ac_no')?.value
     let ifsc = this.addBankForm.get('ifsc')?.value
@@ -73,7 +75,7 @@ export class AddbankPage implements OnInit {
         message: 'Saving Details...',
       });
       loading.present()
-      this.api.addBank(json_user.user_id, json_user.token, bank_name, bank_ac_no, ifsc).subscribe((res:any) =>{
+      this.api.addBank(json_user.user_id, json_user.token, bank_name, bank_ac_no, ifsc, holder_name).subscribe((res:any) =>{
 
        console.log(res)
        loading.dismiss()
@@ -93,6 +95,9 @@ export class AddbankPage implements OnInit {
   }
   ac_no(){
     return this.addBankForm.get('ac_no')
+  }
+  holder_name(){
+    return this.addBankForm.get('holder_name')
   }
   ifsc(){
     return this.addBankForm.get('ifsc')

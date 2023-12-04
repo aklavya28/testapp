@@ -14,6 +14,10 @@
       <div class="bank_single">
         <div> <img src="../../../assets/icon/bank.png" alt=""></div>
         <div>
+          <p *ngIf="bank.holder_name">
+            <span>a/c Holder </span>
+            <span>{{bank.holder_name}}</span>
+          </p>
           <p>
             <span>Bank</span>
             <span>{{bank.name}}</span>
@@ -47,6 +51,18 @@
         </ion-item>
         <div *ngIf="name()?.touched && name()?.invalid">
           <ion-text *ngIf="name()?.errors?.['required']" color="danger">Bank is Required</ion-text>
+        </div>
+        <ion-item lines="full">
+          <ion-input
+          label="Account Holder Name"
+          type="text" formControlName="holder_name"
+          label-placement="floating" >
+          </ion-input>
+        </ion-item>
+
+        <div *ngIf="holder_name()?.touched && holder_name()?.invalid">
+          <ion-text *ngIf="holder_name()?.errors?.['required']" color="danger">A/C Holder Name is Required</ion-text>
+
         </div>
         <ion-item lines="full">
           <ion-input

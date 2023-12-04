@@ -96,14 +96,16 @@ export class LoginService {
       token:string,
       bank_name: string,
       bank_ac_no:number,
-      ifsc:string
+      ifsc:string,
+      holder_name:string
       ){
          return this.http.post<any>(this.mainurl+'app-add-bank-account', {
             user_id: userid,
             token: token,
             bank_name: bank_name,
             bank_ac_no: bank_ac_no,
-            ifsc: ifsc
+            ifsc: ifsc,
+            holder_name:holder_name
          });
    }
    get_personal_banks(
