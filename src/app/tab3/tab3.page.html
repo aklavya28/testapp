@@ -50,7 +50,9 @@
         <ion-select label="Choose Associative Bank" formControlName="bank" label-placement="floating">
           <div *ngFor="let item of banks">
 
-            <ion-select-option value="{{item.id }}">Name: {{item.name}} <br> AC: {{item.account_number}}
+            <ion-select-option value="{{item.id }}">
+              <span *ngIf="item.holder_name">A/C Holder: {{item.holder_name}}</span><br>
+              Name: {{item.name}} <br> AC: {{item.account_number}}
             </ion-select-option>
           </div>
 
