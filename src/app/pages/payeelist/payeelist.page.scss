@@ -1,0 +1,31 @@
+.bank_single {
+    padding: 10px 15px 10px 9px;
+    margin: 0 15px 6px;
+    border-radius: 10px;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.bank_single p {
+    margin: 0 0 7px;
+    font-size: 14px;
+    display: flex;
+    flex-flow: row wrap;
+    gap: 13px;
+    justify-content: flex-start;
+    position: relative;
+}
+
+.bank_single p>span:first-child {
+    font-weight: bold;
+    width: 90px !important;
+    position: absolute;
+    padding: 0;
+    color: #FF9800;
+}
+
+.bank_single p >span {
+    padding-left: 90px;
+}

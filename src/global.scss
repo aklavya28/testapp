@@ -93,3 +93,24 @@ ion-button{color: #fff;}
 .toast-wrapper.toast-top {
     top: 33px;
 }
+.reciver_detail>div {
+    position: relative;
+    padding-left: 82px;
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+.reciver_detail>div >span {
+    position: absolute;
+    width: 70px;
+    left: 0;
+    font-weight: bold;
+    color: #000;
+}
+
+.reciver_detail>div >span:after {
+    content: ":";
+    right: 0;
+    position: absolute;
+    font-weight: bold;
+}

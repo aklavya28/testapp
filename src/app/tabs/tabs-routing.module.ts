@@ -53,6 +53,10 @@ const routes: Routes = [
         canActivate:[AuthGuard]
         // loadChildren: () => import('./pages/addbank/addbank.module').then( m => m.AddbankPageModule)
       },
+      {
+        path: 'payeelist',
+        loadChildren: () => import('../pages/payeelist/payeelist.module').then( m => m.PayeelistPageModule)
+      },
 
       {
         path: '',

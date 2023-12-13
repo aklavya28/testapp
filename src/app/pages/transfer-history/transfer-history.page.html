@@ -13,8 +13,8 @@
       <div class="inner" *ngFor="let item of t_history">
         <ion-icon name="checkmark-done-outline"></ion-icon>
             <div class="first">
-              <p>{{item.updated_at | date}}</p>
-              <h4>{{item.bank_detail}}</h4>
+              <p>{{item.date | date}}</p>
+              <h4>{{item.message}}</h4>
             </div>
             <div>
               {{item.amount | currency: "INR" }}

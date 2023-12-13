@@ -1,0 +1,48 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+
+      <ion-buttons slot="start" class="back_btn" (click)="goBack()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+     </ion-buttons>
+
+    <ion-title>Transfer</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="main_bg">
+  <div *ngIf="error" class="errors_danger">{{error | titlecase }}</div>
+  <div *ngIf="payee_detail" class="payee_detail">
+    <div><span>Name</span>  {{payee_detail.holder_name }}</div>
+    <div><span>Bank</span>  {{payee_detail.name }}</div>
+    <div><span>A/C </span> {{payee_detail.account_number }}</div>
+    <div><span>A/C </span> {{payee_detail.id }}</div>
+    <div *ngIf="payee_detail.ifsc "><span>IFSC</span>  {{payee_detail.ifsc }}</div>
+  </div>
+  <div>
+    <form [formGroup]="ransForm" (ngSubmit)="transferSubmit()">
+      <ion-item lines="full">
+
+        <ion-input label="Enter Amount" type="number" formControlName="amount" label-placement="floating"
+            onKeyPress="if(this.value.length==7) return false;">
+          </ion-input>
+      </ion-item>
+      <input
+
+      value="101"
+      formControlName="bank_account_id"
+      type="hidden"
+      >
+      <div *ngIf="amount()?.touched && amount()?.invalid">
+        <ion-text *ngIf="amount()?.errors?.['required']" color="danger">Amount is Required</ion-text>
+        <ion-text *ngIf="amount()?.errors?.['min_val']" color="danger">Dev Saving to saving minimum transfer amount should be greater than {{
+          2  | currency:'INR':'symbol':'.2-2'}}</ion-text>
+        <ion-text *ngIf="amount()?.errors?.['mix_val']" color="danger">Can not pay more then 1000000 </ion-text>
+
+      </div>
+      <ion-button size="default" color="secondary" expand="block" [disabled]="this.ransForm.status == 'INVALID'"
+      type="submit">Transfer</ion-button>
+
+      {{ransForm.value | json}}
+    </form>
+  </div>
+</ion-content>

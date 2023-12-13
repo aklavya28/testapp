@@ -1,7 +1,11 @@
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LoginService } from './../../services/login.service';
 import { Component, OnInit } from '@angular/core';
-import { LoadingController } from '@ionic/angular';
+import { LoadingController, ToastController } from '@ionic/angular';
+import { HelperService } from 'src/app/services/helper.service';
+import { CustomValidator } from 'src/app/services/validator';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-addbank',
@@ -11,36 +15,57 @@ import { LoadingController } from '@ionic/angular';
 export class AddbankPage implements OnInit {
   isActive:boolean = false;
   addBankForm!:FormGroup;
+  davSavingForm!:FormGroup;
   error:string = '';
-  personBank:any=[]
-  banklist:any =[]
 
+  banklist:any =[]
+  // segment
+  segment: string = 'dev';
+  checksaving_pro: boolean = false;
+  payee_details:any;
+  save_saving_btn:boolean= false;
 
   constructor(
     private api: LoginService,
     private fb: FormBuilder,
-    private loading: LoadingController
+    private loading: LoadingController,
+    private helper: HelperService,
+    private router: Router,
+    private tost: ToastController
 
   ) { }
 
+  ionViewWillEnter(){
+
+    this.get_bank()
+    this.error = ''
+    this.payee_details =''
+    this.save_saving_btn= false
+    this.davSavingForm.reset()
+    this.addBankForm.reset()
+    console.log("ok",this.save_saving_btn)
+    this.davSavingForm.get('mobile')?.setValue('xxxxx-xxxxx')
+  }
+
   ngOnInit() {
-    let c_user:any = localStorage.getItem('current_user');
-    let json_dtl = JSON.parse(c_user)
-    this.api.get_personal_banks(json_dtl.user_id, json_dtl.token).subscribe((res:any) =>{
-      this.personBank = res.data
-      console.log(this.personBank)
-    })
+
+
 
     this.addBankForm = this.fb.group({
       holder_name: this.fb.control('', [Validators.required]),
       name: this.fb.control('', [Validators.required]),
-      ac_no: this.fb.control('', [Validators.required]),
+      ac_no: this.fb.control('', [Validators.required,Validators.maxLength(20), CustomValidator.numeric]),
       ifsc: this.fb.control('', [Validators.required, Validators.maxLength(11), Validators.minLength(11)])
     })
+    this.davSavingForm = this.fb.group({
+      mobile: this.fb.control('', [Validators.required, Validators.minLength(10), Validators.maxLength(10),CustomValidator.numeric ]),
+      saving_ac: this.fb.control('', [Validators.required])
 
+    })
 
   }
  async get_bank(){
+
     let c_user:any = localStorage.getItem('current_user');
     let dtl = JSON.parse(c_user);
     const loading = await this.loading.create({
@@ -59,29 +84,41 @@ export class AddbankPage implements OnInit {
       this.error = err.error.message ? err.error.message : (err.statusText+ "! Something went wrong");
     })
   }
-  async addBankSubmit(){
-    // userid:string,
-    // token:string,
-    // bank_name: string,
-    // bank_ac_no:number,
-    // ifsc:string
-    let c_user:any = localStorage.getItem('current_user');
-    let json_user = JSON.parse(c_user)
+async addBankSubmit(){
+    let user:any = this.helper.get_current_user('current_user');
     let holder_name = this.addBankForm.get('holder_name')?.value
     let bank_name = this.addBankForm.get('name')?.value
     let bank_ac_no = this.addBankForm.get('ac_no')?.value
     let ifsc = this.addBankForm.get('ifsc')?.value
+    // toast
+    const success =  await this.tost.create({
+      position: 'top',
+      header: 'Payee Created Successfully',
+      cssClass: "green",
+      color: 'success',
+      buttons: [
+        {
+          icon: 'close',
+          htmlAttributes: {
+            'aria-label': 'close',
+          },
+        },
+      ],
+      })
+
+    // toast
+
       const loading = await this.loading.create({
-        message: 'Saving Details...',
+        message: 'Creating Payee..',
       });
       loading.present()
-      this.api.addBank(json_user.user_id, json_user.token, bank_name, bank_ac_no, ifsc, holder_name).subscribe((res:any) =>{
-
-       console.log(res)
+      this.api.addBank(user.user_id, user.token, bank_name, bank_ac_no, ifsc, holder_name, 'other').subscribe((res:any) =>{
        loading.dismiss()
-        setTimeout(()=>{
-          location.reload()
-        }, 500)
+        this.addBankForm.reset()
+
+        success.present()
+       this.router.navigateByUrl('/tabs/tabs/payeelist')
+
     }, (err:any) =>{
       this.error = err.error.message ? err.error.message : (err.statusText+ "! Something went wrong");
       loading.dismiss()
@@ -89,7 +126,79 @@ export class AddbankPage implements OnInit {
 
 
   }
+// segment
 
+
+ async devSubmit(){
+    let user:any = this.helper.get_current_user('current_user');
+    let saving_id = this.davSavingForm.get('saving_ac')?.value
+    console.log('saving_id', saving_id)
+
+    const success =  await this.tost.create({
+      position: 'top',
+      header: 'Payee Created Successfully',
+      cssClass: "green",
+      color: 'success',
+      buttons: [
+        {
+          icon: 'close',
+          htmlAttributes: {
+            'aria-label': 'close',
+          },
+        },
+      ],
+      })
+
+    // toast
+
+      const loading = await this.loading.create({
+        message: 'Creating Payee..',
+      });
+
+    if(user && saving_id){
+      loading.present()
+      this.api.addBankDev(user.user_id,user.token, saving_id).subscribe((res)=>{
+        loading.dismiss()
+        success.present()
+        this.davSavingForm.reset()
+        this.payee_details = ''
+        this.router.navigateByUrl('/tabs/tabs/payeelist')
+        console.log(res)
+         }, (err)=>{
+          loading.dismiss()
+        this.error = err.error.message
+      })
+    }
+  }
+  async check_mobile(){
+    this.save_saving_btn = false
+    this.payee_details =''
+    this.error=''
+    let mobile:string = this.davSavingForm.get('mobile')?.value
+    let user = this.helper.get_current_user('current_user');
+    const loading = await this.loading.create({
+      message: 'Fetching Saving Details...',
+    });
+
+    loading.present()
+    this.api.check_mobile(user.user_id, user.token, mobile).subscribe((res)=>{
+      this.payee_details = res.saving
+      this.save_saving_btn = true
+      loading.dismiss()
+    }, (err)=>{
+      this.error = err.error.message
+      loading.dismiss()
+    })
+    // console.log(mobile)
+  }
+  mobile(){
+    return this.davSavingForm.get('mobile')
+  }
+
+
+
+
+// segment
   name(){
     return this.addBankForm.get('name')
   }

@@ -93,6 +93,7 @@ export class Tab1Page {
           position: 'top',
           header: 'Paid Successfully',
           cssClass: "green",
+          color: 'success',
           buttons: [
             {
               icon: 'close',

@@ -30,8 +30,12 @@ export class AppComponent implements OnInit{
       url: "/tabs/tabs/tab1", icon: 'card'
     },
     {
-      title: 'Add Bank',
+      title: 'Add Payee',
       url: "/tabs/tabs/addbank", icon: 'color-filter'
+    },
+    {
+      title: 'Payees/Transfer',
+      url: "/tabs/tabs/payeelist", icon: 'people'
     },
     {
       title: 'Transfer',
@@ -107,11 +111,9 @@ export class AppComponent implements OnInit{
     }
   }
  async ngOnInit(){
-
     if(this.platform.is('android')){
           StatusBar.setOverlaysWebView({ overlay: false })
           StatusBar.setBackgroundColor({color: "#4eb767"})
-
       }
       this.helper.getprofile()
   }

@@ -1,8 +1,9 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormBuilder, ValidationErrors, Validators, FormGroup } from '@angular/forms';
 import { LoginService } from '../services/login.service';
 import { LoadingController, ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { HelperService } from '../services/helper.service';
 
 @Component({
   selector: 'app-tab3',
@@ -14,14 +15,14 @@ export class Tab3Page implements OnInit {
   clientInfo:any = []
   tranferForm!: FormGroup;
   current_user:any = ''
-  error:string = '';
+  @Output() error:string = '';
 
   // forms
   saving_input:boolean | undefined;
   bank_input:boolean | undefined;
   banks:any;
   check_ac:boolean = false
-  reciver_detail:any;
+  @Output() reciver_detail:any;
 
 
 
@@ -31,7 +32,8 @@ export class Tab3Page implements OnInit {
     private loading: LoadingController,
     private router: Router,
     private tost: ToastController,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    private helper: HelperService
   ) {
   }
 
@@ -116,6 +118,7 @@ export class Tab3Page implements OnInit {
       position: 'top',
       header: 'Transfer request sent successfully',
       cssClass: "green",
+      color: 'success',
       buttons: [
         {
           icon: 'close',
@@ -155,6 +158,7 @@ export class Tab3Page implements OnInit {
       position: 'top',
       header: 'Transfer Successfully',
       cssClass: "green",
+      color: 'success',
       buttons: [
         {
           icon: 'close',
@@ -213,29 +217,16 @@ export class Tab3Page implements OnInit {
     }
     return null
   }
-  async verify_accont(){
-    const loading = await this.loading.create({
-      message: 'Searching for saving details ...',
+ async verify_accont(){
+  this.error =''
+  const pro =  await this.helper.verify_accont(this.tranferForm,'s_account' )
+    pro.subscribe(data=>{
+        this.reciver_detail = data
+    }, (err)=>{
+      this.error = err.error.message
+      console.log(err)
     });
 
-
-     let reciver_saving  =  this.tranferForm.get('s_account')?.value
-     let current_user = this.get_current_user('current_user')
-
-      loading.present()
-      this.api.check_saving(current_user.user_id, current_user.token, reciver_saving).subscribe((res:any) =>{
-        this.error = ''
-        loading.dismiss()
-         let name = res.member.first_name
-         let mobile = res.member.mobile_no
-         this.reciver_detail = { name: name, mobile: mobile}
-
-
-      }, (err:any)=>{
-        loading.dismiss()
-        this.reciver_detail = null
-        this.error = err.error.message ? err.error.message : (err.statusText+ "! Something went wrong");
-      })
   }
 
   amount(){

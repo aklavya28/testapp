@@ -1,0 +1,60 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="false"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Payees</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="main_bg" >
+  <div *ngIf="error" class="errors_danger">{{error | titlecase }}</div>
+
+  <div>
+      <ion-button class="ion-padding" [routerLink]="'/tabs/tabs/addbank'" color="secondary"  expand="block">Add New Payee</ion-button>
+      <!-- <h1 class="main_title">List of Payee</h1> -->
+      <ion-searchbar
+      class="ion-padding"
+      color="dark"
+      show-clear-button="focus"
+      placeholder="Search payee"
+      [debounce]="1000"
+      (ionInput)="handleInput($event)"
+      animated
+      ></ion-searchbar>
+      <div *ngFor="let bank of results ">
+        <div class="bank_single" (click)="transfer(bank)">
+          <div>
+            <img *ngIf="bank.bank_info !='dev'" src="../../../assets/icon/bank.png" alt="">
+            <img *ngIf="bank.bank_info ==='dev'" src="../../../assets/icon/dev_icon.png" alt="">
+          </div>
+          <div>
+            <p *ngIf="bank.holder_name">
+              <span>a/c Holder </span>
+              <span>{{bank.holder_name}}</span>
+            </p>
+            <p>
+              <span>Bank</span>
+              <span>{{bank.name}}</span>
+            </p>
+            <p>
+              <span>Ac No</span>
+              <span>{{bank.account_number}}</span>
+            </p>
+            <p *ngIf="bank.ifsc">
+              <span>IFSC</span>
+              <span>{{bank.ifsc}}</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="nodata" *ngIf="!results" >
+        No Data
+    </div>
+
+</ion-content>
+
+
+

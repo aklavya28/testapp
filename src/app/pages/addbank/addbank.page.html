@@ -7,101 +7,156 @@
   </ion-toolbar>
 </ion-header>
 <ion-content class="main_bg">
-  <div *ngIf="personBank" class="bank">
-    <div *ngIf="error" class="errors_danger ion-padding">{{error | titlecase }}</div>
-    <h1>Associated Bank List</h1>
-    <div *ngFor="let bank of personBank">
-      <div class="bank_single">
-        <div> <img src="../../../assets/icon/bank.png" alt=""></div>
-        <div>
-          <p *ngIf="bank.holder_name">
-            <span>a/c Holder </span>
-            <span>{{bank.holder_name}}</span>
-          </p>
-          <p>
-            <span>Bank</span>
-            <span>{{bank.name}}</span>
-          </p>
-          <p>
-            <span>Ac No</span>
-            <span>{{bank.account_number}}</span>
-          </p>
-          <p>
-            <span>IFSC</span>
-            <span>{{bank.ifsc}}</span>
-          </p>
+  <ion-segment [(ngModel)]="segment" value="dev">
+    <ion-segment-button value="dev">
+      <ion-label>Dev Payee</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="bank">
+      <ion-label>Other Bank Payee</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+  <div *ngIf="error" class="errors_danger ion-padding">{{error | titlecase }}</div>
+  <div [ngSwitch]="segment">
+    <div *ngSwitchCase="'dev'">
+      <form [formGroup]="davSavingForm" (ngSubmit)="devSubmit()">
+        <h1>Add Dev Payee</h1>
+        <div class="form_fields">
+          <ion-item lines="full">
+            <!-- <ion-input label="Enter Saving Account" type="text" formControlName="dev_saving" label-placement="floating"
+              maxlength="6">
+            </ion-input> -->
+            <ion-input label="Enter Associated Mobile Number" formControlName="mobile" type="text" inputmode="numeric"
+              maxlength="10" label-placement="floating">
+            </ion-input>
+          </ion-item>
+
+          <div *ngIf="mobile()?.touched && mobile()?.invalid">
+            <ion-text *ngIf="mobile()?.errors?.['required']" color="danger">Mobile account is Required</ion-text>
+            <ion-text *ngIf="mobile()?.errors?.['maxlength']" color="danger"> Maximum length for is 10</ion-text>
+            <ion-text *ngIf="mobile()?.errors?.['manlength']" color="danger"> Minimum length for is 10</ion-text>
+            <ion-text *ngIf="mobile()?.errors?.['invalidNumber']" color="danger"> Enter Vaild Digits</ion-text>
+          </div>
+          <div class="payee_details"
+            *ngIf="payee_details"
+          >
+          <div *ngFor="let item of payee_details">
+            <div><span>Name</span> {{item.name}}</div>
+            <div><span>Saving A/C</span> {{item.saving_ac}}</div>
+          </div>
+          </div>
+          <div *ngIf="!save_saving_btn">
+            <ion-button [disabled]=" mobile()?.invalid &&
+            this.davSavingForm.get('mobile').value.length != 10
+            " (click)="check_mobile()">
+              Check Saving
+            </ion-button>
+          </div>
+
+          <div *ngIf="payee_details" class="saving_radio">
+            <ion-radio-group [allowEmptySelection]="true" value="878"
+            formControlName="saving_ac"
+            >
+              <ion-radio *ngFor="let item of payee_details" value="{{item.saving_id}}" labelPlacement="end">
+                <div class="inner_radio">
+                  <div>
+                    <div>Name</div>
+                    <div>{{item.name}}</div>
+                  </div>
+                  <div>
+                    <div>Saving A/C</div>
+                    <div>{{item.saving_ac}}</div>
+                  </div>
+                </div>
+                </ion-radio>
+            </ion-radio-group>
+          </div>
+
+          {{davSavingForm.value | json}}
+          <div *ngIf="save_saving_btn">
+            <ion-button size="default" color="dark" expand="block" (click)="loc_reload()">Cancel</ion-button>
+            <ion-button size="default" color="secondary" expand="block"
+              [disabled]="this.davSavingForm.status == 'INVALID'" type="submit">Save Payee</ion-button>
+          </div>
         </div>
-      </div>
+      </form>
+    </div>
+    <div *ngSwitchCase="'bank'">
+      <form [formGroup]="addBankForm" (ngSubmit)="addBankSubmit()">
+        <h1>Add Other Bank Payee</h1>
+        <div class="form_fields">
+          <ion-item lines="full">
+            <ion-select formControlName="name" label="Choose Bank" label-placement="floating">
+              <ion-select-option *ngFor="let item of banklist.data" value="{{item}}"> {{item}} </ion-select-option>
+            </ion-select>
+
+          </ion-item>
+
+          <div *ngIf="name()?.touched && name()?.invalid">
+            <ion-text *ngIf="name()?.errors?.['required']" color="danger">Bank is Required</ion-text>
+          </div>
+          <ion-item lines="full">
+            <ion-input label="Account Holder Name" type="text" formControlName="holder_name" label-placement="floating">
+            </ion-input>
+          </ion-item>
+
+          <div *ngIf="holder_name()?.touched && holder_name()?.invalid">
+            <ion-text *ngIf="holder_name()?.errors?.['required']" color="danger">A/C Holder Name is Required</ion-text>
+
+          </div>
+          <ion-item lines="full">
+            <ion-input label="Bank Account Number" formControlName="ac_no" type="text" inputmode="numeric"
+              maxlength="20" label-placement="floating">
+            </ion-input>
+          </ion-item>
+
+          <div *ngIf="ac_no()?.touched && ac_no()?.invalid">
+
+            <ion-text *ngIf="ac_no()?.errors?.['required']" color="danger">Bank account is Required</ion-text>
+            <ion-text *ngIf="ac_no()?.errors?.['maxlength']" color="danger">Maximum length is 20 digits</ion-text>
+            <ion-text *ngIf="ac_no()?.errors?.['invalidNumber']" color="danger">Enter Vaild Digites</ion-text>
+
+          </div>
+
+          <ion-item lines="full">
+            <ion-input label="Enter IFSC" type="text" formControlName="ifsc" maxlength="11" label-placement="floating">
+
+            </ion-input>
+          </ion-item>
+
+          <div *ngIf="ifsc()?.touched && ifsc()?.invalid">
+            <ion-text *ngIf="ifsc()?.errors?.['required']" color="danger">IFSC code is Required</ion-text>
+            <ion-text *ngIf="ifsc()?.errors?.['minlength']" color="danger">Minmume length is
+              {{ifsc()?.errors?.['minlength']['requiredLength']}} charater long</ion-text>
+          </div>
+
+        </div>
+        <div class="btn_area">
+          <div>
+
+            <ion-button size="default" expand="block" color="dark" (click)="loc_reload()">Cancel</ion-button>
+          </div>
+          <div>
+            <ion-button size="default" color="secondary" expand="block"
+              [disabled]="this.addBankForm.status == 'INVALID'" type="submit">Save Payee</ion-button>
+            <!-- <ion-button size="default" expand="block"   type="submit">Save Bank</ion-button> -->
+          </div>
+        </div>
+      </form>
+
     </div>
   </div>
+
+
+
+
   <div class="form_area">
-      <div class="add_new_bank_btn">
+    <div class="add_new_bank_btn">
 
-        <ion-button size="default" color="secondary" expand="block" (click)="get_bank()" *ngIf="isActive == false">Add New Bank</ion-button>
-      </div>
+      <ion-button size="default" color="secondary" expand="block" (click)="get_bank()" *ngIf="isActive == false">Add New
+        Bank</ion-button>
+    </div>
 
-    <form *ngIf="isActive == true" [formGroup]="addBankForm" (ngSubmit)="addBankSubmit()">
-      <h1>Add New Bank</h1>
-      <div class="form_fields">
-        <ion-item lines="full">
-          <ion-select formControlName="name" label="Choose Bank" label-placement="floating" >
-            <ion-select-option *ngFor="let item of banklist.data" value="{{item}}"> {{item}} </ion-select-option>
-          </ion-select>
 
-        </ion-item>
-        <div *ngIf="name()?.touched && name()?.invalid">
-          <ion-text *ngIf="name()?.errors?.['required']" color="danger">Bank is Required</ion-text>
-        </div>
-        <ion-item lines="full">
-          <ion-input
-          label="Account Holder Name"
-          type="text" formControlName="holder_name"
-          label-placement="floating" >
-          </ion-input>
-        </ion-item>
-
-        <div *ngIf="holder_name()?.touched && holder_name()?.invalid">
-          <ion-text *ngIf="holder_name()?.errors?.['required']" color="danger">A/C Holder Name is Required</ion-text>
-
-        </div>
-        <ion-item lines="full">
-          <ion-input
-          label="Bank Account Number"
-          type="number" formControlName="ac_no"
-            onKeyPress="if(this.value.length==20) return false;" label-placement="floating" >
-          </ion-input>
-        </ion-item>
-
-        <div *ngIf="ac_no()?.touched && name()?.invalid">
-          <ion-text *ngIf="ac_no()?.errors?.['required']" color="danger">Bank account is Required</ion-text>
-          <ion-text *ngIf="ac_no()?.errors?.['maxlength']" color="danger">Amount is Required</ion-text>
-        </div>
-
-        <ion-item lines="full">
-          <ion-input label="Enter IFSC" type="text" formControlName="ifsc" maxlength="11" label-placement="floating"
-            >
-
-          </ion-input>
-        </ion-item>
-
-        <div *ngIf="ifsc()?.touched && ifsc()?.invalid">
-          <ion-text *ngIf="ifsc()?.errors?.['required']" color="danger">IFSC code is Required</ion-text>
-          <ion-text *ngIf="ifsc()?.errors?.['minlength']" color="danger">Minmume length is
-            {{ifsc()?.errors?.['minlength']['requiredLength']}} charater long</ion-text>
-        </div>
-
-      </div>
-      <div class="btn_area">
-        <div>
-
-          <ion-button size="default"  expand="block" color="dark" (click)="loc_reload()">Cancel</ion-button>
-        </div>
-        <div>
-          <ion-button size="default" color="secondary" expand="block"  [disabled]="this.addBankForm.status == 'INVALID'" type="submit">Save Bank</ion-button>
-          <!-- <ion-button size="default" expand="block"   type="submit">Save Bank</ion-button> -->
-        </div>
-      </div>
-    </form>
   </div>
 
 

@@ -27,8 +27,8 @@ export class LoginService {
       // return this.http.post<any>(this.loginUrl, {username: username, password:pass, type:type });
       return this.http.post<any>(this.mainurl+'app-bio', {user_id, token });
    }
-   postDashDetail(userid:string, token:string){
-      return  this.http.get<any>(this.mainurl+"app-dashboard?token="+token+"&user_id="+userid)
+   postDashDetail(userid:string, token:string, version:string){
+      return  this.http.get<any>(this.mainurl+"app-dashboard?token="+token+"&user_id="+userid +"&version="+version)
    }
 
    transactions(
@@ -36,7 +36,7 @@ export class LoginService {
       token:string,
       acc:number,
       type: string
-      ){
+      ): Observable<any>{
       return  this.http.get<any>(this.mainurl+"app-transactions?token="+token+"&user_id="+userid+"&acc="+acc+"&type="+type)
    }
    rd_due(
@@ -52,6 +52,13 @@ export class LoginService {
       other_saving_ac:number,
        ){
       return  this.http.get<any>(this.mainurl+"app-check-saving?token="+token+"&user_id="+userid+"&other_saving_ac="+other_saving_ac)
+   }
+   check_mobile(
+      userid:string,
+      token:string,
+      mobile:string,
+       ){
+      return  this.http.get<any>(this.mainurl+"app-check-mobile?token="+token+"&user_id="+userid+"&mobile="+mobile)
    }
 
 
@@ -97,7 +104,8 @@ export class LoginService {
       bank_name: string,
       bank_ac_no:number,
       ifsc:string,
-      holder_name:string
+      holder_name:string,
+      type:string
       ){
          return this.http.post<any>(this.mainurl+'app-add-bank-account', {
             user_id: userid,
@@ -105,7 +113,19 @@ export class LoginService {
             bank_name: bank_name,
             bank_ac_no: bank_ac_no,
             ifsc: ifsc,
-            holder_name:holder_name
+            holder_name:holder_name,
+            type: type
+         });
+   }
+   addBankDev(
+      userid:string,
+      token:string,
+      saving_id:string,
+      ){
+         return this.http.post<any>(this.mainurl+'app-add-bank-dev-account', {
+            user_id: userid,
+            token: token,
+            saving_id:saving_id
          });
    }
    get_personal_banks(
@@ -158,17 +178,48 @@ export class LoginService {
 
          });
    }
+   trnsfer_money(
+      token:string,
+      user_id:string,
+      amount:number,
+      bank_id:number
+       ){
+         return this.http.post<any>(this.mainurl+'app-transfer-money', {
+            token,
+            user_id,
+            amount,
+            bank_id
+         });
+   }
+
+
+
    get_user_profile(
       token:string,
       userid:string
        ){
       return  this.http.get<any>(this.mainurl+"app-get-profile?token="+token+"&user_id="+userid)
    }
+   get_payee(
+      token:string,
+      userid:string,
+      slug:string
+       ){
+      return  this.http.get<any>(this.mainurl+"app-get-payee?token="+token+"&user_id="+userid+"&slug="+slug)
+   }
+
+
    transfer_history(
       userid:string,
       token:string
        ){
       return  this.http.get<any>(this.mainurl+"app-transfer-history?token="+token+"&user_id="+userid)
+   }
+   check_version(
+      userid:string,
+      token:string
+       ){
+      return  this.http.get<any>(this.mainurl+"app-check-version?token="+token+"&user_id="+userid)
    }
 
    transactions_pdf(
