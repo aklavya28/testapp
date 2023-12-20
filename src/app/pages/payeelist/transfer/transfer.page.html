@@ -15,24 +15,26 @@
     <div><span>Name</span>  {{payee_detail.holder_name }}</div>
     <div><span>Bank</span>  {{payee_detail.name }}</div>
     <div><span>A/C </span> {{payee_detail.account_number }}</div>
-    <div><span>A/C </span> {{payee_detail.id }}</div>
     <div *ngIf="payee_detail.ifsc "><span>IFSC</span>  {{payee_detail.ifsc }}</div>
   </div>
   <div>
-    <form [formGroup]="ransForm" (ngSubmit)="transferSubmit()">
-      <ion-item lines="full">
+    <form [formGroup]="ransForm" (ngSubmit)="transferSubmit()" class="forms">
+      <div class="fields">
 
-        <ion-input label="Enter Amount" type="number" formControlName="amount" label-placement="floating"
-            onKeyPress="if(this.value.length==7) return false;">
-          </ion-input>
-      </ion-item>
+        <ion-item lines="full">
+            <ion-input label="Enter Amount" type="number" formControlName="amount" label-placement="floating"
+              onKeyPress="if(this.value.length==7) return false;">
+            </ion-input>
+        </ion-item>
+      </div>
       <input
 
       value="101"
       formControlName="bank_account_id"
       type="hidden"
+      style="display: none;"
       >
-      <div *ngIf="amount()?.touched && amount()?.invalid">
+      <div class="error" *ngIf="amount()?.touched && amount()?.invalid">
         <ion-text *ngIf="amount()?.errors?.['required']" color="danger">Amount is Required</ion-text>
         <ion-text *ngIf="amount()?.errors?.['min_val']" color="danger">Dev Saving to saving minimum transfer amount should be greater than {{
           2  | currency:'INR':'symbol':'.2-2'}}</ion-text>
@@ -42,7 +44,6 @@
       <ion-button size="default" color="secondary" expand="block" [disabled]="this.ransForm.status == 'INVALID'"
       type="submit">Transfer</ion-button>
 
-      {{ransForm.value | json}}
     </form>
   </div>
 </ion-content>

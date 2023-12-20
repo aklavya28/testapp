@@ -9,10 +9,9 @@
     gap: 10px;
     justify-content: space-between;
     font-weight:  normal;
-    margin-bottom: 8px;
+    margin-bottom: 12px;
     background-color: #fff;
     border-radius: 5px;
-    box-shadow: 0 7px 13px #cdcdcd;
     color: #000;
     font-size: 14px;
     position: relative;
@@ -25,7 +24,7 @@
         right: -44px;
         z-index: 1;
         transform: rotate(-124deg);
-        background:linear-gradient(45deg, #9bffbd, #f6fff7);
+        background:linear-gradient(45deg, #ffcba1, #ffffff);
         top:0
     }
     & > *{
@@ -66,10 +65,10 @@
     align-items: center;
     justify-content: center;
     gap: 15px;
-    background: #5fc778;
+    background: var(--ion-color-primary);
     color: #fff;
     height: 67px;
-    border-top: 1px solid #6fab7d;
+    border-top: 1px solid #fb6e23;
 }
 
 .balance>spam {flex: 1;}

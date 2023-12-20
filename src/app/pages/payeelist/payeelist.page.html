@@ -7,14 +7,16 @@
   </ion-toolbar>
 </ion-header>
 <ion-content class="main_bg" >
-  <div *ngIf="error" class="errors_danger">{{error | titlecase }}</div>
+  <div class="ion-padding">
+    <div *ngIf="error" class="errors_danger">{{error | titlecase }}</div>
+  </div>
 
   <div>
       <ion-button class="ion-padding" [routerLink]="'/tabs/tabs/addbank'" color="secondary"  expand="block">Add New Payee</ion-button>
       <!-- <h1 class="main_title">List of Payee</h1> -->
       <ion-searchbar
       class="ion-padding"
-      color="dark"
+
       show-clear-button="focus"
       placeholder="Search payee"
       [debounce]="1000"

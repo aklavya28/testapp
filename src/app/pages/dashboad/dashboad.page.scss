@@ -7,8 +7,8 @@
 
 .main_icons> .dash_single {
     margin-bottom: 17px;
-    border-radius: 10px;
-    box-shadow: 0 3px 10px rgb(26 0 0 / 29%);
+    border-radius: 6px;
+    // box-shadow: 0 1px 5px rgb(53 53 53 / 27%);
     background: white;
     overflow: hidden;
  }
@@ -28,7 +28,7 @@
 
 .dash_single>a p:first-child {
     font-weight: bold;
-    color: #408549;
+    color: var(--ion-color-primary);
     font-size: 15px;
 }
 .dash_single a {
@@ -41,7 +41,8 @@
     content: "";
     width: 128px;
     height: 95px;
-    background:linear-gradient(45deg, #53be77, #79d97c);
+    // background:linear-gradient(45deg, #38779f, #00BCD4);
+    background:#fb9949;
     position: absolute;
     transform: rotate(56deg);
     left: -39px;
@@ -57,14 +58,14 @@
     margin: 0 15px;
     padding: 15px;
     border-radius: 10px;
-    box-shadow: 0 5px 10px #0202021c;
+    // box-shadow: 0 5px 10px #0202021c;
     border: 1px solid #dddddd;
 }
 
 .transfer_rew> .inner h3 {
     margin: 0 0 6px;
     padding: 0 0 8px;
-    color: #5fc778;
+    color: #2d6c95;
     font-size: 18px;
     font-weight: bold;
     position: relative;

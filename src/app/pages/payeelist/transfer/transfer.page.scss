@@ -3,7 +3,7 @@
     margin: 19px;
     font-size: 16px;
     border-radius: 10px;
-    box-shadow: 0 2px 3px #12121242;
+    // box-shadow: 0 2px 3px #12121242;
 }
 
 .payee_detail>div {
@@ -16,4 +16,25 @@
 .payee_detail>div span {
     width: 60px;
     color: #3c7349;
+}
+.error {
+    background: #fff;
+    padding: 10px;
+    margin-bottom: 17px;
+}
+
+.error>ion-text {
+    display: flex;
+    font-size: 14px;
+    padding: 4px 10px;
+}
+
+.forms {
+    margin: 19px;
+    padding: 0;
+    border-radius: 10px 10px 0 0;
+    overflow: hidden;
+}
+.errors_danger {
+    margin: 14px 19px;
 }

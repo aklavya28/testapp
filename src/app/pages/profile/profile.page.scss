@@ -16,7 +16,7 @@
 }
 
 .profile_img >h3 {
-    color: #2f7740;
+    color: var(--ion-color-primary);
     font-size: 15px;
     margin: 7px 0;
     text-shadow: 0 2px 2px #0808083d;
@@ -47,7 +47,7 @@
 
 .details>div>div:first-child {
     position: relative;
-    color: #2f7740;
+    color: var(--ion-color-primary)
 }
 
 .details>div>div:first-child:after {

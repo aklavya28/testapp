@@ -61,7 +61,7 @@
               <!-- {{item |json}} -->
               <p>{{item.ac_type}}</p>
               <p>A/C No:. {{item.account_number}}</p>
-
+              <p *ngIf="item.maturity_date">Maturity Date:. <strong >{{item.maturity_date | date}}</strong> </p>
             </div>
           </a>
         </div>

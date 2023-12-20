@@ -26,11 +26,12 @@
 @import "@ionic/angular/css/flex-utils.css";
 
 // ion-toolbar {--background: linear-gradient(45deg, #e04e10, #FF9800) !important;color: #fff;}
-ion-toolbar {--background: #5fc778; color: #fff;}
+// ion-toolbar {--background: #5fc778; color: #fff;}
+ion-toolbar {--background:var(--ion-color-primary); color: #fff;}
 
 .main_bg {
     // --background: linear-gradient(45deg, #232afb21, #ff930024)
-    --background: #71d47b26;
+    --background: #f1f1f1;
 }
 .errors_danger{
     margin: 10px 0 15px;
@@ -114,3 +115,7 @@ ion-button{color: #fff;}
     position: absolute;
     font-weight: bold;
 }
+.color_white{
+    color: #fff;
+}
+

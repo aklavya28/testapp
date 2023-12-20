@@ -18,15 +18,18 @@
   <div *ngIf="error" class="errors_danger ion-padding">{{error | titlecase }}</div>
   <div [ngSwitch]="segment">
     <div *ngSwitchCase="'dev'">
-      <form [formGroup]="davSavingForm" (ngSubmit)="devSubmit()">
+      <form [formGroup]="davSavingForm"  (ngSubmit)="devSubmit()" class="form">
         <h1>Add Dev Payee</h1>
         <div class="form_fields">
           <ion-item lines="full">
             <!-- <ion-input label="Enter Saving Account" type="text" formControlName="dev_saving" label-placement="floating"
               maxlength="6">
             </ion-input> -->
-            <ion-input label="Enter Associated Mobile Number" formControlName="mobile" type="text" inputmode="numeric"
-              maxlength="10" label-placement="floating">
+            <ion-input label="Enter Associated Mobile Number" formControlName="mobile"
+            type="text"
+            inputmode="numeric"
+              maxlength="10"
+              label-placement="floating" >
             </ion-input>
           </ion-item>
 
@@ -36,17 +39,10 @@
             <ion-text *ngIf="mobile()?.errors?.['manlength']" color="danger"> Minimum length for is 10</ion-text>
             <ion-text *ngIf="mobile()?.errors?.['invalidNumber']" color="danger"> Enter Vaild Digits</ion-text>
           </div>
-          <div class="payee_details"
-            *ngIf="payee_details"
-          >
-          <div *ngFor="let item of payee_details">
-            <div><span>Name</span> {{item.name}}</div>
-            <div><span>Saving A/C</span> {{item.saving_ac}}</div>
-          </div>
-          </div>
+
           <div *ngIf="!save_saving_btn">
             <ion-button [disabled]=" mobile()?.invalid &&
-            this.davSavingForm.get('mobile').value.length != 10
+            (this.davSavingForm.get('mobile')?.value ? this.davSavingForm.get('mobile')?.value.length : '') != 10
             " (click)="check_mobile()">
               Check Saving
             </ion-button>
@@ -71,9 +67,15 @@
             </ion-radio-group>
           </div>
 
-          {{davSavingForm.value | json}}
-          <div *ngIf="save_saving_btn">
+
+        </div>
+        <div *ngIf="save_saving_btn" class="btn_area">
+          <div>
+
             <ion-button size="default" color="dark" expand="block" (click)="loc_reload()">Cancel</ion-button>
+          </div>
+          <div>
+
             <ion-button size="default" color="secondary" expand="block"
               [disabled]="this.davSavingForm.status == 'INVALID'" type="submit">Save Payee</ion-button>
           </div>
@@ -81,7 +83,7 @@
       </form>
     </div>
     <div *ngSwitchCase="'bank'">
-      <form [formGroup]="addBankForm" (ngSubmit)="addBankSubmit()">
+      <form [formGroup]="addBankForm" (ngSubmit)="addBankSubmit()" class="form">
         <h1>Add Other Bank Payee</h1>
         <div class="form_fields">
           <ion-item lines="full">

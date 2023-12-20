@@ -1,4 +1,4 @@
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { LoginService } from './../../services/login.service';
 import { Component, OnInit } from '@angular/core';
 import { LoadingController, ToastController } from '@ionic/angular';
@@ -44,7 +44,8 @@ export class AddbankPage implements OnInit {
     this.davSavingForm.reset()
     this.addBankForm.reset()
     console.log("ok",this.save_saving_btn)
-    this.davSavingForm.get('mobile')?.setValue('xxxxx-xxxxx')
+    // this.davSavingForm.get('mobile')?.setValue('xxxxx-xxxxx')
+
   }
 
   ngOnInit() {

@@ -38,3 +38,61 @@
 ion-button{
     color: #fff;
 }
+
+
+
+ion-radio {
+    display: block;
+    padding: 8px 10px;
+    background: #fff;
+    margin-bottom: 10px;
+}
+
+.inner_radio {
+    width: 401px;
+}
+
+.inner_radio>div {
+    display: flex;
+    position: relative;
+}
+
+.inner_radio>div>div:first-child {
+    width: 118px;
+    position: relative;
+    color: var(--ion-color-primary);
+}
+
+.inner_radio>div>div:first-child:after {
+    content: ":";
+    position: absolute;
+    right: 20px;
+    font-weight: bold;
+}
+
+.inner_radio>div>div:last-child {
+    font-size: 15px;
+}
+.form_fields {
+    background: white;
+    padding: 19px;
+    margin: 0 19px 19px;
+    // box-shadow: 0 1px 3px #14141475;
+    border-radius: 10px;
+}
+
+.form_fields>div {
+    display: flex;
+    flex-flow: column;
+}
+
+.form_fields>div>ion-text {
+    color: red;
+    font-size: 12px;
+    padding: 4px 11px;
+}
+
+.errors_danger {
+    padding: 16px;
+    margin: 19px;
+}
