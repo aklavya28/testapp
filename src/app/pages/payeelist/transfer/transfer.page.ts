@@ -5,6 +5,7 @@ import { HelperService } from 'src/app/services/helper.service';
 import { LoginService } from 'src/app/services/login.service';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { min } from 'rxjs';
+import { JsonPipe } from '@angular/common';
 
 @Component({
   selector: 'app-transfer',
@@ -33,6 +34,7 @@ export class TransferPage implements OnInit {
   this.error=''
  }
   ngOnInit() {
+    this.error=''
     this.slug = this.active_route.snapshot.params['slug'];
 
 
@@ -48,6 +50,7 @@ export class TransferPage implements OnInit {
   }
 
    async getPayeeDetail(slug){
+      this.error=''
       let user = this.helper.get_current_user('current_user');
       const loading = await this.loading.create({
         message: 'Fetching Details',
@@ -86,6 +89,43 @@ export class TransferPage implements OnInit {
   }
 
 
+//  async transferSubmit(){
+
+//       const loading = await this.loading.create({
+//         message: 'Fetching Details',
+//       })
+
+//     let amout= this.ransForm.get('amount')?.value
+//     let bank_id = this.ransForm.get('bank_account_id')?.value
+//     let user:any = this.helper.get_current_user('current_user');
+//     loading.present()
+//     this.api.trnsfer_money(user.token, user.user_id, amout, bank_id).subscribe(async (res)=>{
+//       // console.log(res)
+//       const success =  await this.toast.create({
+//         position: 'top',
+//         header: res.message,
+//         cssClass: "green",
+//         color: 'success',
+//         buttons: [
+//           {
+//             icon: 'close',
+//             htmlAttributes: {
+//               'aria-label': 'close',
+//             },
+//           },
+//         ],
+//         })
+
+//       loading.dismiss()
+//       this.router.navigateByUrl('tabs/tabs/dashboard')
+//       success.present()
+//     },(err)=>{
+//       this.error = err.error.message
+//       loading.dismiss()
+//     })
+
+
+//   }
  async transferSubmit(){
 
       const loading = await this.loading.create({
@@ -96,26 +136,15 @@ export class TransferPage implements OnInit {
     let bank_id = this.ransForm.get('bank_account_id')?.value
     let user:any = this.helper.get_current_user('current_user');
     loading.present()
-    this.api.trnsfer_money(user.token, user.user_id, amout, bank_id).subscribe(async (res)=>{
+    this.api.trnsfer_money(user.token, user.user_id, amout, bank_id).subscribe((res)=>{
       // console.log(res)
-      const success =  await this.toast.create({
-        position: 'top',
-        header: res.message,
-        cssClass: "green",
-        color: 'success',
-        buttons: [
-          {
-            icon: 'close',
-            htmlAttributes: {
-              'aria-label': 'close',
-            },
-          },
-        ],
-        })
+      // header: res.message,
+      const data = res
+      data.datatype="saving"
 
       loading.dismiss()
-      this.router.navigateByUrl('tabs/tabs/dashboard')
-      success.present()
+      this.router.navigate(['tabs/tabs/success', JSON.stringify(data)])
+
     },(err)=>{
       this.error = err.error.message
       loading.dismiss()

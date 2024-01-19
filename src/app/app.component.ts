@@ -26,15 +26,15 @@ export class AppComponent implements OnInit{
       url: "/tabs/tabs/dashboard", icon: 'grid'
     },
     {
-      title: 'Pay',
+      title: 'Pay EMI',
       url: "/tabs/tabs/tab1", icon: 'card'
     },
     {
-      title: 'Add Payee',
+      title: 'Add Beneficiary',
       url: "/tabs/tabs/addbank", icon: 'color-filter'
     },
     {
-      title: 'Payees/Transfer',
+      title: 'Transfer Money',
       url: "/tabs/tabs/payeelist", icon: 'people'
     },
     // {

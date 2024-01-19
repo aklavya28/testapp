@@ -49,18 +49,19 @@ export class DashboadPage implements OnInit {
     });
 
     const alert =  await this.alert.create({
-      header: 'Update App',
+      message: 'Mobile app update is required',
 
         buttons: [
           {
             text: 'Cancel',
             role: 'cancel',
-            cssClass: 'secondary',
+            cssClass: 'cancel',
             handler: () => {
               console.log('Update canceled');
             }
           }, {
             text: 'Update',
+            cssClass: 'confirm',
             handler: () => {
               window.open('https://play.google.com/store/apps/details?id=io.ionic.app2&hl=en-IN', '_system'); // Opens the Play Store link
             }
@@ -74,7 +75,6 @@ export class DashboadPage implements OnInit {
       this.api_service.postDashDetail(user.user_id,user.token, this.version).subscribe((t:any)=>{
         this.services = t
         this.pendig_data =t.req == ""? "":t.req;
-        console.log("data",t)
 
         localStorage.removeItem('client_info');
         this.clientInfo = localStorage.setItem('client_info', JSON.stringify(this.services))
@@ -100,6 +100,9 @@ export class DashboadPage implements OnInit {
 
       this.router.navigateByUrl("tabs/tabs/transactions/"+id+"/"+type)
   }
-
+  refresh(e){
+    console.log(e)
+    location.reload()
+  }
 
 }

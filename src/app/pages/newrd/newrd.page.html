@@ -1,0 +1,55 @@
+<ion-header>
+  <ion-toolbar>
+       <ion-buttons slot="start" class="back_btn" (click)="back_btn()">
+        <ion-icon name="chevron-back-outline"></ion-icon>
+      </ion-buttons>
+
+    <ion-title>Start New {{service_type ==='RdAccountSetting'? 'RD': 'FD' | uppercase}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+<!-- http://localhost:8100/tabs/tabs/success/sdfsdfsdfsadfsdf -->
+<ion-content class="main_bg" >
+  <div class="ion-padding">
+    <div *ngIf="error" class="errors_danger">{{error | titlecase }}</div>
+    <form [formGroup]="newRdForm" *ngIf="newRdForm" (ngSubmit)="confirmation()">
+      <div class="form_fields">
+        <ion-list>
+          <ion-radio-group formControlName="schime">
+            <ion-item *ngFor="let item of scheme" lines="full">
+              <ion-radio [value]="item.id">
+                {{ item.period }} {{item.tenure_type}} / Interest: {{item.interest_rate}}%
+              </ion-radio>
+            </ion-item>
+          </ion-radio-group>
+        </ion-list>
+        <div class="err_messess" *ngIf="schime()?.invalid">
+          <ion-text *ngIf="schime()?.errors?.['required']" color="danger">Schime is Required</ion-text>
+        </div>
+        <ion-item lines="full">
+          <ion-input
+          labelPlacement="floating"
+            label="Enter Amount"
+            type="number"
+            onKeyPress="if(this.value.length==7) return false;"
+            formControlName="amount"
+
+          >
+          </ion-input>
+
+        </ion-item>
+
+
+        <div class="err_messess" *ngIf="amount()?.touched && amount()?.invalid">
+          <ion-text *ngIf="amount()?.errors?.['required']" color="danger">Amount is Required</ion-text>
+          <ion-text *ngIf="amount()?.errors?.['min_val_fd']" color="danger">Minimum amount for fixed Deposit is 1000</ion-text>
+          <ion-text *ngIf="amount()?.errors?.['min_val_rd']" color="danger">Minimum amount for Recurring Deposit is 100</ion-text>
+          <ion-text *ngIf="amount()?.errors?.['mix_val']" color="danger">Can not pay more then 1000000 </ion-text>
+
+        </div>
+      </div>
+      <br>
+      <ion-button size="default" expand="block" color="secondary" class="btn_color" [disabled]="this.newRdForm.status == 'INVALID'" type="submit">Start Now</ion-button>
+
+    </form>
+  </div>
+</ion-content>

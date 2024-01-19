@@ -3,23 +3,23 @@
     <ion-buttons slot="start">
       <ion-menu-button autoHide="false"></ion-menu-button>
     </ion-buttons>
-    <ion-title>Add Personal Bank</ion-title>
+    <ion-title>Add Beneficiary</ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-content class="main_bg">
   <ion-segment [(ngModel)]="segment" value="dev">
     <ion-segment-button value="dev">
-      <ion-label>Dev Payee</ion-label>
+      <ion-label>Dev </ion-label>
     </ion-segment-button>
     <ion-segment-button value="bank">
-      <ion-label>Other Bank Payee</ion-label>
+      <ion-label>Other Bank</ion-label>
     </ion-segment-button>
   </ion-segment>
   <div *ngIf="error" class="errors_danger ion-padding">{{error | titlecase }}</div>
   <div [ngSwitch]="segment">
     <div *ngSwitchCase="'dev'">
       <form [formGroup]="davSavingForm"  (ngSubmit)="devSubmit()" class="form">
-        <h1>Add Dev Payee</h1>
+        <h1>Add Dev Beneficiary</h1>
         <div class="form_fields">
           <ion-item lines="full">
             <!-- <ion-input label="Enter Saving Account" type="text" formControlName="dev_saving" label-placement="floating"
@@ -77,14 +77,14 @@
           <div>
 
             <ion-button size="default" color="secondary" expand="block"
-              [disabled]="this.davSavingForm.status == 'INVALID'" type="submit">Save Payee</ion-button>
+              [disabled]="this.davSavingForm.status == 'INVALID'" type="submit">Save Beneficiary</ion-button>
           </div>
         </div>
       </form>
     </div>
     <div *ngSwitchCase="'bank'">
       <form [formGroup]="addBankForm" (ngSubmit)="addBankSubmit()" class="form">
-        <h1>Add Other Bank Payee</h1>
+        <h1>Add Other Bank Beneficiary</h1>
         <div class="form_fields">
           <ion-item lines="full">
             <ion-select formControlName="name" label="Choose Bank" label-placement="floating">
@@ -139,7 +139,7 @@
           </div>
           <div>
             <ion-button size="default" color="secondary" expand="block"
-              [disabled]="this.addBankForm.status == 'INVALID'" type="submit">Save Payee</ion-button>
+              [disabled]="this.addBankForm.status == 'INVALID'" type="submit">Save Beneficiary</ion-button>
             <!-- <ion-button size="default" expand="block"   type="submit">Save Bank</ion-button> -->
           </div>
         </div>

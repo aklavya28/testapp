@@ -6,9 +6,9 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class LoginService {
-//   private mainurl:string = 'http://localhost:3000/api/'
-
-  private mainurl:string = 'https://app.devrising.in/api/'
+  private mainurl:string = 'http://localhost:3000/api/'
+//
+//   private mainurl:string = 'https://app.devrising.in/api/'
 
     constructor(
       private router: Router,
@@ -231,6 +231,30 @@ export class LoginService {
        ){
       return  this.http.get<any>(this.mainurl+"app-transactions-pdf?token="+token+"&user_id="+userid+"&ac_id="+ac_id+"&ac_type="+ac_type+"&time="+time)
    }
+   get_schemes(
+      userid:string,
+      token:string,
+      ac_type:string,
+       ){
+      return  this.http.get<any>(this.mainurl+"app-get-scheme?token="+token+"&user_id="+userid+"&ac_type="+ac_type)
+   }
+
+   new_fd(
+      user_id:string,
+      token:string,
+      amount:number,
+      schime:string,
+      type:string
+       ){
+         return this.http.post<any>(this.mainurl+'app-new-fd', {
+            token,
+            user_id,
+            amount,
+            schime,
+            type
+         });
+   }
+
    getBooks(
       userid:string,
       token:string,

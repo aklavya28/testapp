@@ -1,0 +1,15 @@
+.err_messess {
+    display: flex;
+    flex-flow: column;
+    font-size: 14px;
+    margin: 4px 0;
+}
+
+.err_messess>ion-text {
+    color: #fff;
+    padding: 5px 13px;
+    background: #ff3e70fa;
+    margin-bottom: 2px;
+    border-radius: 4px;
+    font-size: 12px;
+}

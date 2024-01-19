@@ -55,7 +55,20 @@ const routes: Routes = [
       },
       {
         path: 'payeelist',
-        loadChildren: () => import('../pages/payeelist/payeelist.module').then( m => m.PayeelistPageModule)
+        loadChildren: () => import('../pages/payeelist/payeelist.module').then( m => m.PayeelistPageModule),
+        canActivate:[AuthGuard]
+      },
+      {
+        path: 'startnewrd/:type',
+        loadChildren: () => import('../pages/newrd/newrd.module').then( m => m.NewrdPageModule),
+        canActivate:[AuthGuard]
+        // loadChildren: () => import('../pages/payeelist/payeelist.module').then( m => m.PayeelistPageModule)
+      },
+      {
+        path: 'success/:data',
+        loadChildren: () => import('../pages/success/success.module').then( m => m.SuccessPageModule),
+        canActivate:[AuthGuard]
+        // loadChildren: () => import('../pages/payeelist/payeelist.module').then( m => m.PayeelistPageModule)
       },
 
       {

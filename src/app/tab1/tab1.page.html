@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-menu-button autoHide="false"></ion-menu-button>
     </ion-buttons>
-    <ion-title>Pay</ion-title>
+    <ion-title>Pay EMI</ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-content class="main_bg" >
@@ -11,7 +11,7 @@
 
   <div style="margin: 10px 15px 0;" *ngIf="error" class="errors_danger">{{error | titlecase }}</div>
 
-  <h1 class="main_title">Pay installments and emi</h1>
+  <h1 class="main_title">Pay installments and EMI</h1>
 
   <form  [formGroup]="payForm" (ngSubmit)="paySubmit()" class="form_desgn">
     <div class="fields">
@@ -28,7 +28,7 @@
     >
       <div *ngFor="let item of clientInfo.data">
         <!-- <ion-item-option>tessdfdsf</ion-item-option> -->
-        <ion-select-option  *ngIf="item.ac_type !== 'Saving' && item.ac_type !== 'FD'"  value="{{item.id +','+ item.ac_type}}">{{item.ac_type}} </ion-select-option>
+        <ion-select-option  *ngIf="item.ac_type !== 'Saving' && item.ac_type !== 'FD'"  value="{{item.id +','+ item.ac_type}}">{{item.ac_type}} A/c: {{item.account_number}} </ion-select-option>
       </div>
 
     </ion-select>

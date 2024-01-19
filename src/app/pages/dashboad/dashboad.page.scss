@@ -39,8 +39,8 @@
 
 .dash_single a:after {
     content: "";
-    width: 128px;
-    height: 95px;
+    width: 115px;
+    height: 113px;
     // background:linear-gradient(45deg, #38779f, #00BCD4);
     background:#fb9949;
     position: absolute;
@@ -102,3 +102,28 @@
 .transfer_rew .inner>div >div.pending {
     color: #FF9800;
 }
+.refresh {
+    font-size: 31px;
+    margin-right: 10px;
+    color: #fdfdfd;
+    // animation: loading 3s linear infinite;
+
+}
+.main_icons>div:nth-child(2n+2) a:after {
+    background: #03a9f4bf !important;
+}
+
+.main_icons>div:nth-child(3n+3) a:after {
+    background: #FFC107 !important;
+}
+.main_icons>div:nth-child(4n+4) a:after {
+    background: #034df4bf !important;
+}
+// @keyframes loading {
+//     0% {
+//       transform: rotate(0);
+//     }
+//     100% {
+//       transform: rotate(360deg);
+//     }
+// }

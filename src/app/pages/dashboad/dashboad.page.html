@@ -6,6 +6,8 @@
       <ion-menu-button autoHide="false"></ion-menu-button>
     </ion-buttons>
     <ion-title>Dashboard</ion-title>
+    <ion-icon slot="end" class="refresh" (click)="refresh($event)" name="refresh-outline"></ion-icon>
+    <!-- <ion-button slot="end"  (click)="refresh($event)">Refresh</ion-button> -->
   </ion-toolbar>
 </ion-header>
 
@@ -61,7 +63,10 @@
               <!-- {{item |json}} -->
               <p>{{item.ac_type}}</p>
               <p>A/C No:. {{item.account_number}}</p>
+              <p *ngIf="item.ac_type ==='Saving'"> Balance:. <strong >{{item.balance_available | currency:'INR'}}</strong></p>
               <p *ngIf="item.maturity_date">Maturity Date:. <strong >{{item.maturity_date | date}}</strong> </p>
+
+              <p *ngIf="item.maturity_amount">Approx Maturity:. <strong > {{item.maturity_amount | currency:'INR'}}</strong> </p>
             </div>
           </a>
         </div>

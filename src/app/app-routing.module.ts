@@ -29,6 +29,14 @@ const routes: Routes = [
     path: 'test',
     loadChildren: () => import('./pages/test/test.module').then( m => m.TestPageModule)
   },
+  // {
+  //   path: 'success',
+  //   loadChildren: () => import('./pages/success/success.module').then( m => m.SuccessPageModule)
+  // },
+  // {
+  //   path: 'newrd',
+  //   loadChildren: () => import('./pages/newrd/newrd.module').then( m => m.NewrdPageModule)
+  // },
 
   // {
   //   path: 'transfer-history',

@@ -1,0 +1,45 @@
+<ion-header class="green" [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="false"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Success</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="main_bg" >
+  <div class="success-animation">
+    <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52"><circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none" /><path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" /></svg>
+    </div>
+    <!-- <ion-button (click)="playSound()">Play Sound</ion-button> -->
+    <div class="success_info" *ngIf="data.datatype ==='rd'">
+        <h1>Successfully Created</h1>
+        <div *ngIf="data">
+          <div *ngIf="data.account_number">
+            <div>Account No</div>
+            <div>{{data.account_number}}</div>
+          </div>
+          <div *ngIf="data.open_date">
+            <div>Opening Date</div>
+            <div>{{data.open_date | date}}</div>
+          </div>
+          <div *ngIf="data.open_date">
+            <div>Principal Amount</div>
+            <div>{{data.principal_amount | currency:'INR'}}</div>
+          </div>
+
+        </div>
+
+    </div>
+
+    <div class="success_info_saving" *ngIf="data.datatype ==='saving'">
+        <h1>Success!</h1>
+        <ion-text>{{data.message}}</ion-text>
+    </div>
+
+
+    <div  class="center">
+      <ion-button [routerLink]="['/tabs/tabs/dashboard']" color="success"> Done</ion-button>
+
+    </div>
+</ion-content>

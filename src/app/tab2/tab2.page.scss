@@ -8,3 +8,31 @@
     text-transform: uppercase;
     color: #979797;
 }
+.Service_list {
+    display: flex;
+    gap: 11px;
+    padding: 20px;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+}
+
+.Service_list>div>div {
+    background: linear-gradient(45deg, #fb6e23, #f1a427);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px;
+    width: 100px;
+    height: 100px;
+    border-radius: 5px;
+}
+
+.Service_list>div {
+    text-align: center;
+    font-size: 14px;
+}
+
+.Service_list>div p {
+    margin: 4px 0 0;
+    color: #393939;
+}

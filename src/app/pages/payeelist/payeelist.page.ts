@@ -34,7 +34,7 @@ export class PayeelistPage implements OnInit {
     let user:any = this.helper.get_current_user('current_user');
     this.api.get_personal_banks(user.user_id, user.token).subscribe((res:any) =>{
       this.results = res.data;
-
+      this.data = [...res.data]
       loading.dismiss()
     },(err)=>{
       this.error = err.error.message
@@ -49,6 +49,7 @@ export class PayeelistPage implements OnInit {
   async handleInput(event){
 
     const query = event.target.value.toLowerCase();
+    console.log( this.results)
     this.results = this.data.filter((d:any) => {
     return Object.keys(d)
     .some(function(k) {

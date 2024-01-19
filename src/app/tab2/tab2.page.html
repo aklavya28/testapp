@@ -7,6 +7,26 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <div class="coming_soon">Coming Soon</div>
+  <div class="Service_list">
+    <div (click)="startNew('RdAccountSetting')">
+      <div>
+        <img src="../../assets/icon/rd.png" alt="">
+      </div>
+        <p>Start New RD</p>
+    </div>
+    <!-- <div>
+      <div>
+        <img src="../../assets/icon/rd.png" alt="">
+      </div>
+        <p>New FD</p>
+    </div> -->
+    <div>
+      <div (click)="startNew('FdAccountSetting')">
+        <img src="../../assets/icon/fd.png" alt="">
+      </div>
+        <p>Start New FD</p>
+    </div>
+  </div>
+  <!-- <div class="coming_soon">Coming Soon</div> -->
 </ion-content>
 

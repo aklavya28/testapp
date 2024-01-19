@@ -3,19 +3,19 @@
     <ion-buttons slot="start">
       <ion-menu-button autoHide="false"></ion-menu-button>
     </ion-buttons>
-    <ion-title>Payees</ion-title>
+    <ion-title>Transfer Money</ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-content class="main_bg" >
-  <div class="ion-padding">
+  <div class="ion-padding-horizontal mt20 ">
     <div *ngIf="error" class="errors_danger">{{error | titlecase }}</div>
   </div>
 
   <div>
-      <ion-button class="ion-padding" [routerLink]="'/tabs/tabs/addbank'" color="secondary"  expand="block">Add New Payee</ion-button>
+      <ion-button class="ion-padding-horizontal" [routerLink]="'/tabs/tabs/addbank'" color="secondary"  expand="block">Add New Payee</ion-button>
       <!-- <h1 class="main_title">List of Payee</h1> -->
       <ion-searchbar
-      class="ion-padding"
+      class="ion-padding-horizontal"
 
       show-clear-button="focus"
       placeholder="Search payee"

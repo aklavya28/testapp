@@ -119,3 +119,18 @@ ion-button{color: #fff;}
     color: #fff;
 }
 
+.confirm {
+    background: var(--ion-color-primary) !important;
+    padding: 5px 10px !important;
+    height: 31px;
+    color: #fff !important;
+    border-radius:5px !important;
+}
+.cancel {
+    background: var(--ion-color-dark) !important;
+    padding: 5px 10px !important;
+    height: 31px;
+    color: #fff !important;
+    border-radius:5px !important;
+}
+.mt20{ margin-top: 20px;}

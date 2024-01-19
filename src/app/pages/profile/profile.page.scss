@@ -47,7 +47,9 @@
 
 .details>div>div:first-child {
     position: relative;
-    color: var(--ion-color-primary)
+    color: var(--ion-color-primary);
+    text-align: right;
+    padding-right: 33px;
 }
 
 .details>div>div:first-child:after {

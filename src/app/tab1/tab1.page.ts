@@ -39,7 +39,7 @@ export class Tab1Page {
     this.clientInfo = JSON.parse(info)
     console.log('clint', this.clientInfo)
     this.payForm.get('service')?.valueChanges.subscribe(async (val)=>{
-      console.log('testing', val)
+      this.error = ''
       this.payForm.get('amount')?.enable()
       this.payForm.patchValue({ amount: 0});
       let rd_id =  val.split(',')[0]
@@ -57,6 +57,7 @@ export class Tab1Page {
       rd_loder.present()
 
       this.api.rd_due(userid, token, rd_id).subscribe((res:any) =>{
+        this.error=''
         rd_loder.dismiss()
         console.log(res.amount)
         // this.payForm.get('amount')?.value = res.amount
@@ -105,6 +106,7 @@ export class Tab1Page {
           })
         loading.present();
         this.api.pay(userid, token, ac_type, ac_id,amount).subscribe((res:any)=>{
+         this.error=''
             loading.dismiss()
               success.present()
               this.payForm.reset()
