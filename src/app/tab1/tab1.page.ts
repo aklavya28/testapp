@@ -37,7 +37,7 @@ export class Tab1Page {
 
     let info:any = localStorage.getItem('client_info')
     this.clientInfo = JSON.parse(info)
-    console.log('clint', this.clientInfo)
+    // console.log('clint', this.clientInfo)
     this.payForm.get('service')?.valueChanges.subscribe(async (val)=>{
       this.error = ''
       this.payForm.get('amount')?.enable()
@@ -59,7 +59,7 @@ export class Tab1Page {
       this.api.rd_due(userid, token, rd_id).subscribe((res:any) =>{
         this.error=''
         rd_loder.dismiss()
-        console.log(res.amount)
+        // console.log(res.amount)
         // this.payForm.get('amount')?.value = res.amount
 
         this.payForm.patchValue({ amount: res.amount })

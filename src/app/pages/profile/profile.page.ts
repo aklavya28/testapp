@@ -31,7 +31,7 @@ export class ProfilePage implements OnInit {
     this.api.get_user_profile(user.token, user.user_id).subscribe((res:any)=>{
       loading.dismiss()
       this.userdata = res.data
-      console.log(res)
+      // console.log(res)
     }, (err:any)=>{
       loading.dismiss()
       // this.reciver_detail = null

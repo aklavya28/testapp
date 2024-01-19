@@ -43,7 +43,7 @@ export class AddbankPage implements OnInit {
     this.save_saving_btn= false
     this.davSavingForm.reset()
     this.addBankForm.reset()
-    console.log("ok",this.save_saving_btn)
+    // console.log("ok",this.save_saving_btn)
     // this.davSavingForm.get('mobile')?.setValue('xxxxx-xxxxx')
 
   }
@@ -79,7 +79,7 @@ export class AddbankPage implements OnInit {
       this.isActive = true
       this.addBankForm.reset()
       this.banklist = res
-      console.log(this.banklist)
+      // console.log(this.banklist)
     }, (err:any) =>{
       loading.dismiss()
       this.error = err.error.message ? err.error.message : (err.statusText+ "! Something went wrong");
@@ -133,7 +133,7 @@ async addBankSubmit(){
  async devSubmit(){
     let user:any = this.helper.get_current_user('current_user');
     let saving_id = this.davSavingForm.get('saving_ac')?.value
-    console.log('saving_id', saving_id)
+    // console.log('saving_id', saving_id)
 
     const success =  await this.tost.create({
       position: 'top',
@@ -164,7 +164,7 @@ async addBankSubmit(){
         this.davSavingForm.reset()
         this.payee_details = ''
         this.router.navigateByUrl('/tabs/tabs/payeelist')
-        console.log(res)
+        // console.log(res)
          }, (err)=>{
           loading.dismiss()
         this.error = err.error.message

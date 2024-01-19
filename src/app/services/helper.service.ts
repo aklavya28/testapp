@@ -35,7 +35,7 @@ export class HelperService {
           mobile:mobile
         }
         localStorage.setItem('profile', JSON.stringify(profile))
-        console.log("from helper", this.get_current_user('profile'))
+        // console.log("from helper", this.get_current_user('profile'))
       }, (err)=>{
        return err
       })

@@ -102,7 +102,7 @@ export class NewrdPage implements OnInit {
     this.service.new_fd(user.user_id, user.token, amount, schime, type).subscribe((res)=>{
       const data = res.data
       data.datatype="rd"
-      console.log("data prasms",JSON.stringify(data))
+      // console.log("data prasms",JSON.stringify(data))
       this.router.navigate(['tabs/tabs/success', JSON.stringify(data)])
 
       loading.dismiss()
@@ -113,12 +113,6 @@ export class NewrdPage implements OnInit {
 
   }
 
-
-
-
-  handleChange(ev) {
-    console.log('Current value:', JSON.stringify(ev.target.value));
-  }
 
   trackItems(index: number, item: any) {
     return item.id;

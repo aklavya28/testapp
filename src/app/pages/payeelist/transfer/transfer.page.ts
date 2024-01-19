@@ -1,11 +1,10 @@
-import { LoadingController, ToastController } from '@ionic/angular';
+import { LoadingController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HelperService } from 'src/app/services/helper.service';
 import { LoginService } from 'src/app/services/login.service';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
-import { min } from 'rxjs';
-import { JsonPipe } from '@angular/common';
+
 
 @Component({
   selector: 'app-transfer',
@@ -25,8 +24,7 @@ export class TransferPage implements OnInit {
     private api: LoginService,
     private helper: HelperService,
     private loading: LoadingController,
-    private fb: FormBuilder,
-    private toast: ToastController
+    private fb: FormBuilder
 
 
   ) { }
@@ -88,44 +86,6 @@ export class TransferPage implements OnInit {
     return null
   }
 
-
-//  async transferSubmit(){
-
-//       const loading = await this.loading.create({
-//         message: 'Fetching Details',
-//       })
-
-//     let amout= this.ransForm.get('amount')?.value
-//     let bank_id = this.ransForm.get('bank_account_id')?.value
-//     let user:any = this.helper.get_current_user('current_user');
-//     loading.present()
-//     this.api.trnsfer_money(user.token, user.user_id, amout, bank_id).subscribe(async (res)=>{
-//       // console.log(res)
-//       const success =  await this.toast.create({
-//         position: 'top',
-//         header: res.message,
-//         cssClass: "green",
-//         color: 'success',
-//         buttons: [
-//           {
-//             icon: 'close',
-//             htmlAttributes: {
-//               'aria-label': 'close',
-//             },
-//           },
-//         ],
-//         })
-
-//       loading.dismiss()
-//       this.router.navigateByUrl('tabs/tabs/dashboard')
-//       success.present()
-//     },(err)=>{
-//       this.error = err.error.message
-//       loading.dismiss()
-//     })
-
-
-//   }
  async transferSubmit(){
 
       const loading = await this.loading.create({

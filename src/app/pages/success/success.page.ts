@@ -23,7 +23,7 @@ export class SuccessPage implements OnInit {
   }
   ngOnInit() {
     this.data = JSON.parse(this.route.snapshot.params['data'])
-    console.log(this.data)
+    // console.log(this.data)
 
   }
 

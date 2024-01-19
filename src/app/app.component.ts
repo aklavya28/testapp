@@ -7,6 +7,7 @@ import { LoginService } from './services/login.service';
 
 
 
+
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -35,7 +36,7 @@ export class AppComponent implements OnInit{
     },
     {
       title: 'Transfer Money',
-      url: "/tabs/tabs/payeelist", icon: 'people'
+      url: "/tabs/tabs/payeelist", icon: 'cash-outline'
     },
     // {
     //   title: 'Transfer',
