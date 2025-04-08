@@ -128,6 +128,7 @@ export class AppComponent implements OnInit{
 
     localStorage.removeItem('current_user')
     localStorage.removeItem('profile')
+    localStorage.removeItem('bio')
     this.router.navigateByUrl('/')
      window.location.reload()
     return false
