@@ -1,9 +1,12 @@
 import { Component, DoCheck, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { LoadingController, Platform } from '@ionic/angular';
+import { LoadingController } from '@ionic/angular';
 import { StatusBar, Style } from '@capacitor/status-bar';
 import { HelperService } from './services/helper.service';
 import { LoginService } from './services/login.service';
+import { EdgeToEdge } from '@capawesome/capacitor-android-edge-to-edge-support';
+import { Capacitor } from '@capacitor/core';
+import { Device } from '@capacitor/device';
 
 
 
@@ -65,7 +68,6 @@ export class AppComponent implements OnInit{
   public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
   constructor(
     private router: Router,
-    private platform: Platform,
     private helper: HelperService,
     private api: LoginService,
     private loding: LoadingController
@@ -82,6 +84,18 @@ export class AppComponent implements OnInit{
 
     })
 
+  }
+
+  async enableEdgeToEdge() {
+    if (Capacitor.getPlatform() === 'android') {
+      const info = await Device.getInfo();
+      const version = parseInt(info.osVersion.split('.')[0]);
+      if (version >= 15) {
+        await EdgeToEdge.enable();
+        await EdgeToEdge.setBackgroundColor({ color: '#fb6e23' });
+      }
+      await StatusBar.setStyle({ style: Style.Default });
+    }
   }
   async open(){
     let user:any =  this.helper.get_current_user('current_user')
@@ -112,11 +126,8 @@ export class AppComponent implements OnInit{
     }
   }
  async ngOnInit(){
-    if(this.platform.is('android')){
-          StatusBar.setOverlaysWebView({ overlay: false })
-          StatusBar.setBackgroundColor({color: "#fb6e23"})
-      }
-      this.helper.getprofile()
+   this.enableEdgeToEdge()
+   this.helper.getprofile()
   }
   ngDoCheck( ){
     // console.log(this.profile, 'son',  this.getprofile())

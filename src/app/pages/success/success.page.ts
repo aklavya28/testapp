@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-success',
@@ -10,7 +10,8 @@ export class SuccessPage implements OnInit {
   data:any;
   private audio: HTMLAudioElement
   constructor(
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
 
   ) {
 
@@ -35,4 +36,9 @@ export class SuccessPage implements OnInit {
     // Play the sound
     this.audio.play();
   }
+  navigateToDashboard() {
+  this.router.navigate(['/tabs/tabs/dashboard']).then(() => {
+    window.location.reload();
+  });
+}
 }
