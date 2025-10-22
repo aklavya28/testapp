@@ -1,4 +1,4 @@
-import { Component, DoCheck, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { ChangeDetectorRef, Component, DoCheck, NgZone, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
 import { StatusBar, Style } from '@capacitor/status-bar';
@@ -7,6 +7,8 @@ import { LoginService } from './services/login.service';
 import { EdgeToEdge } from '@capawesome/capacitor-android-edge-to-edge-support';
 import { Capacitor } from '@capacitor/core';
 import { Device } from '@capacitor/device';
+import { NetworkService } from './services/network.service';
+import { Subscription } from 'rxjs';
 
 
 
@@ -23,6 +25,15 @@ export class AppComponent implements OnInit{
   top:string='';
   profileStatus:boolean=false;
   profile:any;
+  isOnline:boolean = true;
+  showBanner:boolean = false;
+  // hidingBanner = false;
+  bannerMessage:string = '';
+  bannerColor:string = '';
+  private hideTimer: any;
+  private firstCheckDone = false;
+  private wasOffline = false;
+   private subscription!: Subscription;
 
   public appPages = [
     {
@@ -53,6 +64,10 @@ export class AppComponent implements OnInit{
       title: 'Transfer History',
       url: "/tabs/tabs/t-history", icon: 'layers'
     },
+    {
+      title: 'Change Password',
+      url: "/tabs/tabs/changepassword", icon: 'lock-closed'
+    },
 
 
     // { title: 'Inbox', url: '/folder/inbox', icon: 'mail' },
@@ -70,7 +85,10 @@ export class AppComponent implements OnInit{
     private router: Router,
     private helper: HelperService,
     private api: LoginService,
-    private loding: LoadingController
+    private loding: LoadingController,
+    private networkService: NetworkService,
+    private zone: NgZone,
+    private cdr: ChangeDetectorRef
       ) {
 
     router.events.subscribe((event:any) =>{
@@ -128,6 +146,28 @@ export class AppComponent implements OnInit{
  async ngOnInit(){
    this.enableEdgeToEdge()
    this.helper.getprofile()
+    this.subscription = this.networkService.networkStatus$.subscribe((online) => {
+      this.clearHideTimer();
+      // clearTimeout(this.hideTimer);
+      // this.zone.run(() => {
+        if (!this.firstCheckDone) {
+          this.firstCheckDone = true;
+          this.isOnline = online;
+          this.wasOffline = !online;
+          return;
+        }
+
+        this.isOnline = online;
+
+        if (!online) {
+            this.showOfflineBanner();
+            this.wasOffline = true;
+          } else if (this.wasOffline && online) {
+            this.showOnlineBanner();
+            this.wasOffline = false;
+          }
+      });
+    // });
   }
   ngDoCheck( ){
     // console.log(this.profile, 'son',  this.getprofile())
@@ -135,6 +175,55 @@ export class AppComponent implements OnInit{
 
     this.current_user = localStorage.getItem('current_user')
   }
+  private showOfflineBanner() {
+      this.zone.run(() => {
+        this.bannerMessage = 'No Internet Connection';
+        this.bannerColor = 'red';
+        this.showBanner = true;
+        // this.hidingBanner = false;
+         this.cdr.detectChanges();
+      });
+    }
+
+    private showOnlineBanner() {
+      this.zone.run(() => {
+        this.clearHideTimer();
+        this.bannerMessage = 'Back Online';
+        this.bannerColor = 'green';
+        this.showBanner = true;
+        // this.hidingBanner = false;
+        this.cdr.detectChanges();
+
+        this.hideTimer = window.setTimeout(() => {
+          this.zone.run(() => {
+            this.hideBanner();
+          });
+        }, 3000);
+      });
+    }
+
+     private hideBanner() {
+        this.zone.run(() => {
+          // this.hidingBanner = true;
+          this.cdr.detectChanges();
+
+          // Wait for animation to complete before removing from DOM
+          setTimeout(() => {
+            this.zone.run(() => {
+              this.showBanner = false;
+              // this.hidingBanner = false;
+              this.cdr.detectChanges();
+            });
+          }, 400); // Match animation duration
+        });
+      }
+
+    private clearHideTimer() {
+      if (this.hideTimer) {
+        clearTimeout(this.hideTimer);
+        this.hideTimer = null;
+      }
+    }
  logout(): boolean{
 
     localStorage.removeItem('current_user')
@@ -144,6 +233,11 @@ export class AppComponent implements OnInit{
      window.location.reload()
     return false
 
+  }
+
+  ngOnDestroy() {
+      // this.clearHideTimer();
+    if (this.subscription) this.subscription.unsubscribe();
   }
 
 }

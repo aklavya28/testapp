@@ -232,5 +232,7 @@ export class LoginPage implements OnInit {
     this.viewMode = d;
   }
 
-
+  togglePassword() {
+     this.show_password = !this.show_password;
+  }
 }

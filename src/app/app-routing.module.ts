@@ -29,6 +29,10 @@ const routes: Routes = [
     path: 'test',
     loadChildren: () => import('./pages/test/test.module').then( m => m.TestPageModule)
   },
+  {
+    path: 'change-password',
+    loadChildren: () => import('./pages/change-password/change-password.module').then( m => m.ChangePasswordPageModule)
+  },
   // {
   //   path: 'success',
   //   loadChildren: () => import('./pages/success/success.module').then( m => m.SuccessPageModule)

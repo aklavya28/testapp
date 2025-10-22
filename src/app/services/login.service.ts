@@ -6,9 +6,9 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class LoginService {
-  private mainurl:string = 'http://localhost:3200/api/'
+//   private mainurl:string = 'http://localhost:3200/api/'
 //
-//   private mainurl:string = 'https://app.devrising.in/api/'
+  private mainurl:string = 'https://app.devrising.in/api/'
 
     constructor(
       private router: Router,
@@ -267,5 +267,17 @@ export class LoginService {
 
    //   );
 
+   }
+
+   change_password(
+      data:any,
+      user_id:string,
+      token:string,
+       ){
+         return this.http.post<any>(this.mainurl+'app-change-password', {
+            data,
+            user_id,
+            token
+         });
    }
 }

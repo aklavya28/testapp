@@ -70,6 +70,11 @@ const routes: Routes = [
         canActivate:[AuthGuard]
         // loadChildren: () => import('../pages/payeelist/payeelist.module').then( m => m.PayeelistPageModule)
       },
+      {
+        path: 'changepassword',
+        loadChildren: () => import('../pages/change-password/change-password.module').then( m => m.ChangePasswordPageModule),
+        canActivate:[AuthGuard]
+      },
 
       {
         path: '',

@@ -48,6 +48,13 @@
     </ion-menu>
     <ion-router-outlet id="main-content"></ion-router-outlet>
   </ion-split-pane>
+            <div
+            class="network-banner"
+            *ngIf="showBanner"
+            [ngClass]="bannerColor === 'red' ? 'offline' : 'online'"
+          >
+            {{ bannerMessage }}
+          </div>
   <div *ngIf="fingerprint">
     {{fingerprint}}
   </div>

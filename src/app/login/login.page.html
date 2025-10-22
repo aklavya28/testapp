@@ -30,11 +30,13 @@
           <div class="fields">
             <ion-list  no-lines>
               <ion-item lines="full">
-                <ion-label position="floating">Username</ion-label>
+                <!-- <ion-label position="floating">Username</ion-label> -->
                 <ion-input
-                  placeholder="Username"
+                  placeholder="username"
                   formControlName="username"
                   maxlength="6"
+                  label="Username"
+                  labelPlacement="floating"
                 ></ion-input>
                 <ion-icon slot="start" name="person-outline"></ion-icon>
               </ion-item>
@@ -52,15 +54,23 @@
                   >Maximum length for username is 10 character</ion-text
                 >
               </ion-item>
-              <ion-item lines="full">
-                <ion-label position="floating">Password</ion-label>
-                <ion-input
-
-                  formControlName="password"
-                  type="password"
-                ></ion-input>
-
+              <ion-item lines="full" class="password-item">
                 <ion-icon slot="start" name="lock-closed-outline"></ion-icon>
+                <ion-input
+                  label="Password"
+                  placeholder="password"
+                  [type]="show_password ? 'text' : 'password'"
+                  formControlName="password"
+                  label-placement="floating"
+                  >
+                </ion-input>
+
+                <ion-icon
+                  [name]="show_password ? 'eye-off-outline' : 'eye-outline'"
+                  slot="end"
+                  class="eye-icon"
+                  (click)="togglePassword()">
+                </ion-icon>
               </ion-item>
               <ion-item lines="none"
                 *ngIf="password()?.touched && password()?.invalid"
@@ -76,16 +86,6 @@
                   >Maximum length for password is 20 character</ion-text
                 >
               </ion-item>
-              <div class="ion-padding">
-                <div class="show_password" *ngIf="show_password">
-                  {{memberForm.get('password')?.value}}
-                </div>
-                <ion-checkbox
-                  labelPlacement="end"
-                  (click)="show_password = !show_password"
-                  >Show Password</ion-checkbox
-                >
-              </div>
 
             </ion-list>
           </div>
