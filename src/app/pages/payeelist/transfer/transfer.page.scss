@@ -38,3 +38,21 @@
 .errors_danger {
     margin: 14px 19px;
 }
+.balance {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    background: var(--ion-color-primary);
+    color: #fff;
+    height: 67px;
+    border-top: 1px solid #fb6e23;
+}
+
+.balance>spam {flex: 1;}
+
+.balance>.amount {
+    color: #fff;
+    font-size: 19px;
+    font-weight: normal;
+}

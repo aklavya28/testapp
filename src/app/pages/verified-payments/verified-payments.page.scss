@@ -1,0 +1,86 @@
+.list {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 5px;
+    padding: 0 10px;
+    }
+
+.list>div:last-child {
+    width: 100%;
+}
+
+.list>div:first-child {
+    width: 130px;
+}
+.ion-content_text{ padding: 10px 0;}
+.date {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    padding: 10px;
+    text-align: center;
+    .month{
+        font-size: 12px;
+    }
+}
+
+.date>.day {
+    font-size: 34px;
+    font-weight: bold;
+}
+
+.ion-content_text>div> span:first-child {
+    display: inline-block;
+    width: 82px;
+    position: relative;
+    font-size: 13px;
+}
+.ion-content_text>div> span{
+    font-size: 13px;
+}
+
+.ion-content_text>div> span:first-child::after {
+    content: ":";
+    position: absolute;
+    right: 6px;
+}
+
+.rejected {
+    background: #e91e638c;
+    color: #fff;
+}
+
+.rejected>.date {
+    background: #e91e638c;
+}
+.pending {
+    background: #ff9800a8;
+    color: #fff;
+}
+
+.pending>.date {
+    background: #ff9800f7;
+}
+.approved {
+    background: #3dad7c;
+    color: #fff;
+}
+
+.approved>.date {
+    background: #378f69;
+}
+ion-spinner {
+  width: 60px;
+  height: 60px;
+}
+.spinner{ text-align: center;}
+.close_icon {
+    background: #dd611f;
+    font-size: 36px;
+    color: #fff;
+    font-weight: normal;
+}
+.img_width{ max-width: 100%;}
+.padding_h{ padding: 15px 0 15px;}

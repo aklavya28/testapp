@@ -1,0 +1,39 @@
+.upload_box * {
+    color: #ff5f09 !important;
+    font-weight: bold;
+    text-align: center;
+}
+.preview {
+    background: #d5d5d5;
+    display: flex;
+    justify-content: center;
+    padding: 15px;
+}
+.btn_area{ padding: 10px; text-align: center;}
+.error {
+    display: block;background: #E91E63;
+    padding: 8px 10px;
+    font-size: 15px;
+    color: #fff;
+    text-align: left;
+    margin: 0 0 0 16px;
+    border-radius: 0 0 0 11px;
+    position: relative;
+    top: -1px;
+    z-index: 9;
+}
+
+.error::after {
+    content: "";
+    position: absolute;
+    top: -20px;
+    left: 13px;
+    border-width: 10px;
+    border-color: transparent transparent #E91E63 transparent;
+    border-style: solid;
+}
+ion-spinner {
+  --color: #54dc98;
+  width: 40px;
+  height: 40px;
+}

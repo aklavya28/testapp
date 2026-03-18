@@ -1,0 +1,53 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="false"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Verify Payment</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="main_bg" >
+<div class="padding_h">
+  <ion-button class="ion-padding-horizontal" [routerLink]="'/tabs/tabs/verify-payment'" color="secondary"  expand="block">Verify Payment</ion-button>
+</div>
+
+  <div  class="spinner" *ngIf="is_spinner">
+    <ion-spinner name="dots" color="primary"></ion-spinner>
+
+  </div>
+
+
+  <div *ngFor="let item of data">
+    <div class="list {{item.status}}" (click)="openModel(item.image_name)">
+      <div class="date">
+        <div class="day">{{item.day}}</div>
+        <div class="month">{{item.month}}</div>
+        <div class="year">{{item.year}}</div>
+      </div>
+      <div class="ion-content_text">
+        <div>
+          <span>Status</span>
+          <span>{{item.status | uppercase}}</span>
+        </div>
+        <div>
+          <span>Amount</span>
+          <span>{{item.amount | currency:'INR'}}</span>
+        </div>
+        <ng-container *ngIf="item.status === 'rejected'">
+          <div>
+            <span>Remarks</span>
+            <span>{{item.remarks}}</span>
+        </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+  <ion-modal [isOpen]="isModalOpen">
+    <ng-template>
+       <ion-icon name="close" (click)="setOpen(false)" class="close_icon"></ion-icon>
+      <ion-content class="ion-padding">
+        <img [src]="img_url" alt="" class="img_width">
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+</ion-content>

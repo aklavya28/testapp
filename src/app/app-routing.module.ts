@@ -25,6 +25,16 @@ const routes: Routes = [
     loadChildren: () =>import('./pages/dashboad/transactions/transactions.module').then( m => m.TransactionsPageModule ),
     canActivate:[AuthGuard]
   },
+    {
+    path: 'verified-payments',
+    loadChildren: () =>import('./pages/verified-payments/verified-payments.module').then( m => m.VerifiedPaymentsPageModule ),
+    canActivate:[AuthGuard]
+  },
+    {
+    path: 'verify-payment',
+    loadChildren: () =>import('./pages/verify-payment/verify-payment.module').then( m => m.VerifyPaymentPageModule ),
+    canActivate:[AuthGuard]
+  },
   {
     path: 'test',
     loadChildren: () => import('./pages/test/test.module').then( m => m.TestPageModule)
@@ -32,6 +42,10 @@ const routes: Routes = [
   {
     path: 'change-password',
     loadChildren: () => import('./pages/change-password/change-password.module').then( m => m.ChangePasswordPageModule)
+  },
+  {
+    path: 'verified-payments',
+    loadChildren: () => import('./pages/verified-payments/verified-payments.module').then( m => m.VerifiedPaymentsPageModule)
   },
   // {
   //   path: 'success',

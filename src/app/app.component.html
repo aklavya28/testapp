@@ -12,7 +12,6 @@
           <div class="spinner" *ngIf="!profile">
             <ion-spinner name="dots" color="primary"></ion-spinner>
 
-
           </div>
 
           <div class="profile" *ngIf="profile">
@@ -29,6 +28,7 @@
             <ion-item lines="full"
              routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" routerLinkActive="selected">
               <ion-icon aria-hidden="true" name="{{p.icon}}"></ion-icon> &nbsp;
+
               <!-- <ion-icon aria-hidden="true" slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon> -->
               <ion-label>{{ p.title }}</ion-label>
             </ion-item>

@@ -4,9 +4,20 @@
       <ion-buttons slot="start" class="back_btn" (click)="goBack()">
       <ion-icon name="chevron-back-outline"></ion-icon>
      </ion-buttons>
-
     <ion-title>Transfer</ion-title>
   </ion-toolbar>
+
+   <ion-list >
+    <div class="balance">
+        Balance:
+      <span *ngIf="balance" class="amount">
+
+        {{balance | currency:'INR'}}
+      </span>
+      <ion-button color="secondary" size="small" *ngIf="!balance"  (click)="check_balanece()">Check</ion-button>
+    </div>
+  </ion-list>
+
 </ion-header>
 
 <ion-content [fullscreen]="true" class="main_bg">

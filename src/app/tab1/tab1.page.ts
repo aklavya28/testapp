@@ -17,7 +17,7 @@ export class Tab1Page {
   current_user:any = ''
   error:string = '';
   disable:boolean = false
-
+  minAmt:number = 200000000
   constructor(
     private fb: FormBuilder,
     private api: LoginService,
@@ -29,27 +29,49 @@ export class Tab1Page {
     ) {
       this.payForm = fb.group({
         service: fb.control('', [Validators.required]),
-        amount: fb.control('', [Validators.required, this.min_val, this.mix_val])
+        amount: fb.control('', [Validators.required, Validators.min(this.minAmt), this.min_val, this.mix_val])
       })
 
   }
   ngOnInit(){
 
     let info:any = localStorage.getItem('client_info')
+
+
     this.clientInfo = JSON.parse(info)
     // console.log('clint', this.clientInfo)
     this.payForm.get('service')?.valueChanges.subscribe(async (val)=>{
+      const amountControl = this.payForm.get('amount');
       this.error = ''
       this.payForm.get('amount')?.enable()
       this.payForm.patchValue({ amount: 0});
       let rd_id =  val.split(',')[0]
       let s_type =  val.split(',')[1]
+      let emi_amount =  val.split(',')[2]
 
+        if (s_type !== 'RD') {
+          this.minAmt = Number(emi_amount);
+        } else {
+          this.minAmt = 0;
+        }
+
+  // ✅ Update validators dynamically
+  amountControl?.setValidators([
+        Validators.required,
+        Validators.min(this.minAmt),
+        this.min_val,
+        this.mix_val
+      ]);
+
+      // ✅ IMPORTANT
+      amountControl?.updateValueAndValidity();
      if(s_type === "RD"){
       let login_user:any = localStorage.getItem('current_user');
       this.current_user = JSON.parse(login_user)
       let userid:string = this.current_user.user_id
       let token:string = this.current_user.token
+
+
       const rd_loder =  await this.loading.create({
         message: 'Fatching RD Due Installments...',
 
@@ -121,19 +143,6 @@ export class Tab1Page {
           this.error = err.error.message ? err.error.message : (err.statusText+ "! Something went wrong");
         //  err.error.message ? err.error.message : (err.statusText+ "! Server Not Found");
         })
-
-
-
-
-
-
-
-
-
-
-
-
-
 
   }
   service(){

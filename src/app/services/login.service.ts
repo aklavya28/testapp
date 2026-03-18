@@ -1,20 +1,24 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
 export class LoginService {
-//   private mainurl:string = 'http://localhost:3200/api/'
-//
-  private mainurl:string = 'https://app.devrising.in/api/'
+  private mainurl:string = 'http://localhost:3200/api/'
 
+//   private mainurl:string = 'https://app.devrising.in/api/'
+   token:string = ''
+   user_slug:string = ''
     constructor(
       private router: Router,
       private http: HttpClient
-
       ) {
+            this.token =  localStorage.getItem('auth_token') || ""
+                const current_user = JSON.parse(localStorage.getItem('current_user'))
+                  this.user_slug = current_user?.user_id
+                  console.log("login", this.user_slug );
 
    }
    postLogin(username:string, pass:string, type:string){
@@ -280,4 +284,31 @@ export class LoginService {
             token
          });
    }
+   // upload_payment_screenshot(data:any, user_id:string ){
+   //         let contentHeader = new HttpHeaders({  "Authorization": `${this.token}`, observe: 'response' });
+   //       return this.http.post<any>(this.mainurl+'upload-payment-screenshot', {data, user_id}, { headers: contentHeader })
+
+   // }
+   upload_payment_screenshot(formData: FormData) {
+      // ONLY include Authorization. Let the browser handle the rest.
+      let contentHeader = new HttpHeaders({
+         "Authorization": `${this.token}`,
+         "Accept": "application/json"
+      });
+
+      return this.http.post<any>(
+         this.mainurl + 'upload-payment-screenshot',
+         formData, // Send the formData directly
+         { headers: contentHeader }
+      );
+   }
+
+   get_verified_screenshots(){
+      return this.http.get<any>(`${this.mainurl}get-verified-screenshots?user_id=${this.user_slug }`, {
+        headers: new HttpHeaders({
+          "Authorization": `${this.token}`
+        })
+      })
+    }
+
 }

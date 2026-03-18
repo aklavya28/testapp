@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, DoCheck, NgZone, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { LoadingController } from '@ionic/angular';
+import { IonDatetimeButton, LoadingController } from '@ionic/angular';
 import { StatusBar, Style } from '@capacitor/status-bar';
 import { HelperService } from './services/helper.service';
 import { LoginService } from './services/login.service';
@@ -17,6 +17,7 @@ import { Subscription } from 'rxjs';
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
+
 })
 export class AppComponent implements OnInit{
   current_url:string =''
@@ -63,6 +64,14 @@ export class AppComponent implements OnInit{
     {
       title: 'Transfer History',
       url: "/tabs/tabs/t-history", icon: 'layers'
+    },
+       {
+      title: 'Verfied Payments',
+      url: "/tabs/tabs/verified-payments", icon: 'checkmark-done-circle-outline'
+    },
+       {
+      title: 'Verfiy Payment',
+      url: "/tabs/tabs/verify-payment", icon: 'checkmark-done-outline'
     },
     {
       title: 'Change Password',

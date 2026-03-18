@@ -17,7 +17,7 @@ export class TransferPage implements OnInit {
   error:any;
   ransForm!:FormGroup;
   msg_success:any ="Transfer successfully";
-
+  balance:number = 0
   constructor(
     private active_route: ActivatedRoute,
     private router: Router,
@@ -111,6 +111,56 @@ export class TransferPage implements OnInit {
     })
 
 
+  }
+  async check_balanece2() {
+    let user: any = this.helper.get_current_user('current_user');
+    let info:any = localStorage.getItem('client_info')
+    const clientInfo = JSON.parse(info)
+    let ac_id;
+    clientInfo.data.forEach(d => {
+      if (d.ac_type === 'Saving') {
+        ac_id = d.id;
+      }
+    });
+    console.log(ac_id)
+
+  }
+   async check_balanece() {
+    // let user: any = this.helper.get_current_user('current_user');
+    // let ac_type = acc_detail.type;
+    // let ac_id = acc_detail.acc_id;
+    let user: any = this.helper.get_current_user('current_user');
+    let info:any = localStorage.getItem('client_info')
+    const clientInfo = JSON.parse(info)
+    let ac_id;
+    clientInfo.data.forEach(d => {
+      if (d.ac_type === 'Saving') {
+        ac_id = d.id;
+      }
+    });
+
+    const loading = await this.loading.create({
+      message: 'Checking Balance ...',
+    });
+    loading.present();
+    this.api
+      .check_balance(user.user_id, user.token, "Saving", ac_id)
+      .subscribe(
+        (res: any) => {
+          // console.log(res);
+          loading.dismiss();
+          if (res === 0) {
+            this.balance = 0.0;
+          } else {
+            this.balance = res;
+          }
+        },
+        (err: any) => {
+          loading.dismiss();
+          // console.log(err);
+          this.error = err.error.message  ? err.error.message : err.statusText + '! Something went wrong';
+        }
+      );
   }
 
 }

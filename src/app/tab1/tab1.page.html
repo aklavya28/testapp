@@ -28,12 +28,13 @@
     >
       <div *ngFor="let item of clientInfo.data">
         <!-- <ion-item-option>tessdfdsf</ion-item-option> -->
-        <ion-select-option  *ngIf="item.ac_type !== 'Saving' && item.ac_type !== 'FD'"  value="{{item.id +','+ item.ac_type}}">{{item.ac_type}} A/c: {{item.account_number}} </ion-select-option>
+        <ion-select-option  *ngIf="item.ac_type !== 'Saving' && item.ac_type !== 'FD'"  value="{{item.id +','+ item.ac_type+','+ item?.emi_amount}}">{{item.ac_type}} A/c: {{item.account_number}} </ion-select-option>
       </div>
 
     </ion-select>
 
   </ion-item>
+
     <div *ngIf="service()?.touched && service()?.invalid">
       <ion-text *ngIf="service()?.errors?.['required']" color="danger">Field is Required</ion-text>
     </div>
@@ -44,7 +45,6 @@
       type="number"
       onKeyPress="if(this.value.length==7) return false;"
       formControlName="amount"
-
      >
     </ion-input>
   </ion-item>
@@ -52,7 +52,8 @@
   <div *ngIf="amount()?.touched && amount()?.invalid">
     <ion-text *ngIf="amount()?.errors?.['required']" color="danger">Amount is Required</ion-text>
     <ion-text *ngIf="amount()?.errors?.['min_val']" color="danger">Zero not allowed</ion-text>
-    <ion-text *ngIf="amount()?.errors?.['mix_val']" color="danger">Can not pay more then 1000000 </ion-text>
+    <ion-text *ngIf="amount()?.errors?.['mix_val']" color="danger">Can not pay more than{{ 1000000 | currency:"INR"}} </ion-text>
+    <ion-text *ngIf="amount()?.errors?.['min']" color="danger">Can not pay less than {{this.minAmt | currency:"INR"}} </ion-text>
 
   </div>
     </div>

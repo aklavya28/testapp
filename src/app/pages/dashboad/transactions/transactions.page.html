@@ -8,7 +8,8 @@
 
    </ion-toolbar>
 
-   <ion-list *ngIf="acc_detail?.type ==='Deposit Loan' || acc_detail?.type ==='FD' || acc_detail?.type ==='Saving' || acc_detail?.type === 'Personal Loan' || acc_detail?.type === 'Property Loan' || acc_detail?.type === 'Gold Loan'">
+
+   <ion-list *ngIf="acc_detail?.type ==='Deposit Loan' || acc_detail?.type ==='FD' || acc_detail?.type ==='Saving' || acc_detail?.type === 'Personal Loan' || acc_detail?.type === 'Property Loan' || acc_detail?.type === 'Gold Loan' || acc_detail?.type === 'Fixed Loan'">
     <div class="balance">
         Balance:
       <span *ngIf="balance" class="amount">

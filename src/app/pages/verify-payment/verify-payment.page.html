@@ -1,0 +1,95 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="false"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Verify Payment</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="main_bg" >
+
+  <!-- <ion-datetime-button datetime="datetime" ></ion-datetime-button> -->
+
+
+
+
+  <form [formGroup]="verifyPaymentForm" (ngSubmit)="submit()">
+  <!-- Date Picker -->
+
+  <ion-item lines="full">
+    <ion-label datetime="datetime">Transaction Date</ion-label>
+    <ion-datetime-button datetime="uploadDate" ></ion-datetime-button>
+  </ion-item>
+
+
+  <ion-modal [keepContentsMounted]="true">
+    <ng-template>
+      <ion-datetime
+        id="uploadDate"
+        presentation="date"
+        formControlName="upload_date"
+      ></ion-datetime>
+    </ng-template>
+  </ion-modal>
+
+
+  <!-- Amount -->
+  <ion-item lines="full">
+    <ion-label position="floating">Amount</ion-label>
+    <ion-input
+      type="number"
+      formControlName="amount">
+    </ion-input>
+  </ion-item>
+
+<ion-text class="error"
+  *ngIf="verifyPaymentForm.get('amount')?.touched && verifyPaymentForm.get('amount')?.invalid">
+  Enter transaction amount
+</ion-text>
+  <!-- Screenshot -->
+
+
+
+    <input
+      type="file"
+      (change)="onFileChange($event)"
+      accept="image/*"
+      formControlName="sreenshot"
+     #fileInput
+     hidden
+
+      />
+
+    <ion-item button (click)="openFilePicker()" lines="full" class="upload_box">
+      <ion-icon name="cloud-upload-outline" slot="start"></ion-icon>
+      <ion-label>Upload Screenshot</ion-label>
+    </ion-item>
+
+<ion-text class="error"
+  *ngIf="verifyPaymentForm.get('sreenshot')?.touched && verifyPaymentForm.get('sreenshot')?.invalid">
+ Upload transaction screenshot
+</ion-text>
+  <!-- Preview -->
+<div  *ngIf="preview" class="preview">
+  <img [src]="preview" width="300">
+</div>
+
+  <!-- Submit -->
+   <div  class="btn_area">
+     <div *ngIf="error" class="errors_danger">{{error | titlecase }}</div>
+     <ng-container *ngIf="is_spinner">
+      <ion-spinner  name="circular" color="primary"></ion-spinner>
+    </ng-container>
+    <ng-container *ngIf="!is_spinner">
+        <ion-button expand="block" type="submit">
+       Create Request
+     </ion-button>
+    </ng-container>
+
+
+
+  </div>
+
+</form>
+
+</ion-content>

@@ -59,6 +59,16 @@ const routes: Routes = [
         canActivate:[AuthGuard]
       },
       {
+        path: 'verified-payments',
+        loadChildren: () => import('../pages/verified-payments/verified-payments.module').then( m => m.VerifiedPaymentsPageModule),
+        canActivate:[AuthGuard]
+      },
+      {
+        path: 'verify-payment',
+        loadChildren: () => import('../pages/verify-payment/verify-payment-routing.module').then( m => m.VerifyPaymentPageRoutingModule),
+        canActivate:[AuthGuard]
+      },
+      {
         path: 'startnewrd/:type',
         loadChildren: () => import('../pages/newrd/newrd.module').then( m => m.NewrdPageModule),
         canActivate:[AuthGuard]
