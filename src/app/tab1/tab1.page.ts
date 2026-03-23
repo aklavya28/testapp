@@ -117,6 +117,7 @@ export class Tab1Page {
           header: 'Paid Successfully',
           cssClass: "green",
           color: 'success',
+          duration: 5000,
           buttons: [
             {
               icon: 'close',

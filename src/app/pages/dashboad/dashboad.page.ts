@@ -18,7 +18,7 @@ export class DashboadPage implements OnInit {
   ac_type:string = ''
   clientInfo:any = ''
   pendig_data:any;
-  version:string = '33';
+  version:string = '34';
   // account service info
 
 
@@ -49,7 +49,7 @@ export class DashboadPage implements OnInit {
     });
 
     const alert =  await this.alert.create({
-      message: 'Mobile app update is required',
+      message: 'App update required to continue',
 
         buttons: [
           {

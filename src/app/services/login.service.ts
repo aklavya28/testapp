@@ -303,12 +303,16 @@ export class LoginService {
       );
    }
 
-   get_verified_screenshots(){
-      return this.http.get<any>(`${this.mainurl}get-verified-screenshots?user_id=${this.user_slug }`, {
+   get_verified_screenshots(user_slug: string){
+      return this.http.get<any>(`${this.mainurl}get-verified-screenshots?user_id=${user_slug }`, {
         headers: new HttpHeaders({
           "Authorization": `${this.token}`
         })
       })
-    }
+    }   
+    
+   delete_bank_acc(id:number,user_id:string,token:string,
+       ){return this.http.post<any>(this.mainurl+'delete-bank-acc', {id,user_id,token});
+   }
 
 }

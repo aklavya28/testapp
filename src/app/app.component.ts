@@ -65,13 +65,13 @@ export class AppComponent implements OnInit{
       title: 'Transfer History',
       url: "/tabs/tabs/t-history", icon: 'layers'
     },
-       {
-      title: 'Verfied Payments',
-      url: "/tabs/tabs/verified-payments", icon: 'checkmark-done-circle-outline'
-    },
-       {
-      title: 'Verfiy Payment',
+    {
+      title: 'Upload Payment Proof',
       url: "/tabs/tabs/verify-payment", icon: 'checkmark-done-outline'
+    },
+    {
+      title: 'Deposit History',
+      url: "/tabs/tabs/verified-payments", icon: 'checkmark-done-circle-outline'
     },
     {
       title: 'Change Password',

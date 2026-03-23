@@ -119,6 +119,7 @@ export class Tab3Page implements OnInit {
       header: 'Transfer request sent successfully',
       cssClass: "green",
       color: 'success',
+      duration: 5000,
       buttons: [
         {
           icon: 'close',
@@ -159,6 +160,7 @@ export class Tab3Page implements OnInit {
       header: 'Transfer Successfully',
       cssClass: "green",
       color: 'success',
+      duration: 5000,
       buttons: [
         {
           icon: 'close',

@@ -3,6 +3,7 @@ import { ChangeDetectorRef, Component, ElementRef, NO_ERRORS_SCHEMA, OnDestroy, 
 import { FormBuilder, FormGroup, FormsModule, NgModel, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
+import { ToastController } from '@ionic/angular';
 
 import {
   IonItem,
@@ -69,7 +70,8 @@ export class VerifyPaymentPage implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private api: LoginService,
     private cd: ChangeDetectorRef,
-    private loader: LoadingController
+    private loader: LoadingController,
+    private tost: ToastController
   ) {}
   ngOnInit() {
     this.loader.create({
@@ -80,6 +82,10 @@ export class VerifyPaymentPage implements OnInit, OnDestroy {
       this.user_slug = current_user.user_id
       // console.log( current_user.user_id )
   }
+
+  ionViewWillEnter() {
+    this.verifyPaymentForm.get("upload_date").setValue(new Date().toISOString());
+  }
   loadForm(){
     return this.fb.group({
       upload_date: [new Date().toISOString(), [Validators.required]],
@@ -88,7 +94,7 @@ export class VerifyPaymentPage implements OnInit, OnDestroy {
     })
   }
   setDate(event: any) {
-    console.log(event, "anu")
+    // console.log(event, "anu")
     const date = event.detail.value;
     this.verifyPaymentForm.patchValue({
       upload_date: date
@@ -115,7 +121,7 @@ export class VerifyPaymentPage implements OnInit, OnDestroy {
         reader.readAsDataURL(this.selectedFile);
       }
   }
-  submit(){
+  async submit(){
     this.error = ''
     this.is_spinner = true
     if (this.verifyPaymentForm.invalid) {
@@ -125,6 +131,22 @@ export class VerifyPaymentPage implements OnInit, OnDestroy {
     }
     // const data = this.verifyPaymentForm.value
     // console.log(this.selectedFile);
+
+    const success = await this.tost.create({
+                      position: 'top',
+                      header: 'Screenshot uploaded successfully!',
+                      cssClass: "green",
+                      color: 'success',
+                      duration: 5000,
+                      buttons: [
+                        {
+                          icon: 'close',
+                          htmlAttributes: {
+                            'aria-label': 'close',
+                          },
+                        },
+                      ],
+                    })
   const formData = new FormData();
   formData.append('screenshot', this.selectedFile);
   formData.append('amount', this.verifyPaymentForm.get('amount')?.value);
@@ -139,6 +161,7 @@ export class VerifyPaymentPage implements OnInit, OnDestroy {
                     this.verifyPaymentForm.reset()
                     this.preview = ''
                     this.router.navigate(['/tabs/tabs/verified-payments'])
+                    success.present()
                 },
                 error: (err) => {
                   console.error(err);
@@ -154,7 +177,7 @@ export class VerifyPaymentPage implements OnInit, OnDestroy {
   }
    ngOnDestroy(): void {
       this.destroy$.next();
-      this.destroy$.complete(); // ✅ triggers unsubscription
+      this.destroy$.complete(); 
     }
 
 }

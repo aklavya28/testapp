@@ -97,6 +97,7 @@ async addBankSubmit(){
       header: 'Payee Created Successfully',
       cssClass: "green",
       color: 'success',
+      duration: 5000,
       buttons: [
         {
           icon: 'close',
@@ -140,6 +141,7 @@ async addBankSubmit(){
       header: 'Payee Created Successfully',
       cssClass: "green",
       color: 'success',
+      duration: 5000,
       buttons: [
         {
           icon: 'close',

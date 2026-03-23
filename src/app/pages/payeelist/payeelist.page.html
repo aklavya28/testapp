@@ -47,6 +47,10 @@
               <span>{{bank.ifsc}}</span>
             </p>
           </div>
+          <!-- <div> <ion-icon color="danger" name="trash"></ion-icon> </div> -->
+           <div class="delete_icon" (click)="deleteBank(bank, $event)">
+            <ion-icon name="trash-outline"></ion-icon>
+          </div>
         </div>
       </div>
     </div>

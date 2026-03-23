@@ -11,6 +11,7 @@ export class VerifiedPaymentsPage implements OnInit, OnDestroy{
    private destroy$ = new Subject<void>();
   is_spinner:boolean
   data:any[]= []
+  user_slug:string = ''
   constructor(
     private cd: ChangeDetectorRef,
     private api: LoginService
@@ -19,14 +20,17 @@ export class VerifiedPaymentsPage implements OnInit, OnDestroy{
 
   ngOnInit() {
     // this.load_data()
+      const current_user = JSON.parse(localStorage.getItem('current_user'))
+      this.user_slug = current_user.user_id
   }
    ionViewWillEnter() {
-    this.load_data(); // 🔥 important
+    this.load_data();
   }
   load_data(){
     this.is_spinner = true
     this.data = []
-    this.api.get_verified_screenshots().pipe(takeUntil(this.destroy$))
+
+    this.api.get_verified_screenshots(this.user_slug).pipe(takeUntil(this.destroy$))
                   .subscribe({
                     next: (res) => {
                         this.is_spinner = false

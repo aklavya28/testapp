@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-menu-button autoHide="false"></ion-menu-button>
     </ion-buttons>
-    <ion-title>Verify Payment</ion-title>
+    <ion-title>Upload Payment Proof</ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-content class="main_bg" >
@@ -32,6 +32,10 @@
     </ng-template>
   </ion-modal>
 
+<ion-text class="error"
+  *ngIf="verifyPaymentForm.get('upload_date')?.touched && verifyPaymentForm.get('upload_date')?.invalid">
+  Choose date
+</ion-text>
 
   <!-- Amount -->
   <ion-item lines="full">
@@ -62,7 +66,7 @@
 
     <ion-item button (click)="openFilePicker()" lines="full" class="upload_box">
       <ion-icon name="cloud-upload-outline" slot="start"></ion-icon>
-      <ion-label>Upload Screenshot</ion-label>
+      <ion-label>Upload Payment Screenshot</ion-label>
     </ion-item>
 
 <ion-text class="error"
@@ -82,7 +86,7 @@
     </ng-container>
     <ng-container *ngIf="!is_spinner">
         <ion-button expand="block" type="submit">
-       Create Request
+      Submit Proof
      </ion-button>
     </ng-container>
 
