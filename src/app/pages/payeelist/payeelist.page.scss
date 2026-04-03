@@ -41,3 +41,17 @@
   font-size: 20px;
   color: var(--ion-color-danger);
 }
+
+.bank_single.pending {
+    background-color: #ffc10069;
+    box-sizing: border-box;
+    padding: 10px;
+    span{color: #694f00 !important}
+}
+
+.bank_single.blocked {
+     background-color: rgb(255 25 0 / 24%);
+    box-sizing: border-box;
+    padding: 10px;
+    span{color:#691500 !important}
+}

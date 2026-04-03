@@ -36,12 +36,12 @@ export class LoginPage implements OnInit {
     private helper: HelperService
   ) {
     this.memberForm = fb.group({
-      username: fb.control('', [
+      username: fb.control('m03229', [
         Validators.required,
         Validators.maxLength(10),
         Validators.minLength(6),
       ]),
-      password: fb.control('', [
+      password: fb.control('Iloveshimla@3546', [
         Validators.required,
         Validators.minLength(6),
         Validators.maxLength(20),

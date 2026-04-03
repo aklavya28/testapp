@@ -24,7 +24,7 @@
       animated
       ></ion-searchbar>
       <div *ngFor="let bank of results ">
-        <div class="bank_single" (click)="transfer(bank)">
+        <div class="bank_single"[ngClass]="bank.cssClass" (click)="transfer(bank)">
           <div>
             <img *ngIf="bank.bank_info !='dev'" src="../../../assets/icon/bank.png" alt="">
             <img *ngIf="bank.bank_info ==='dev'" src="../../../assets/icon/dev_icon.png" alt="">

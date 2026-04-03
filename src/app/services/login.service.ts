@@ -7,7 +7,6 @@ import { Observable } from 'rxjs';
 })
 export class LoginService {
   private mainurl:string = 'http://localhost:3200/api/'
-
 //   private mainurl:string = 'https://app.devrising.in/api/'
    token:string = ''
    user_slug:string = ''
@@ -309,8 +308,8 @@ export class LoginService {
           "Authorization": `${this.token}`
         })
       })
-    }   
-    
+    }
+
    delete_bank_acc(id:number,user_id:string,token:string,
        ){return this.http.post<any>(this.mainurl+'delete-bank-acc', {id,user_id,token});
    }

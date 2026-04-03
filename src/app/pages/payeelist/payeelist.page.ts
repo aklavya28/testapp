@@ -83,7 +83,7 @@ export class PayeelistPage implements OnInit {
     // });
 
     this.api.delete_bank_acc(bank.id, user.user_id, user.token).subscribe({
-      
+
       next: async (res: any) => {
         const success =  await this.tost.create({
           position: 'top',
@@ -117,8 +117,26 @@ export class PayeelistPage implements OnInit {
     });
   }
 
-  transfer(slug){
-    this.router.navigateByUrl(`tabs/tabs/payeelist/transfer/${slug.slug}`)
+ async transfer(bank){
+    const error = await this.tost.create({
+      header:bank.note,
+      position:'top',
+      color:'danger',
+      duration: 3000,
+       buttons: [
+                {
+                  icon: 'close',
+                  htmlAttributes: {
+                    'aria-label': 'close',
+                  },
+                  },
+        ],
+    })
+    if(bank.is_transferable){
+      this.router.navigateByUrl(`tabs/tabs/payeelist/transfer/${bank.slug}`)
+    }else{
+      error.present()
+    }
   }
   async handleInput(event){
 

@@ -1,10 +1,11 @@
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { LoginService } from './../../services/login.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { LoadingController, ToastController } from '@ionic/angular';
 import { HelperService } from 'src/app/services/helper.service';
 import { CustomValidator } from 'src/app/services/validator';
 import { Router } from '@angular/router';
+import { Subject, takeUntil } from 'rxjs';
 
 
 @Component({
@@ -12,7 +13,8 @@ import { Router } from '@angular/router';
   templateUrl: './addbank.page.html',
   styleUrls: ['./addbank.page.scss'],
 })
-export class AddbankPage implements OnInit {
+export class AddbankPage implements OnInit, OnDestroy{
+  private destroy$ = new Subject<void>();
   isActive:boolean = false;
   addBankForm!:FormGroup;
   davSavingForm!:FormGroup;
@@ -31,6 +33,7 @@ export class AddbankPage implements OnInit {
     private loading: LoadingController,
     private helper: HelperService,
     private router: Router,
+    private cd: ChangeDetectorRef,
     private tost: ToastController
 
   ) { }
@@ -91,40 +94,42 @@ async addBankSubmit(){
     let bank_name = this.addBankForm.get('name')?.value
     let bank_ac_no = this.addBankForm.get('ac_no')?.value
     let ifsc = this.addBankForm.get('ifsc')?.value
-    // toast
-    const success =  await this.tost.create({
-      position: 'top',
-      header: 'Payee Created Successfully',
-      cssClass: "green",
-      color: 'success',
-      duration: 5000,
-      buttons: [
-        {
-          icon: 'close',
-          htmlAttributes: {
-            'aria-label': 'close',
-          },
-        },
-      ],
-      })
-
-    // toast
-
       const loading = await this.loading.create({
         message: 'Creating Payee..',
       });
       loading.present()
-      this.api.addBank(user.user_id, user.token, bank_name, bank_ac_no, ifsc, holder_name, 'other').subscribe((res:any) =>{
-       loading.dismiss()
-        this.addBankForm.reset()
 
-        success.present()
-       this.router.navigateByUrl('/tabs/tabs/payeelist')
+         this.api.addBank(user.user_id, user.token, bank_name, bank_ac_no, ifsc, holder_name, 'other')
+         .pipe(takeUntil(this.destroy$))
+                        .subscribe({
+                          next: async (res:any) => {
+                            loading.dismiss()
+                            this.addBankForm.reset()
+                            const toast = await this.tost.create({
+                              position: 'top',
+                              header: res.message,   // ✅ dynamic from API
+                              color: 'success', buttons: [
+                                                {
+                                                  icon: 'close',
+                                                  htmlAttributes: {
+                                                    'aria-label': 'close',
+                                                  },
+                                                  },
+                                        ],
+                            });
+                            toast.present()
+                             this.router.navigateByUrl('/tabs/tabs/payeelist')
+                            this.cd.detectChanges();
+                          },
+                          error: (err) => {
+                            this.error = err.error.message ? err.error.message : (err.statusText+ "! Something went wrong");
+                            loading.dismiss()
+                          },
+                          complete: () => {
+                            loading.dismiss()
+                          },
+                        });
 
-    }, (err:any) =>{
-      this.error = err.error.message ? err.error.message : (err.statusText+ "! Something went wrong");
-      loading.dismiss()
-    })
 
 
   }
@@ -217,4 +222,8 @@ async addBankSubmit(){
   loc_reload(){
     location.reload()
   }
+    ngOnDestroy(): void {
+      this.destroy$.next();
+      this.destroy$.complete(); // ✅ triggers unsubscription
+    }
 }
