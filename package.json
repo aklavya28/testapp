@@ -45,6 +45,7 @@
     "@ionic-native/file-opener": "^5.36.0",
     "@ionic/angular": "^7.0.0",
     "@ionic/pwa-elements": "^3.2.2",
+    "@jonz94/capacitor-sim": "^2.0.0",
     "cordova-plugin-file-opener2": "^4.0.0",
     "cordova-plugin-fingerprint-aio": "^5.0.1",
     "cordova-plugin-splashscreen": "^6.0.2",

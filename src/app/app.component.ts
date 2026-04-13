@@ -1,3 +1,4 @@
+import { Sim } from '@jonz94/capacitor-sim';
 import { ChangeDetectorRef, Component, DoCheck, NgZone, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { IonDatetimeButton, LoadingController } from '@ionic/angular';
@@ -20,6 +21,8 @@ import { Subscription } from 'rxjs';
 
 })
 export class AppComponent implements OnInit{
+
+
   current_url:string =''
   current_user:any;
   fingerprint:any;
@@ -177,7 +180,16 @@ export class AppComponent implements OnInit{
           }
       });
     // });
+      console.log("kundu")
+      this.getSimCards()
+
   }
+async getSimCards (){
+    const { simCards } = await Sim.getSimCards();
+    console.log("mear simg ", simCards);
+    return simCards;
+}
+
   ngDoCheck( ){
     // console.log(this.profile, 'son',  this.getprofile())
 
@@ -249,4 +261,6 @@ export class AppComponent implements OnInit{
     if (this.subscription) this.subscription.unsubscribe();
   }
 
+
 }
+

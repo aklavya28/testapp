@@ -6,8 +6,8 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class LoginService {
-  private mainurl:string = 'http://localhost:3200/api/'
-//   private mainurl:string = 'https://app.devrising.in/api/'
+//   private mainurl:string = 'http://localhost:3200/api/'
+  private mainurl:string = 'https://app.devrising.in/api/'
    token:string = ''
    user_slug:string = ''
     constructor(
