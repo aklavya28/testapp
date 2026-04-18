@@ -109,7 +109,7 @@
               <ion-item lines="none">
                 <ion-label position="floating">Registered Mobile Number</ion-label>
                 <ion-icon slot="start" name="call-outline"></ion-icon>
-                <ion-input type="number" formControlName="mobile"   onKeyPress="if(this.value.length==10) return false;"></ion-input>
+                <ion-input type="number" formControlName="mobile" [readonly]="true"  onKeyPress="if(this.value.length==10) return false;"></ion-input>
               </ion-item>
               <ion-item lines="none"
                 *ngIf="memberFormOtp.get('mobile')?.touched && memberFormOtp.get('mobile')?.invalid"

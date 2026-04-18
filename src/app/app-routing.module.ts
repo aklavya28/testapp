@@ -1,13 +1,16 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './guards/auth.guard';
+import { SimGuard } from './guards/sim.guard';
 
 
 
 const routes: Routes = [
   {
-    path: '',
-    loadChildren: () => import('./login/login.module').then(m=>m.LoginPageModule)
+    path: 'login',
+    // path: '',
+    loadChildren: () => import('./login/login.module').then(m=>m.LoginPageModule),
+    canActivate:[SimGuard]
     // loadChildren: () => import('./pages/rxjs/rxjs-routing.module').then(m=> m.RxjsPageRoutingModule)
   },
   {
@@ -36,16 +39,24 @@ const routes: Routes = [
     canActivate:[AuthGuard]
   },
   {
-    path: 'test',
+    path: '',
+    // path: 'test',
     loadChildren: () => import('./pages/test/test.module').then( m => m.TestPageModule)
   },
   {
     path: 'change-password',
-    loadChildren: () => import('./pages/change-password/change-password.module').then( m => m.ChangePasswordPageModule)
+    loadChildren: () => import('./pages/change-password/change-password.module').then( m => m.ChangePasswordPageModule),
+    canActivate:[AuthGuard]
   },
   {
     path: 'verified-payments',
-    loadChildren: () => import('./pages/verified-payments/verified-payments.module').then( m => m.VerifiedPaymentsPageModule)
+    loadChildren: () => import('./pages/verified-payments/verified-payments.module').then( m => m.VerifiedPaymentsPageModule),
+    canActivate:[AuthGuard]
+  },
+  {
+    // path: '',
+    path: 'sim-permission',
+    loadChildren: () => import('./sim-permission/sim-permission.module').then( m => m.SimPermissionPageModule)
   },
   // {
   //   path: 'success',

@@ -7,7 +7,8 @@ import { Observable } from 'rxjs';
 })
 export class LoginService {
 //   private mainurl:string = 'http://localhost:3200/api/'
-  private mainurl:string = 'https://app.devrising.in/api/'
+  private mainurl:string = 'http://192.168.1.11:3000/api/'
+//   private mainurl:string = 'https://app.devrising.in/api/'
    token:string = ''
    user_slug:string = ''
     constructor(
@@ -312,6 +313,12 @@ export class LoginService {
 
    delete_bank_acc(id:number,user_id:string,token:string,
        ){return this.http.post<any>(this.mainurl+'delete-bank-acc', {id,user_id,token});
+   }
+
+
+   find_mobile(
+      mobile:number,
+       ){return  this.http.get<any>(this.mainurl+"app-find-mobile?&mobile="+mobile)
    }
 
 }

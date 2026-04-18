@@ -18,7 +18,7 @@ export class LoginPage implements OnInit {
   show_password: boolean = false;
   current_user: any = localStorage.getItem('current_user') ? localStorage.getItem('current_user') : '';
   newdata: any = '';
-
+  private mobileNumber: string | null = null;
   viewMode: string = 'member';
   fpo: any;
 
@@ -36,12 +36,12 @@ export class LoginPage implements OnInit {
     private helper: HelperService
   ) {
     this.memberForm = fb.group({
-      username: fb.control('m03229', [
+      username: fb.control('', [
         Validators.required,
         Validators.maxLength(10),
         Validators.minLength(6),
       ]),
-      password: fb.control('Iloveshimla@3546', [
+      password: fb.control('', [
         Validators.required,
         Validators.minLength(6),
         Validators.maxLength(20),
@@ -82,12 +82,23 @@ export class LoginPage implements OnInit {
     //  this.memberForm.get('password')?.setValue("Sunil@3546")
     //  this.memberForm.get('password')?.setValue("545A1E")
     // otp
+    // this.mobileNumber = this.helper.getMobile();
+    this.mobileNumber =  localStorage.getItem('number');
+    // this.mobileNumber = "7018817938"
+
+    // if (!this.mobileNumber || localStorage.getItem('simVerified') == null){
+    //   alert("mobile number not found")
+    //    this.route.navigateByUrl('/');
+    //    return;
+    // }
+      
     this.memberFormOtp = this.fb.group({
       mobile: this.fb.control('', [
         Validators.required,
         Validators.pattern('^((\\+91-?)|0)?[0-9]{10}$'),
       ]),
     });
+      this.memberFormOtp.get('mobile')?.setValue(this.mobileNumber.replace(/\D/g, '').slice(-10));
     // otp end
 
     // bio
@@ -205,8 +216,8 @@ export class LoginPage implements OnInit {
     this.service.mobile_login(mobile).subscribe(
       (res:any) => {
         loading.dismiss();
-        localStorage.setItem('mobile', mobile);
-        this.route.navigateByUrl('opt', mobile);
+        localStorage.setItem('number', mobile);
+        this.route.navigateByUrl('login/opt', mobile);
 
       },
       (err:any) => {

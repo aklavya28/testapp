@@ -12,7 +12,7 @@ import { LoginService } from 'src/app/services/login.service';
 export class OptPage implements OnInit {
 
   // mobile:any =localStorage.getItem('mobile');
-  mobile:any =this.helper.get_current_user('mobile');
+  mobile:any =this.helper.get_current_user('number');
   otp:any;
   resendOtp:boolean = true;
   verfy:boolean = true

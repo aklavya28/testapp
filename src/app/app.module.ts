@@ -17,6 +17,7 @@ import { far } from '@fortawesome/free-regular-svg-icons'
 import { fab } from '@fortawesome/free-brands-svg-icons'
 import { FileOpener } from '@ionic-native/file-opener/ngx';
 import { File } from '@ionic-native/file/ngx';
+import { SimGuard } from './guards/sim.guard';
 
 
 @NgModule({
@@ -32,6 +33,7 @@ import { File } from '@ionic-native/file/ngx';
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     Platform,
     AuthGuard,
+    SimGuard,
     FingerprintAIO,
     FileOpener,
     File

@@ -1,0 +1,110 @@
+<!-- <ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>sim-permission</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">sim-permission</ion-title>
+    </ion-toolbar>
+  </ion-header>
+</ion-content> -->
+<ion-header translucent="true">
+  <ion-toolbar  class="custom-toolbar">
+    <ion-title>Secure Verification</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="permission-container">
+
+  <div class="permission-wrapper">
+
+    <div class="permission-card">
+
+      <div class="icon-wrapper">
+        <ion-icon 
+        [name]="isReVerification ? 'phone-portrait-outline' : 'shield-checkmark-outline'">
+      </ion-icon>
+      </div>
+
+      <h2>
+      {{ isReVerification ? 'Select Your SIM Card' : 'Secure SIM Verification' }}
+    </h2>
+
+      <p class="message" *ngIf="permissionMessage">
+        {{ permissionMessage }}
+      </p>
+
+      <!-- Grant Permission -->
+      <ion-button 
+        expand="block"
+        size="large"
+        *ngIf="showGrantButton"
+        (click)="requestPermission()">
+        Allow Phone Permission
+      </ion-button>
+
+      <!-- Open Settings -->
+      <ion-button 
+        expand="block"
+        size="large"
+        color="medium"
+        *ngIf="showSettingsButton"
+        (click)="openSettings()">
+        Open Settings
+      </ion-button>
+
+      <!-- SIM List -->
+      <!-- <ion-list *ngIf="simCards.length" class="sim-list">
+
+        <ion-radio-group [(ngModel)]="selectedSim">
+
+          <ion-item *ngFor="let sim of simCards" lines="none" class="sim-item">
+            <ion-label>
+              <h3>{{ sim.carrierName || 'SIM Card' }}</h3>
+              <p>{{ sim.number || 'Number not available' }}</p>
+            </ion-label>
+            <ion-radio slot="end" [value]="sim"></ion-radio>
+          </ion-item>
+
+        </ion-radio-group>
+
+      </ion-list> -->
+
+
+  <ion-list *ngIf="simCards.length" class="sim-list">
+    <ion-radio-group [(ngModel)]="selectedSim">
+        <ion-item 
+          *ngFor="let sim of simCards" 
+          lines="none" 
+          class="sim-item"
+          button
+          (click)="selectedSim = sim"
+        >
+          <ion-label>
+            <h3>{{ sim.carrierName || 'SIM Card' }}</h3>
+            <p>{{ sim.number || 'Number not available' }}</p>
+          </ion-label>
+          <ion-radio slot="end" [value]="sim"></ion-radio>
+        </ion-item>
+
+      </ion-radio-group>
+  </ion-list>
+
+      <!-- Continue -->
+      <ion-button 
+        expand="block"
+        size="large"
+        [disabled]="!selectedSim"
+        *ngIf="simCards.length"
+        (click)="continue()">
+        Continue Securely
+      </ion-button>
+
+    </div>
+
+  </div>
+
+</ion-content>

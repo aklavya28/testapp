@@ -34,3 +34,6 @@ project(':capawesome-capacitor-android-edge-to-edge-support').projectDir = new F
 
 include ':jonz94-capacitor-sim'
 project(':jonz94-capacitor-sim').projectDir = new File('../node_modules/@jonz94/capacitor-sim/android')
+
+include ':capacitor-native-settings'
+project(':capacitor-native-settings').projectDir = new File('../node_modules/capacitor-native-settings/android')
