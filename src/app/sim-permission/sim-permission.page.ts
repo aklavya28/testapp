@@ -125,7 +125,6 @@ export class SimPermissionPage implements OnInit, OnDestroy {
 
   listenAppResume() {
      if (Capacitor.getPlatform() === 'android') {
-      console.log("affffff")
         //  const verified = localStorage.getItem('simVerified');
         //   if (verified === 'true') {
         //     this.router.navigateByUrl('/login', { replaceUrl: true });

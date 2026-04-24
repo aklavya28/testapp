@@ -22,20 +22,6 @@ export class HelperService {
           let json_user = JSON.parse(c_user)
           return json_user
   }
-
-  setMobile(number: string) {
-    this.mobileNumber = number;
-    localStorage.setItem('number',number)
-  }
-
-  getMobile() {
-    return this.mobileNumber;
-  }
-
-  clear() {
-    this.mobileNumber = null;
-    localStorage.clear;
-  }
   
   getprofile() {
     let user:any =  this.get_current_user('current_user')
