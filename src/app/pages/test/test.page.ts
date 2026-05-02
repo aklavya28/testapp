@@ -35,7 +35,7 @@ export class TestPage implements OnInit {
 
     // Check permission status
     const status: any = await Sim.checkPermissions();
-    console.log("status",status)
+    // console.log("status",status)
     const permissionGranted =
       status?.readPhoneState === 'granted' ||
       status?.android?.readPhoneState === 'granted';

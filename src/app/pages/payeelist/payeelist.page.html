@@ -48,7 +48,7 @@
             </p>
           </div>
           <!-- <div> <ion-icon color="danger" name="trash"></ion-icon> </div> -->
-           <div class="delete_icon" (click)="deleteBank(bank, $event)">
+           <div *ngIf="bank.is_delete" class="delete_icon" (click)="deleteBank(bank, $event)">
             <ion-icon name="trash-outline"></ion-icon>
           </div>
         </div>

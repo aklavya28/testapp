@@ -18,7 +18,7 @@ export class DashboadPage implements OnInit {
   ac_type:string = ''
   clientInfo:any = ''
   pendig_data:any;
-  version:string = '34';
+  version:string = '36';
   // account service info
 
 

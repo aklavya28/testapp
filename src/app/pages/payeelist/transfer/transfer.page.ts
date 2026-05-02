@@ -122,7 +122,7 @@ export class TransferPage implements OnInit {
         ac_id = d.id;
       }
     });
-    console.log(ac_id)
+    // console.log(ac_id)
 
   }
    async check_balanece() {

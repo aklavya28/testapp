@@ -71,7 +71,6 @@ export class PayeelistPage implements OnInit {
   }
 
   async confirmDelete(bank: any) {
-    console.log(bank)
     // return
     const loading = await this.loader.create({
       message: 'loading...',
@@ -141,7 +140,7 @@ export class PayeelistPage implements OnInit {
   async handleInput(event){
 
     const query = event.target.value.toLowerCase();
-    console.log( this.results)
+    // console.log( this.results)
     this.results = this.data.filter((d:any) => {
     return Object.keys(d)
     .some(function(k) {

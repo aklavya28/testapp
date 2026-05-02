@@ -108,7 +108,8 @@ async addBankSubmit(){
                             const toast = await this.tost.create({
                               position: 'top',
                               header: res.message,   // ✅ dynamic from API
-                              color: 'success', buttons: [
+                              color: 'success',
+                              duration: 15000, buttons: [
                                                 {
                                                   icon: 'close',
                                                   htmlAttributes: {

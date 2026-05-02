@@ -6,8 +6,8 @@ const config: CapacitorConfig = {
   webDir: 'www',
 
   server: {
-    // androidScheme: 'https'
-    androidScheme: 'http'
+    androidScheme: 'https'
+    // androidScheme: 'http'
   },
    plugins: {
     EdgeToEdge: {

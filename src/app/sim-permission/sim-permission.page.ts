@@ -55,7 +55,7 @@ export class SimPermissionPage implements OnInit, OnDestroy {
     }
 
     const status: any = await Sim.checkPermissions();
-    console.log("init  ",status)
+    // console.log("init  ",status)
     if (this.isGranted(status)) {
       await this.loadSim();
     } else {
@@ -99,7 +99,7 @@ export class SimPermissionPage implements OnInit, OnDestroy {
   async loadSim() {
     const result = await Sim.getSimCards();
     this.simCards = result.simCards || [];
-    console.log("loadsim dfdffd",this.simCards,this.simCards.length,!this.simCards.length)
+    // console.log("loadsim dfdffd",this.simCards,this.simCards.length,!this.simCards.length)
 
     if (!this.simCards.length) {
       localStorage.clear()
@@ -131,7 +131,7 @@ export class SimPermissionPage implements OnInit, OnDestroy {
         //     return;
         //   }
       this.appListener = App.addListener('appStateChange', async ({ isActive }) => {
-        console.log("is active",isActive)
+        // console.log("is active",isActive)
         if (isActive) {
           this.zone.run(async () => {
             const status: any = await Sim.checkPermissions();
@@ -153,13 +153,13 @@ export class SimPermissionPage implements OnInit, OnDestroy {
     const laoder = await this.loader.create({
       message: 'Please Wait...',
     });
-    console.log("ssss", this.selectedSim.number)
+    // console.log("ssss", this.selectedSim.number)
     // localStorage.setItem('selectedSim', JSON.stringify(this.selectedSim));
     laoder.present()
     this.api.find_mobile(this.selectedSim.number).pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (res) => {
-          console.log(res)
+          // console.log(res)
           if (res.status === 'success') {
             localStorage.clear();
             // this.helper.setMobile();
